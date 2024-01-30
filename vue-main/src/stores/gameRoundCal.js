@@ -87,7 +87,7 @@ export const useDrawcalStore = defineStore('counter', {
 
             if (!this.turnDrawColorOfCol.every(subArray => subArray.length === 0)) {
 
-                this.roundResult.set('turn' + this.turnOfRound, [cloneDeep(this.gameBoard), cloneDeep(this.turnGemMoveArray), cloneDeep(this.turnDrawColorOfCol), this.roundTotalCombo])
+                this.roundResult.set('turn' + this.turnOfRound, [cloneDeep(this.gameBoard), cloneDeep(this.gameGemRemovedSet), cloneDeep(this.turnGemMoveArray), cloneDeep(this.turnDrawColorOfCol), this.roundTotalCombo])
             }
             if (this._checkRowSameState === true || this._checkColSameState === true) {
                 console.log("有進入下回合");
@@ -371,7 +371,7 @@ export const useDrawcalStore = defineStore('counter', {
                     if (this.gameBoardDraw[row][col] === null) {
                         const randomIndex = Math.floor(Math.random() * elements.length);
                         this.gameBoardDraw[row][col] = elements[randomIndex]
-                        drawColor.push(randomIndex)
+                        drawColor.push(elements[randomIndex])
                     }
 
                 }
