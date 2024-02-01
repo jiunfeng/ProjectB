@@ -3,10 +3,12 @@ import Phaser from 'phaser'
 import gems from '@/game/assets/sprites/gems.png'
 import gemSwitchSound from '@/game/assets/audio/test.mp3'
 
+import { useDrawcalStore } from "@/stores/gameRoundCal";
+const DrawcalStore = useDrawcalStore();
 let gameOptions = {
   rowSize: 5,
   colSize: 6,
-  gemColors: 3,
+  gemColors: 4,
   gemSize: 100,
 }
 export default class PlayGame extends Phaser.Scene {
@@ -22,13 +24,13 @@ export default class PlayGame extends Phaser.Scene {
     this.load.audio('gemSwitchSound', gemSwitchSound);
   }
   create() {
-    this.input.mouse?.disableContextMenu();
+    this.input.mouse.disableContextMenu();
     // 获取游戏画布的 DOM 元素
     const canvasElement = this.game.canvas;
 
     // 添加 mouseleave 事件监听器
     canvasElement.addEventListener('mouseleave', function () {
-      console.log('鼠标离开游戏画布！');
+      // console.log('鼠标离开游戏画布！');
       this.input.emit('pointerup');
     }.bind(this));
 
@@ -125,15 +127,35 @@ export default class PlayGame extends Phaser.Scene {
         );
         this.dragGem = null;
         this.gemCollider.destroy();
-        console.log('放開');
+        // console.log('放開');
         if (this.hasSwitch) {
-          //有交換再啟動消除
-          this.destroyGems([{ i: 3, j: 0 }, { i: 3, j: 1 }, { i: 3, j: 2 }, { i: 4, j: 3 }, { i: 3, j: 3 }, { i: 2, j: 3 }]);
+          //有交換再啟動
+
+          let gameBoard = this.gameArray.map(row => row.map(col => `${col.gemColor + 1}`));
+
+
+          DrawcalStore.$reset();
+
+
+          console.log(gameBoard);
+          DrawcalStore.gameBoard = gameBoard;
+          DrawcalStore.getboard();
+          DrawcalStore.checkGem();
+
+          const result = DrawcalStore.roundResult;
+
+          this.iterator = result.entries();
+          const nextEntry = this.iterator.next();
+          if (!nextEntry.done) {
+
+            const destroyGems = [...nextEntry.value[1][1]].map(item => ({ i: item[0], j: item[1] }));
+            const gemsColor = nextEntry.value[1][3].map(item => item.length != 0 ? [...item] : undefined).filter(item => item != undefined).flat().map(item => parseInt(item, 10) - 1);
+            this.destroyGems(destroyGems, gemsColor);
+          }
           this.hasSwitch = false;
         }
       }
     });
-
     this.initGameArea();
   }
   isGem(object) {
@@ -192,6 +214,7 @@ export default class PlayGame extends Phaser.Scene {
     do {
       let randomColor = Phaser.Math.Between(0, gameOptions.gemColors - 1);
       gem.setFrame(randomColor);
+      gem.color = randomColor;
       this.gameArray[i][j] = {
         gemColor: randomColor,
         gemSprite: gem,
@@ -204,7 +227,8 @@ export default class PlayGame extends Phaser.Scene {
 
     gem.setInteractive();//將此遊戲物件傳遞給輸入管理器以啟用它的輸入。        
     gem.input.hitArea.setTo(65 / 2, 65 / 2, 40, 40);// 设置输入事件的範圍
-
+    
+    
 
   }
 
@@ -224,76 +248,122 @@ export default class PlayGame extends Phaser.Scene {
     return this.gameArray[row][col];
   }
 
-  destroyGems(gems) {
-    let k = 1;
-    gems.forEach(gem => {
+  destroyGems(gems, color) {
+    const gemsCount = gems.length;
+
+    gems.forEach((gem, index) => {
+      const gemSprite = this.gameArray[gem.i][gem.j].gemSprite;
+
       this.tweens.add({
-        targets: this.gameArray[gem.i][gem.j].gemSprite,
+        targets: gemSprite,
         alpha: 0.5,
-        duration: 300,
+        duration: 800,
         ease: 'quad.out',
         callbackScope: this,
-        onComplete: function () {
-          this.gameArray[gem.i][gem.j].gemSprite.setVisible(false);
-          this.gameArray[gem.i][gem.j].gemSprite.body.enable = false;
-          this.poolArray.push(this.gameArray[gem.i][gem.j].gemSprite);
-          if (k == gems.length) {
+        onComplete: () => {
+          gemSprite.setVisible(false);
+          gemSprite.body.enable = false;
+
+          // 设置颜色
+          gemSprite.color = color[index];
+          gemSprite.setFrame(gemSprite.color);
+
+          this.poolArray.push(gemSprite);
+
+          if (index === gemsCount - 1) {
             this.makeGemsFall();
-            this.fillGem();
+
           }
-          else k++;
-        }
-      }, this);
+        },
+      });
+
       this.gameArray[gem.i][gem.j].isEmpty = true;
     });
-
   }
+
   makeGemsFall() {
+    let k = 0;
+    let emptyCount = 0;
     for (let j = 0; j < gameOptions.colSize; j++) {
-      let emptyCount = 0;
+      emptyCount = 0;
       for (let i = gameOptions.rowSize - 1; i >= 0; i--) {
         if (this.gameArray[i][j].isEmpty) {
           emptyCount++;
         }
         else if (emptyCount > 0) {
+          k++;
           this.tweens.add({
             targets: this.gameArray[i][j].gemSprite,
             y: this.gameArray[i][j].y + (this.cellSetting.size * emptyCount),  // 目標 y 座標
-            duration: 200,  // 持續時間（毫秒）
+            duration: 1000,  // 持續時間（毫秒）
             ease: 'quad.out',  // 使用的緩動函數（例如 'Linear'、'Cubic' 等）
             callbackScope: this,
+            onComplete: () => {
+              k--;
+              if (k === 0) {
+                this.fillGem();
+              }
+            }
           }, this);
           this.gameArray[i + emptyCount][j].gemSprite = this.gameArray[i][j].gemSprite;
           this.gameArray[i + emptyCount][j].gemSprite.i = i + emptyCount;
-
+          this.gameArray[i + emptyCount][j].gemColor = this.gameArray[i][j].gemColor;
           this.gameArray[i][j].isEmpty = true;
           this.gameArray[i + emptyCount][j].isEmpty = false;
         }
       }
     }
+    if (k === 0) {
+      this.fillGem();
+    }
   }
+
   fillGem() {
-    for (let j = 0; j < gameOptions.colSize; j++) {
+    const rowSize = gameOptions.rowSize;
+    const colSize = gameOptions.colSize;
+    let k = 0;
+    for (let j = 0; j < colSize; j++) {
       let emptyCount = 0;
-      for (let i = gameOptions.rowSize - 1; i >= 0; i--) {
-        if (this.gameArray[i][j].isEmpty) {
+
+      for (let i = rowSize - 1; i >= 0; i--) {
+        const currentGem = this.gameArray[i][j];
+
+        if (currentGem.isEmpty) {
           emptyCount++;
-          this.gameArray[i][j].gemSprite = this.poolArray.shift();
-          this.gameArray[i][j].gemSprite.i = i;
-          this.gameArray[i][j].gemSprite.setVisible(true);
-          this.gameArray[i][j].gemSprite.body.enable = true;
-          this.gameArray[i][j].gemSprite.alpha = 1;
-          this.gameArray[i][j].isEmpty = false;
+          k++;
+          const gemSprite = currentGem.gemSprite = this.poolArray.shift();
+          currentGem.gemColor = gemSprite.color;
 
-          this.gameArray[i][j].gemSprite.x = this.gameArray[i][j].x;
-          this.gameArray[i][j].gemSprite.y = this.gameArray[0][j].y - this.cellSetting.size * emptyCount;
+          gemSprite.i = i;
+          gemSprite.j = j;
+          gemSprite.setVisible(true);
+          gemSprite.body.enable = true;
+          gemSprite.alpha = 1;
+          currentGem.isEmpty = false;
 
+
+          gemSprite.x = currentGem.x;
+          gemSprite.y = this.gameArray[0][j].y - this.cellSetting.size * emptyCount;
+          // 更新 hitArea 的位置
+          gemSprite.input.hitArea.setTo(65 / 2, 65 / 2, 40, 40);
           this.tweens.add({
-            targets: this.gameArray[i][j].gemSprite,
-            y: this.gameArray[i][j].y,  // 目標 y 座標
-            duration: 200,  // 持續時間（毫秒）
-            ease: 'quad.out',  // 使用的緩動函數（例如 'Linear'、'Cubic' 等）
+            targets: gemSprite,
+            y: currentGem.y,
+            duration: 1000,
+            ease: 'quad.out',
             callbackScope: this,
+            onComplete: () => {
+              k--;
+              if (k === 0) {
+                const nextEntry = this.iterator.next();
+
+                if (!nextEntry.done) {
+                  const destroyGems = [...nextEntry.value[1][1]].map(item => ({ i: item[0], j: item[1] }));
+                  const gemsColor = nextEntry.value[1][3].flat().map(item => parseInt(item, 10) - 1);
+                  this.destroyGems(destroyGems, gemsColor);
+                }
+              }
+            }
           });
         }
       }

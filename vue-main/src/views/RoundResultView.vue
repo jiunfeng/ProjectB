@@ -46,10 +46,9 @@ import { useDrawcalStore } from "@/stores/gameRoundCal";
 const DrawcalStore = useDrawcalStore();
 // DrawcalStore.randomMatrix();
 
-DrawcalStore.$reset
-DrawcalStore.gameBoard=
+
 DrawcalStore.checkGem();
-DrawcalStore.roundResult
+
 
 
 
