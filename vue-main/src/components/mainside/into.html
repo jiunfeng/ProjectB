@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入頁面</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/myall.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        br {
+            user-select: none;
+        }
+
+        .bg1 {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .body1 {
+            background-image: url(04.jpg);
+            width: 850px;
+            height: 1085px;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+
+        }
+
+        .box {
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 130px;
+            width: 600px;
+            height: 650px;
+        }
+
+        .inbox1 {
+            position: absolute;
+            top: 20px;
+            left: 300px;
+            width: 300px;
+            height: 130px;
+        }
+
+        .inbox2 {
+            position: absolute;
+            font-size: 35px;
+            top: 208px;
+            left: 28px;
+            width: 300px;
+            height: 130px;
+        }
+
+        .inbox3 {
+            position: absolute;
+            font-size: 30px;
+            top: 200px;
+            left: 150px;
+            width: 400px;
+            height: 80px;
+        }
+
+        .inbox3-1 {
+            position: absolute;
+            font-size: 30px;
+            top: 280px;
+            left: 160px;
+        }
+
+        .inbox3-2 {
+            position: absolute;
+            font-size: 30px;
+            top: 280px;
+            left: 160px;
+        }
+
+        .inbox3-3 {
+            position: absolute;
+            font-size: 30px;
+            top: 280px;
+            left: 160px;
+        }
+
+        .inbox4 {
+            position: absolute;
+            font-size: 35px;
+            top: 360px;
+            left: 28px;
+            width: 300px;
+            height: 130px;
+        }
+
+        .inbox5 {
+            position: absolute;
+            font-size: 30px;
+            top: 350px;
+            left: 150px;
+            width: 400px;
+            height: 80px;
+        }
+        .inbox5-1 {
+            position: absolute;
+            font-size: 30px;
+            top: 432px;
+            left: 160px;
+        }
+        .inbox5-2 {
+            position: absolute;
+            font-size: 30px;
+            top: 432px;
+            left: 160px;
+        }
+
+        .inbox6 {
+            position: absolute;
+            font-size: 25px;
+            top: 512px;
+            left: 28px;
+            width: 300px;
+            height: 130px;
+        }
+
+        .inbox7 {
+            position: absolute;
+            font-size: 30px;
+            top: 505px;
+            left: 220px;
+            width: 330px;
+            height: 80px;
+        }
+
+        .inbox8 {
+            position: absolute;
+            font-size: 30px;
+            top: 510px;
+            left: 350px;
+            width: 180px;
+            height: 90px;
+        }
+    </style>
+</head>
+
+<body class="br bg-black">
+    <div class="body1 mx-auto row">
+        <!-- 灰色內容 -->
+        <div class="box bg1 row">
+            <img class="inbox1 translate-middle-x" src="https://fakeimg.pl/100x100/200">
+            <!-- 帳號 -->
+            <label for="in1" class="inbox2 text-white">帳號 :</label>
+            <div>
+                <input type="text" class="inbox3 form-control is-invalid" name="in1" id="in1"
+                    placeholder="請輸入5~8個之間的英文數字" oninput="value=value.replace(/[^\w\.\/]/ig,'')">
+                <!-- 只能輸入數字和英文 -->
+                <div class="valid-feedback inbox3-1">字數符合</div>
+                <div class="invalid-feedback inbox3-2" id="inva01">字數請在5~8之內</div>
+                <div class="invalid-feedback inbox3-3 d-none" id="inva02">帳號已存在</div>
+            </div>
+            <!-- 密碼 -->
+            <label for="in2" class="inbox4 text-white">密碼 :</label>
+            <div>
+                <input type="password" class="inbox5 form-control is-invalid" name="in2" id="in2"
+                    placeholder="請輸入1~8個之間的英文數字" oninput="value=value.replace(/[^\w\.\/]/ig,'')">
+                <div class="inbox5-1 valid-feedback">字數符合</div>
+                <div class="inbox5-2 invalid-feedback" id="inva01">字數請在5~8之內</div>
+            </div>
+            <!-- 登入按鈕 -->
+            <input class="inbox8 border border-success" type="image" src="https://fakeimg.pl/50x50/200/?text=change"
+                alt="" name="" id="" onclick="send();" />
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/counterup2@2.0.2/dist/index.js">	</script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
+</body>
+
+</html>
