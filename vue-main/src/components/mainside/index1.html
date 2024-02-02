@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主畫面</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/myall.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        br{
+            user-select: none;
+        }
+        
+        .bg1{
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .body1 {
+            background-image: url(03.jpg);
+            width: 850px;
+            height: 1085px;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .index1 {
+            width: 850px;
+            position: relative;
+            height: 150px;
+        }
+
+        .inbox1-1 {
+            position: absolute;
+            user-select: none;
+            top: 1%;
+            left: 5%;
+            width: 150px;
+            height: 150px;
+            z-index: 2;
+        }
+        .inbox1-1-1 {
+            position: absolute;
+            user-select: none;
+            border-radius: 35%;
+            top: 19%;
+            left: 8.5%;
+            width: 95px;
+            height: 100px;
+            z-index: 1;
+        }
+        .inbox1-1-2{
+            position: absolute;
+            width: max-content;
+            height: max-content;
+            top: 25%;
+            left: 22%;
+            
+        }
+        .inbox1-2 {
+            position: absolute;
+            width: max-content;
+            height: max-content;
+            top: 30%;
+            left: 45%;
+        }
+
+        .index2 {
+            position: relative;
+            width: 850px;
+            height: 935px;
+        }
+
+        .inbox2-1 {
+            position: absolute;
+            bottom: 0%;
+            left: 55%;
+        }
+
+        .inbox2-2 {
+            position: absolute;
+            bottom: 45%;
+            right: 7%;
+        }
+
+        .inbox2-3 {
+            position: absolute;
+            top: 0%;
+            left: 3.5%;
+        }
+        .inbox2-4 {
+            position: absolute;
+            top: 13%;
+            left: 14%;
+        }
+        .pic01{
+            position: absolute;
+            top: 0%;
+            right: 2%;
+            width: 300px;
+            height: 185px;            
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body class="user-select-none bg-black">
+    <div class="body1 mx-auto row">
+        <!-- 上方 -->
+        <div class="index1">
+            <!-- 頭貼 左上方，需資料庫資料-->
+            <img class="inbox1-1" src="1-1-2.png" alt="">
+            <img class="inbox1-1-1" src="https://fakeimg.pl/50x50/200">
+            <!-- 人物資訊 左上方，需資料庫資料 -->
+            <div class="inbox1-1-2 bg1">
+                <span class="text-white mx-2">LV.XX</span>
+                <br>
+                <span class="text-white mx-3">XXX</span>
+                <div style="height: 3px; user-select: none;"></div>
+                <div class="bg-white mx-1" style="height: 2px;"></div>
+                <span class="text-white mx-2">ID:</span><span class="text-white mr-5">XXXXXXXXX</span>
+                <div style="height: 3px; user-select: none;"></div>
+            </div>
+            <!-- 資源 -->
+            <div class="inbox1-2 bg1">
+                <!-- 錢 上方，需資料庫資料 -->
+                <img class="mx-2" src="money2.png" style="width: 50px; height: 50px;">
+                <span class="text-white">XXXXXXXXX</span>&nbsp;&nbsp;&nbsp;
+                <!-- 經驗 上方，需資料庫資料 -->
+                <img class="mx-2" src="exp2.png" style="width: 50px; height: 50px;">
+                <span class="text-white">XXXXXXXXX</span>&nbsp;&nbsp;&nbsp;                
+            </div>
+        </div>
+        <!-- 下方 -->
+        <div class="index2">
+            <!-- 角色圖案 下方中間，需資料庫資料-->
+            <img class="inbox2-1 translate-middle-x" src="https://fakeimg.pl/500x700/200/?text=character">
+            <!-- 換角色按鈕 下方右邊-->
+            <input class="inbox2-2" type="image" src="https://fakeimg.pl/50x50/200/?text=change" alt="" name="" id=""
+                onclick="send();" />
+            <!-- 戰鬥按鈕 中間左邊-->
+            <input class="inbox2-3" type="image" src="https://fakeimg.pl/200x100/200/?text=fight" alt="" name="" id=""
+                onclick="send();" />
+            <!-- 箱子按鈕 中間左邊-->
+            <input class="inbox2-4" type="image" src="https://fakeimg.pl/150x80/200/?text=box" alt="" name="" id=""
+                onclick="send();" />
+            <!-- 幻燈片 中間右邊-->
+            <div id="carouselExampleIndicators" class="pic01 carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="2000">
+                        <img src="https://fakeimg.pl/400x230/F00/?text=settings1" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="https://fakeimg.pl/400x230/F00/?text=settings2" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="https://fakeimg.pl/400x230/F00/?text=settings3" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/counterup2@2.0.2/dist/index.js">	</script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
+</body>
+
+</html>
