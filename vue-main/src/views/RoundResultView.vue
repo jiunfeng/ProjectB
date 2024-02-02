@@ -7,6 +7,7 @@
             <div class="row m-3">
                 <div class="row">
                     <div class="col">該回合盤面結果</div>
+                    <div class="col">要消除的珠子</div>
                     <div class="col">珠子要從A掉落到B</div>
                     <div class="col">每col要補的珠子數量顏色</div>
                     <div class="col">總combo </div>
@@ -44,7 +45,10 @@
 import { useDrawcalStore } from "@/stores/gameRoundCal";
 const DrawcalStore = useDrawcalStore();
 // DrawcalStore.randomMatrix();
+
+
 DrawcalStore.checkGem();
+
 
 
 
