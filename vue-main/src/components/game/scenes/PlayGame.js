@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 
-import gems from '@/game/assets/sprites/gems.png'
-import gemSwitchSound from '@/game/assets/audio/test.mp3'
+import gems from '@/components/game/assets/sprites/gems.png'
+import gemSwitchSound from '@/components/game/assets/audio/test.mp3'
 
 import { useDrawcalStore } from "@/stores/gameRoundCal";
 const DrawcalStore = useDrawcalStore();

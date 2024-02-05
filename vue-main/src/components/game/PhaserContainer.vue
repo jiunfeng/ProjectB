@@ -3,7 +3,7 @@ import { onMounted, onUnmounted } from 'vue'
 
 let gameInstance = null
 const containerId = 'game-container'
-const game = await import('@/game/game')
+const game = await import('@/components/game/game')
 
 onMounted(() => {
   gameInstance = game.launch(containerId)
