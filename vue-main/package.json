@@ -15,7 +15,6 @@
     "phaser": "^3.70.0",
     "pinia": "^2.1.7",
     "vue": "^3.3.11",
-    "vue-phaser": "^0.1.9",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
