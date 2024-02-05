@@ -2,8 +2,8 @@
 // import { RouterLink, RouterView } from 'vue-router'
 import { useUserInfoStore } from "@/stores/userInfo";
 import { computed } from 'vue';
-import GamePage from "@/components/game/Game.vue";
-import MainUIPage from "@/components/mainui/Main.vue"
+import GamePage from "@/views/GameView.vue";
+import MainUIPage from "@/views/MainUIView.vue"
 import BoxPage from "@/views/PetBoxView.vue";
 const userStore = useUserInfoStore();
 

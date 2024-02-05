@@ -1,4 +1,5 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
 
 /**
@@ -8,6 +9,7 @@ import { defineStore } from 'pinia'
 export const useUserInfoStore = defineStore('info', {
     state: () => ({
         currentPage: "main",
+        useraccount: "taiwanno1",
     }),
     actions: {}
 })
