@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 
-import PlayGame from '@/game/scenes/PlayGame'
+import PlayGame from '@/components/game/scenes/PlayGame'
 function launch(containerId) {
   return new Phaser.Game({
     type: Phaser.AUTO,
