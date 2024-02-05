@@ -1,10 +1,8 @@
 <template>
-    <div>
-
-    </div>
+    <Box />
 </template>
-<script>
-
+<script setup>
+import Box from '@/components/petbox/Box.vue';
 
 </script>
 <style></style>
