@@ -1,11 +1,13 @@
 <script setup>
 // import { RouterLink, RouterView } from 'vue-router'
-import { useUserInfoStore } from "@/stores/userInfo";
 import { computed } from 'vue';
 import GamePage from "@/views/GameView.vue";
 import MainUIPage from "@/views/MainUIView.vue"
 import BoxPage from "@/views/PetBoxView.vue";
+import { useUserInfoStore } from "@/stores/userInfo";
 const userStore = useUserInfoStore();
+
+userStore._setTestAccount()//預塞測試帳號資料
 
 // 控制使用者currentPage導向
 const currentPageComponent = computed(() => {

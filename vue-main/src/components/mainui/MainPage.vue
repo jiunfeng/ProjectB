@@ -80,8 +80,19 @@
 <script setup>
 import '@/mainside/css/bootstrap.min.css'
 import '@/mainside/css/index1.css'
-import { useUserInfoStore } from "@/stores/userInfo";
-const userStore = useUserInfoStore();
+import { useUserInfoStore } from '@/stores/userInfo';
+// import { getCurrentInstance } from 'vue';
+// const {proxy} = getCurrentInstance();
+
+// import { useUserInfoStore } from "@/stores/userInfo";
+// const userStore = useUserInfoStore();
+// const demo = getCurrentInstance()
+// const user = demo.appContext.config.globalProperties.$myGlobalMethod
+// const user = demo.app.config.globalProperties.$myGlobalMethod
+// console.log(user);
+
+const userInfoStore = useUserInfoStore()
+console.log(userInfoStore.username);
 
 </script>
 
