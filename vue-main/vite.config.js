@@ -13,5 +13,6 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  build: { sourcemap: false }//隱藏代碼以及加快建構速度
 })
