@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
+:root{
+    --mycolor01:#D1EDE1;
+    --mycolor02:#7BC5AE;
+    --mycolor03:#028C6A;
+    --mycolor04:#003E19;
+    --mycolor05:#9BCFB8;
+    --mycolor06:#4dc28d;
+    --mycolor06:#4dc28d88;
+    --mycolor07:rgb(0,0,0,0.3);
+    --mycolor08:#0F4C81;
+}
+
+body{
+    /* font-family: 'Noto Sans TC', sans-serif; */
+      font-family: 'DotGothic16', sans-serif;  
+
+}
+
+.fw-100{
+    font-weight: 100;
+}
+
+.fw-200{
+    font-weight: 200;
+}
+
+.fw-800{
+    font-weight: 800;
+}
+
+.fw-900{
+    font-weight: 900;
+}
+
+.bg-cover{
+    background-position:center center;
+    background-size: cover;
+}
+
+.demo{
+    width: 75%;
+    padding: 25px;
+    margin: 25px;
+    border:2px solid var(--mycolor08);
+    }
