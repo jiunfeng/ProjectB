@@ -74,7 +74,11 @@
     </div>
 </template>
 <script setup>
-    import '@/assets/box/css/bootstrap.min.css'
-    import '@/assets/box/css/index_box.css'
+import '@/assets/box/css/bootstrap.min.css'
+import '@/assets/box/css/index_box.css'
+import { useUserInfoStore } from '@/stores/userInfo';
+
+const userInfoStore = useUserInfoStore()
+console.log(userInfoStore.username);
 
 </script>
