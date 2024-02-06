@@ -1,7 +1,32 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+// import { RouterLink, RouterView } from 'vue-router'
+import { useUserInfoStore } from "@/stores/userInfo";
+import { computed } from 'vue';
+import GamePage from "@/views/GameView.vue";
+import MainUIPage from "@/views/MainUIView.vue"
+import BoxPage from "@/views/PetBoxView.vue";
+const userStore = useUserInfoStore();
+
+// 控制使用者currentPage導向
+const currentPageComponent = computed(() => {
+  switch (userStore.currentPage) {
+    case 'main':
+      return MainUIPage;
+    case 'game':
+      return GamePage;
+    case 'box':
+      return BoxPage;
+    default:
+      return MainUIPage;
+  }
+});
+
+// 修改store資料推動頁面切換
+const changePage = (page) => {
+  userStore.currentPage = page;
+}
 </script>
+
 
 <template>
   <!-- <header>
@@ -17,11 +42,19 @@ import HelloWorld from './components/HelloWorld.vue'
     </div>
   </header> -->
 
-  <RouterView />
+  <!-- <RouterView /> -->
+
+  <main class="bbb">
+    <h1>main test</h1>
+
+    <button @click="changePage('main')">MainPage</button>
+    <button @click="changePage('game')">game</button>
+    <button @click="changePage('box')">box</button>
+    <component :is="currentPageComponent"></component>
+  </main>
 </template>
 
 <style scoped>
-
 header {
   line-height: 1.5;
   max-height: 100vh;

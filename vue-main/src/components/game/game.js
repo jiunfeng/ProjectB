@@ -19,4 +19,4 @@ function launch(containerId) {
 }
 
 export default launch
-export { launch}
+export { launch }

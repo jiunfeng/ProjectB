@@ -1,11 +1,14 @@
-<template>
-    <Game />
-</template>
 <script setup>
-import Game from '@/components/game/Game.vue'
+import Game from '@/components/game/GamePage.vue';
 </script>
+
+<template>
+  <Game />
+</template>
+
 <style>
 body {
+  background: #0aa7c3;
   padding: 0px;
   margin: 0px;
 }
