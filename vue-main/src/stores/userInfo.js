@@ -30,7 +30,7 @@ export const useUserInfoStore = defineStore('info', {
                 this.usercredit = "88888",
                 this.userexp = "100000",
                 this.userpetset = [["001", "20000"], ["002", "30000"], ["003", "400000"]],
-                this.useritems = [["001", "30"],
+                this.useritems = [["001", "30"],]
                 this.userpets = []//使用者擁有的寵物
         },
     }
