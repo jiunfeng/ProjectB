@@ -44,7 +44,7 @@ export default class PlayGame extends Phaser.Scene {
           this.prex = pointer.x;
           this.prey = pointer.y;
           this.hasSwitch = false;
-          this.gemCollider = this.physics.add.collider(gameObject, this.gemGroup.getChildren().filter(e => e !== gameObject), (self, other) => {
+          this.gemOverlap = this.physics.add.overlap(gameObject, this.gemGroup.getChildren().filter(e => e !== gameObject), (self, other) => {
             //------------------------------------------------
             // 交換音檔撥放
             const audioContext = this.sound.context;
@@ -69,6 +69,7 @@ export default class PlayGame extends Phaser.Scene {
             // 撥放前 2 秒
             sourceNode.start(0, 3, 1);  // 開始播放，延遲 0 秒，從第3秒開始，持續時間為 2 秒
             //------------------------------------------------
+            
             this.hasSwitch = true;
             const swapGem = this.gameArray[other.i][other.j].gemSprite;
             const swapGemColor = this.gameArray[other.i][other.j].gemColor;
@@ -126,7 +127,7 @@ export default class PlayGame extends Phaser.Scene {
           this.gameArray[this.dragGem.i][this.dragGem.j].y
         );
         this.dragGem = null;
-        this.gemCollider.destroy();
+        this.gemOverlap.destroy();
         // console.log('放開');
         if (this.hasSwitch) {
           //有交換再啟動
@@ -157,6 +158,7 @@ export default class PlayGame extends Phaser.Scene {
       }
     });
     this.initGameArea();
+    this.scene.run('test');//上方場景
   }
   isGem(object) {
     return this.gemGroup.contains(object);
