@@ -203,7 +203,7 @@ export default class PlayGame extends Phaser.Scene {
       i * this.cellSetting.size + this.cellSetting.size / 2 + this.game.config.height - gameOptions.rowSize * this.cellSetting.size
     ];
     const gem = this.add.sprite(x, y, "gems");
-    gem.setScale(0.73);//調整寶石大小
+    gem.setScale(0.6);//調整寶石大小
     gem.setDepth(1);
     this.physics.add.existing(gem);//加入物理世界
     gem.body.setSize(46, 46);//縮小物理碰撞範圍
