@@ -11,6 +11,10 @@
                     <div class="col">珠子要從A掉落到B</div>
                     <div class="col">每col要補的珠子數量顏色</div>
                     <div class="col">總combo </div>
+                    <div class="col">紅 </div>
+                    <div class="col">藍</div>
+                    <div class="col">綠 </div>
+                    <div class="col">心</div>
                 </div>
                 <div class="col" v-for="value in turn[1]">
 
@@ -19,7 +23,11 @@
             </div>
         </div>
 
-
+        <h5>陣列前為總傷害 後為是否全體攻擊</h5>
+        <h1>紅傷害{{ DungeonStore.finalDmg[0] }}</h1>
+        <h1>藍傷害{{ DungeonStore.finalDmg[1] }}</h1>
+        <h1>綠傷害{{ DungeonStore.finalDmg[2] }}</h1>
+        <h1>恢復力{{ DungeonStore.finalDmg[3] }}</h1>
 
 
         <!-- <div v-for="(innerRow, innerRowIndex) in innerValue" :key="innerRowIndex">
@@ -37,17 +45,20 @@
         min-height: 100vh;
         /* display: flex; */
         /* align-items: center; */
+        margin-top: 10vh;
     }
 }
 </style>
 
 <script setup>
 import { useDrawcalStore } from "@/stores/gameRoundCal";
+import { useDungeonStore } from "@/stores/gameDungeon";
 const DrawcalStore = useDrawcalStore();
+const DungeonStore = useDungeonStore();
 // DrawcalStore.randomMatrix();
+// console.log(DrawcalStore.roundResult);
 
-
-DrawcalStore.checkGem();
+// DrawcalStore.checkGem();
 
 
 
