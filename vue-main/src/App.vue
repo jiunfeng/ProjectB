@@ -5,6 +5,7 @@ import GamePage from "@/views/GameView.vue";
 import MainUIPage from "@/views/MainUIView.vue"
 import BoxPage from "@/views/PetBoxView.vue";
 import { useUserInfoStore } from "@/stores/userInfo";
+import ResultPage from "@/views/tmpRoundResultView.vue";
 const userStore = useUserInfoStore();
 
 userStore._setTestAccount()//預塞測試帳號資料
@@ -44,22 +45,31 @@ const changePage = (page) => {
     </div>
   </header> -->
 
-  <!-- <RouterView /> -->
-
   <main class="bbb">
-    <h1>main test</h1>
 
+    <component :is="currentPageComponent"></component>
+  </main>
+  <div class="ccc">
+    <h1>main test</h1>
     <button @click="changePage('main')">MainPage</button>
     <button @click="changePage('game')">game</button>
     <button @click="changePage('box')">box</button>
-    <component :is="currentPageComponent"></component>
-  </main>
+  </div>
+  <component :is="ResultPage"></component>
 </template>
 
 <style scoped>
 header {
   line-height: 1.5;
   max-height: 100vh;
+}
+
+.bbb {
+  height: 100vh;
+}
+
+.ccc {
+  margin-top: 30vh;
 }
 
 .logo {

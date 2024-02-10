@@ -2,6 +2,8 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import cloneDeep from 'lodash/cloneDeep';
 import clearUniq from "lodash/uniq";
+import { isEqual, uniqWith, unzipWith } from 'lodash';
+import { useDungeonStore } from "@/stores/gameDungeon"
 
 /**
  * 私有命名約定加上'_',作為內部方法使用,外部引入這隻js不要隨意呼叫帶有'_'開頭的任何方法或變數會爆炸
@@ -10,12 +12,12 @@ import clearUniq from "lodash/uniq";
 
 export const useDrawcalStore = defineStore('counter', {
     state: () => ({
-        // gameBoard: [[],[],[],[],[]],
-        gameBoard: [['1', '1', '1', '1', '1', '4'],
-        ['3', '2', '3', '2', '1', '2'],
-        ['1', '4', '3', '1', '2', '1'],
-        ['1', '4', '3', '1', '2', '1'],
-        ['1', '4', '3', '1', '2', '2']],
+        gameBoard: [[], [], [], [], []],
+        // gameBoard: [['1', '1', '1', '1', '1', '4'],
+        // ['3', '2', '3', '2', '1', '2'],
+        // ['1', '4', '3', '1', '2', '1'],
+        // ['1', '4', '3', '1', '2', '1'],
+        // ['1', '4', '3', '1', '2', '2']],
         gameBoardDraw: [],//處理完掉落盤面
         gameGemRemovedSet: new Set(),
         ColorGemList: [],
@@ -55,11 +57,20 @@ export const useDrawcalStore = defineStore('counter', {
         ],
     }),
     actions: {
-        getboard(){
+        getboard() {
             //console.log('gameRoundCal-gameBoard:');
             //console.log(this.gameBoard);
         },
         checkGem() {
+            const doungeon = useDungeonStore()
+            doungeon.$reset()
+            doungeon._getAttack()
+            this._checkGem()
+            doungeon._finalAttack()
+        },
+        _checkGem() {
+            const doungeon = useDungeonStore()
+
             for (let i = 0; i < this.gameBoard.length; i++) {
                 for (let j = 0; j < this.gameBoard[0].length; j++) {
 
@@ -87,7 +98,12 @@ export const useDrawcalStore = defineStore('counter', {
 
             if (!this.turnDrawColorOfCol.every(subArray => subArray.length === 0)) {
 
-                this.roundResult.set('turn' + this.turnOfRound, [cloneDeep(this.gameBoard), cloneDeep(this.gameGemRemovedSet), cloneDeep(this.turnGemMoveArray), cloneDeep(this.turnDrawColorOfCol), this.roundTotalCombo])
+                this.roundResult.set('turn' + this.turnOfRound, [cloneDeep(this.gameBoard),
+                cloneDeep(this.gameGemRemovedSet),
+                cloneDeep(this.turnGemMoveArray),
+                cloneDeep(this.turnDrawColorOfCol), this.roundTotalCombo, ["1", this.turnRedComboSet], ["2", this.turnBlueComboSet], ["3", this.turnGreenComboSet], ["4", this.turnCoverComboSet]]
+                )
+                doungeon._turnAttackCal('turn' + this.turnOfRound)
             }
             if (this._checkRowSameState === true || this._checkColSameState === true) {
                 //console.log("有進入下回合");
@@ -116,7 +132,7 @@ export const useDrawcalStore = defineStore('counter', {
                     [null, null, null, null, null, null]
                 ]
 
-                this.checkGem()
+                this._checkGem()
             }
             //console.log("遍歷陣列結果null為combo");
             //console.log(this.gameBoard);
@@ -330,12 +346,15 @@ export const useDrawcalStore = defineStore('counter', {
                 finalGemSet.add(stepGemArray)
             }
 
+            // 將組合完的相鄰combo去除重複珠子
+            let returnFinal = new Set()
+            finalGemSet.forEach(element => {
 
+                returnFinal.add(uniqWith(element, isEqual))
 
-            //console.log("finalGemSet");
-            //console.log(finalGemSet);
+            });
 
-            return finalGemSet
+            return returnFinal
 
         },
 
