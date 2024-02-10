@@ -25,7 +25,6 @@ export default class PlayGame extends Phaser.Scene {
     this.load.audio('gemSwitchSound', gemSwitchSound);
   }
   create() {
-    this.canDrag = true;
     this.input.mouse.disableContextMenu();
     // 获取游戏画布的 DOM 元素
     const canvasElement = this.game.canvas;
@@ -38,8 +37,7 @@ export default class PlayGame extends Phaser.Scene {
 
 
     this.input.on('gameobjectdown', (pointer, gameObject) => {
-
-      if (pointer.leftButtonDown() && this.canDrag) {
+      if (pointer.leftButtonDown()) {
         //this.isGem()判斷點擊的物件是不是寶石
         if (this.isGem(gameObject)) {
           gameObject.setDepth(2);
@@ -70,9 +68,9 @@ export default class PlayGame extends Phaser.Scene {
             sourceNode.buffer = audioBuffer;
 
             // 撥放前 2 秒
-            //sourceNode.start(0, 3, 1);  // 開始播放，延遲 0 秒，從第3秒開始，持續時間為 2 秒
+            sourceNode.start(0, 3, 1);  // 開始播放，延遲 0 秒，從第3秒開始，持續時間為 2 秒
             //------------------------------------------------
-
+            
             this.hasSwitch = true;
             const swapGem = this.gameArray[other.i][other.j].gemSprite;
             const swapGemColor = this.gameArray[other.i][other.j].gemColor;
@@ -134,17 +132,22 @@ export default class PlayGame extends Phaser.Scene {
         // console.log('放開');
         if (this.hasSwitch) {
           //有交換再啟動
-          this.canDrag = false;
-          let gameBoard = this.gameArray.map(row => row.map(col => `${col.gemColor + 1}`));
 
+          let gameBoard = this.gameArray.map(row => row.map(col => `${col.gemColor + 1}`));
+          
           DrawcalStore.$reset();
           DrawcalStore.gameBoard = gameBoard;
           DrawcalStore.checkGem();
-
+          
           const result = DrawcalStore.roundResult;
-
+          console.log(result);
           this.iterator = result.entries();
-          this.nextTurn();
+          const nextEntry = this.iterator.next();
+          if (!nextEntry.done) {
+            const destroyGems = [...nextEntry.value[1][1]].map(item => ({ i: item[0], j: item[1] }));
+            const gemsColor = nextEntry.value[1][3].map(item => item.length != 0 ? [...item] : undefined).filter(item => item != undefined).flat().map(item => parseInt(item, 10) - 1);
+            this.destroyGems(destroyGems, gemsColor);
+          }
           this.hasSwitch = false;
         }
       }
@@ -221,8 +224,8 @@ export default class PlayGame extends Phaser.Scene {
 
     gem.setInteractive();//將此遊戲物件傳遞給輸入管理器以啟用它的輸入。        
     gem.input.hitArea.setTo(65 / 2, 65 / 2, 40, 40);// 设置输入事件的範圍
-
-
+    
+    
 
   }
 
@@ -241,87 +244,38 @@ export default class PlayGame extends Phaser.Scene {
     }
     return this.gameArray[row][col];
   }
-  nextTurn() {
-    const nextEntry = this.iterator.next();
-
-    if (!nextEntry.done) {
-      //要消的總數
-      this.destroyAmount = nextEntry.value[1][1].size
-
-      //要補的顏色
-      this.gemsColor = nextEntry.value[1][3].map(item => item.length != 0 ? [...item] : undefined).filter(item => item != undefined).flat().map(item => parseInt(item, 10) - 1);
-
-      this.lastPromise = Promise.resolve();
-      //紅珠
-      nextEntry.value[1][5][1].forEach(group => {
-        const destroyGems = group.map(item => ({ i: item[0], j: item[1] }));
-        this.destroyGems(destroyGems, '1');
-      });
-      //藍珠
-      nextEntry.value[1][6][1].forEach(group => {
-        const destroyGems = group.map(item => ({ i: item[0], j: item[1] }));
-        this.destroyGems(destroyGems, '2');
-      });
-      //綠珠
-      nextEntry.value[1][7][1].forEach(group => {
-        const destroyGems = group.map(item => ({ i: item[0], j: item[1] }));
-        this.destroyGems(destroyGems, '3');
-      });
-      //心珠
-      nextEntry.value[1][8][1].forEach(group => {
-        const gems = group.map(item => ({ i: item[0], j: item[1] }));
-        this.destroyGems(gems, '4');
-      });
-    }
-    else{
-      this.canDrag=true;
-    }
-  }
 
   destroyGems(gems, color) {
     const gemsCount = gems.length;
-    const currentPromise = this.lastPromise.then(async () => {
-      await new Promise(resolve => {
-        console.log(color);
-        console.log('--------');
-        const sums=[0,0];
-        gems.forEach((gem, index) => {
-          sums[0]+=this.gameArray[gem.i][gem.j].x;
-          sums[1]+=this.gameArray[gem.i][gem.j].y;
-          console.log(`[${gem.i},${gem.j}]:x=${this.gameArray[gem.i][gem.j].x}/y=${this.gameArray[gem.i][gem.j].y}`);
-          const gemSprite = this.gameArray[gem.i][gem.j].gemSprite;
-          this.tweens.add({
-            targets: gemSprite,
-            alpha: 0.5,
-            duration: 800,
-            ease: 'quad.out',
-            callbackScope: this,
-            onComplete: () => {
-              gemSprite.setVisible(false);
-              gemSprite.body.enable = false;
 
-              // 设置颜色
-              gemSprite.color = this.gemsColor.shift();
-              gemSprite.setFrame(gemSprite.color);
-              this.poolArray.push(gemSprite);
+    gems.forEach((gem, index) => {
+      const gemSprite = this.gameArray[gem.i][gem.j].gemSprite;
 
-              if (index === gemsCount - 1) {
-                resolve('換下一組');
-              }
-              this.destroyAmount--;
-              if (this.destroyAmount == 0) {
-                this.makeGemsFall();
-              }
-            },
-          });
-          this.gameArray[gem.i][gem.j].isEmpty = true;
-        });
-        const center=[sums[0]/gems.length,sums[1]/gems.length];
-        console.log(center);
+      this.tweens.add({
+        targets: gemSprite,
+        alpha: 0.5,
+        duration: 800,
+        ease: 'quad.out',
+        callbackScope: this,
+        onComplete: () => {
+          gemSprite.setVisible(false);
+          gemSprite.body.enable = false;
+
+          // 设置颜色
+          gemSprite.color = color[index];
+          gemSprite.setFrame(gemSprite.color);
+
+          this.poolArray.push(gemSprite);
+
+          if (index === gemsCount - 1) {
+            this.makeGemsFall();
+
+          }
+        },
       });
 
+      this.gameArray[gem.i][gem.j].isEmpty = true;
     });
-    this.lastPromise = currentPromise; // 更新 lastPromise，表示当前调用已经开始执行
   }
 
   makeGemsFall() {
@@ -398,14 +352,13 @@ export default class PlayGame extends Phaser.Scene {
             onComplete: () => {
               k--;
               if (k === 0) {
-                this.nextTurn();
-                // const nextEntry = this.iterator.next();
+                const nextEntry = this.iterator.next();
 
-                // if (!nextEntry.done) {
-                //   const destroyGems = [...nextEntry.value[1][1]].map(item => ({ i: item[0], j: item[1] }));
-                //   const gemsColor = nextEntry.value[1][3].flat().map(item => parseInt(item, 10) - 1);
-                //   this.destroyGems(destroyGems, gemsColor);
-                // }
+                if (!nextEntry.done) {
+                  const destroyGems = [...nextEntry.value[1][1]].map(item => ({ i: item[0], j: item[1] }));
+                  const gemsColor = nextEntry.value[1][3].flat().map(item => parseInt(item, 10) - 1);
+                  this.destroyGems(destroyGems, gemsColor);
+                }
               }
             }
           });

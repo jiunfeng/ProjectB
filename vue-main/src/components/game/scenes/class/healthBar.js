@@ -34,7 +34,7 @@ export default class healthBar {
         this.#y=y;
         this.#height=height;
 
-        console.log(this.#healthBar)
+        // console.log(this.#healthBar)
     }
    
     getX(){

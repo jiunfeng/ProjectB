@@ -125,6 +125,7 @@ export const useDungeonStore = defineStore('Dungeon', {
                 green *= this.leaderPower[1]
             }
             this.finalDmg = [[Math.trunc(red * this.totalCombo * 0.25), this.redAll], [Math.trunc(blue * this.totalCombo * 0.25), this.blueAll], [Math.trunc(green * this.totalCombo * 0.25), this.greenAll], [Math.trunc(cover * this.totalCombo * 0.25), 1]]
+            console.log('***************************');
             console.log(this.finalDmg);
         }
 

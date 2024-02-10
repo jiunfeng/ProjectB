@@ -57,10 +57,6 @@ export const useDrawcalStore = defineStore('counter', {
         ],
     }),
     actions: {
-        getboard() {
-            //console.log('gameRoundCal-gameBoard:');
-            //console.log(this.gameBoard);
-        },
         checkGem() {
             const doungeon = useDungeonStore()
             doungeon.$reset()
