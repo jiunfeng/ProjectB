@@ -1,3 +1,5 @@
+import { NONE } from "phaser"
+
 export default class healthBar {
     #healthColor = {
         green: [0x73d544, 0x1Ba93E, false],
@@ -6,57 +8,64 @@ export default class healthBar {
     }
     #scene
     #fullWidth
-    
+
     #healthBar
+    #healthBarFrame
     #healthBarShadow
     #fullHp
     #currentHp
-    
+
     #x
     #y
     #height
 
     constructor(scene, x, y, fullWidth, height, radius, hp) {
         //rexRoundRectangleCanvas(x, y, width, height, radiusConfig, fillStyle, strokeStyle, strokeWidth, fillColor2, isHorizontalGradient)
-        this.#healthBarShadow = scene.add.rexRoundRectangleCanvas(x, y, fullWidth, height, radius, 0x000000, 0x000000, 0, 0x000000, false);
-        this.#healthBarShadow.setOrigin(0, 0);
-        this.#healthBarShadow.setAlpha(0.1);
+        const FrameStrokeWidth=2.5;
+        this.#healthBarFrame = scene.add.rexRoundRectangleCanvas(x, y, fullWidth, height, radius, null, 0xF6C555, FrameStrokeWidth, null, false);
+        this.#healthBarFrame.setOrigin(0, 1);
 
-        this.#healthBar = scene.add.rexRoundRectangleCanvas(x, y, fullWidth, height, radius, 0x000000, 0x000000, 2, 0x000000, false);
-        this.#healthBar.setOrigin(0, 0);
+        const [FrameX,FrameY]=[this.#healthBarFrame.x,this.#healthBarFrame.y];
+        
+        this.#healthBarShadow = scene.add.rexRoundRectangleCanvas(FrameX+FrameStrokeWidth, FrameY-height/2, fullWidth-FrameStrokeWidth*2, height-FrameStrokeWidth*2, radius, 0xffffff, 0x000000, 0, 0xffffff, false);
+        this.#healthBarShadow.setOrigin(0, 0.5);
+        this.#healthBarShadow.setAlpha(0.2);
+
+
+        this.#healthBar = scene.add.rexRoundRectangleCanvas(FrameX+FrameStrokeWidth, FrameY-height/2, fullWidth-FrameStrokeWidth*2, height-FrameStrokeWidth*2, radius, 0x000000, 0x000000, 0, 0x000000, false);
+        this.#healthBar.setOrigin(0, 0.5);
         this.#healthBar.setFillStyle(...this.#healthColor.green);
 
         this.#scene = scene;
-        this.#fullWidth = fullWidth;
+        this.#fullWidth = fullWidth-FrameStrokeWidth*2;
         this.#fullHp = hp;
         this.#currentHp = hp;
-        this.#x=x;
-        this.#y=y;
-        this.#height=height;
+        this.#x = x;
+        this.#y = y;
+        this.#height = height;
 
-        // console.log(this.#healthBar)
     }
-   
-    getX(){
+
+    getX() {
         return this.#x;
     }
-    getY(){
+    getY() {
         return this.#y;
     }
-    getWidth(){
+    getWidth() {
         return this.#fullWidth;
     }
-    getHeight(){
+    getHeight() {
         return this.#height;
     }
-    getFullHp(){
+    getFullHp() {
         return this.#fullHp;
     }
     increaseHp(variation) {
-       return this.#currentHp=Phaser.Math.MaxAdd(this.#currentHp,variation,this.#fullHp);        
+        return this.#currentHp = Phaser.Math.MaxAdd(this.#currentHp, variation, this.#fullHp);
     }
     reduceHp(variation) {
-       return this.#currentHp=Phaser.Math.MinSub(this.#currentHp,variation,0);
+        return this.#currentHp = Phaser.Math.MinSub(this.#currentHp, variation, 0);
     }
     setHpPercentageAnimated(percent, duration = 2500) {
         const width = this.#fullWidth * percent

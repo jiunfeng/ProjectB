@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import RoundRectangleCanvasPlugin from 'phaser3-rex-plugins/plugins/roundrectanglecanvas-plugin.js';
-import PlayGame from '@/components/game/scenes/PlayGame'
-import test from '@/components/game/scenes/test'
+import Main from '@/components/game/scenes/main'
+import Secondary from '@/components/game/scenes/secondary'
 function launch(containerId) {
   return new Phaser.Game({
     type: Phaser.AUTO,
@@ -15,7 +15,7 @@ function launch(containerId) {
         debug: true,
       }
     },
-    scene: [PlayGame, test],
+    scene: [Main, Secondary],
     plugins: {
       global: [{
         key: 'rexRoundRectangleCanvasPlugin',

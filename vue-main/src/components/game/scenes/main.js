@@ -1,20 +1,21 @@
 import Phaser from 'phaser'
-
+import { toRaw } from 'vue';
 import gems from '@/components/game/assets/sprites/gems.png'
 import gemSwitchSound from '@/components/game/assets/audio/test.mp3'
 
 import { useDrawcalStore } from "@/stores/gameRoundCal";
-
+import { useDungeonStore } from '@/stores/gameDungeon';
 const DrawcalStore = useDrawcalStore();
+const DungeonStore = useDungeonStore();
 let gameOptions = {
   rowSize: 5,
   colSize: 6,
   gemColors: 4,
   gemSize: 100,
 }
-export default class PlayGame extends Phaser.Scene {
+export default class Main extends Phaser.Scene {
   constructor() {
-    super({ key: 'PlayGame' })//場景命名
+    super({ key: 'Main' })//場景命名
   }
 
   preload() {
@@ -133,7 +134,7 @@ export default class PlayGame extends Phaser.Scene {
         this.gemOverlap.destroy();
         // console.log('放開');
         if (this.hasSwitch) {
-          //有交換再啟動
+          //有交換再啟動消珠流程
           this.canDrag = false;
           let gameBoard = this.gameArray.map(row => row.map(col => `${col.gemColor + 1}`));
 
@@ -142,7 +143,11 @@ export default class PlayGame extends Phaser.Scene {
           DrawcalStore.checkGem();
 
           const result = DrawcalStore.roundResult;
-
+          console.log('-----------------gameRoundCal--------------------');
+          console.log(result);
+          console.log('----------------------Dungeon--------------------')
+          console.log(DungeonStore.finalDmg);
+          console.log(DungeonStore.finalDmg[3][0]);
           this.iterator = result.entries();
           this.nextTurn();
           this.hasSwitch = false;
@@ -150,7 +155,9 @@ export default class PlayGame extends Phaser.Scene {
       }
     });
     this.initGameArea();
-    this.scene.run('test');//上方場景
+    this.scene.run('Secondary');//上方場景
+    this.secScene = this.scene.get('Secondary');
+
   }
   isGem(object) {
     return this.gemGroup.contains(object);
@@ -182,7 +189,9 @@ export default class PlayGame extends Phaser.Scene {
       }
     }
 
-    this.boardGroup.setY(this.game.config.height - gameOptions.rowSize * this.cellSetting.size);//將盤格群組偏移至底
+
+    this.boardGroup.setY(this.game.config.height - gameOptions.rowSize * this.cellSetting.size);//將盤格群組偏移至底部
+
   }
   drawField(i, j) {
     const color = (i + j) % 2 === 0 ? this.cellSetting.darkColor : this.cellSetting.lightColor;
@@ -242,8 +251,12 @@ export default class PlayGame extends Phaser.Scene {
     return this.gameArray[row][col];
   }
   nextTurn() {
+    function parts(value, numParts) {
+      const quotient = Math.floor(value / numParts);
+      const remainder = value % numParts;
+      return Array.from({ length: numParts }, (_, i) => quotient + (i < remainder ? 1 : 0)).reverse();
+    }
     const nextEntry = this.iterator.next();
-
     if (!nextEntry.done) {
       //要消的總數
       this.destroyAmount = nextEntry.value[1][1].size
@@ -253,42 +266,60 @@ export default class PlayGame extends Phaser.Scene {
 
       this.lastPromise = Promise.resolve();
       //紅珠
-      nextEntry.value[1][5][1].forEach(group => {
+
+      console.log(nextEntry.value[1][5][2]);
+      let values = parts(nextEntry.value[1][5][2], nextEntry.value[1][5][1].size);
+      Array.from(nextEntry.value[1][5][1]).forEach((group, index) => {
+        console.log(values[index]);
         const destroyGems = group.map(item => ({ i: item[0], j: item[1] }));
         this.destroyGems(destroyGems, '1');
-      });
+      }
+      );
       //藍珠
-      nextEntry.value[1][6][1].forEach(group => {
+      values = parts(nextEntry.value[1][6][2], nextEntry.value[1][6][1].size);
+      Array.from(nextEntry.value[1][6][1]).forEach((group, index) => {
+        console.log(values[index]);
         const destroyGems = group.map(item => ({ i: item[0], j: item[1] }));
         this.destroyGems(destroyGems, '2');
       });
       //綠珠
-      nextEntry.value[1][7][1].forEach(group => {
+      values = parts(nextEntry.value[1][7][2], nextEntry.value[1][7][1].size);
+      Array.from(nextEntry.value[1][7][1]).forEach((group, index) => {
+        console.log(values[index]);
         const destroyGems = group.map(item => ({ i: item[0], j: item[1] }));
         this.destroyGems(destroyGems, '3');
       });
       //心珠
-      nextEntry.value[1][8][1].forEach(group => {
+      values = parts(nextEntry.value[1][8][2], nextEntry.value[1][8][1].size);
+      Array.from(nextEntry.value[1][8][1]).forEach((group, index) => {
+        setTimeout(() => {
+          this.secScene.playerCureAnimate(values[index]);
+        }, 1000 * index);
+
         const gems = group.map(item => ({ i: item[0], j: item[1] }));
         this.destroyGems(gems, '4');
       });
     }
-    else{
-      this.canDrag=true;
+    else {
+      this.canDrag = true;
+      console.log(DungeonStore.finalDmg[3][0])
+      this.secScene.playerCure(DungeonStore.finalDmg[3][0]);
     }
   }
 
-  destroyGems(gems, color) {
+  destroyGems(gems, color, value) {
     const gemsCount = gems.length;
     const currentPromise = this.lastPromise.then(async () => {
       await new Promise(resolve => {
-        console.log(color);
-        console.log('--------');
-        const sums=[0,0];
+        //center 預定用來當發射座標點 sums 計算用
+        // const sums = [0, 0];
         gems.forEach((gem, index) => {
-          sums[0]+=this.gameArray[gem.i][gem.j].x;
-          sums[1]+=this.gameArray[gem.i][gem.j].y;
-          console.log(`[${gem.i},${gem.j}]:x=${this.gameArray[gem.i][gem.j].x}/y=${this.gameArray[gem.i][gem.j].y}`);
+          // sums[0] += this.gameArray[gem.i][gem.j].x;
+          // sums[1] += this.gameArray[gem.i][gem.j].y;
+          // console.log(`[${gem.i},${gem.j}]:x=${this.gameArray[gem.i][gem.j].x}/y=${this.gameArray[gem.i][gem.j].y}`);
+          //屬性動畫
+          
+          //消除的動畫
           const gemSprite = this.gameArray[gem.i][gem.j].gemSprite;
           this.tweens.add({
             targets: gemSprite,
@@ -316,8 +347,8 @@ export default class PlayGame extends Phaser.Scene {
           });
           this.gameArray[gem.i][gem.j].isEmpty = true;
         });
-        const center=[sums[0]/gems.length,sums[1]/gems.length];
-        console.log(center);
+        // const center = [sums[0] / gems.length, sums[1] / gems.length];
+        // console.log(center);
       });
 
     });
@@ -384,7 +415,6 @@ export default class PlayGame extends Phaser.Scene {
           gemSprite.alpha = 1;
           currentGem.isEmpty = false;
 
-
           gemSprite.x = currentGem.x;
           gemSprite.y = this.gameArray[0][j].y - this.cellSetting.size * emptyCount;
           // 更新 hitArea 的位置
@@ -397,16 +427,7 @@ export default class PlayGame extends Phaser.Scene {
             callbackScope: this,
             onComplete: () => {
               k--;
-              if (k === 0) {
-                this.nextTurn();
-                // const nextEntry = this.iterator.next();
-
-                // if (!nextEntry.done) {
-                //   const destroyGems = [...nextEntry.value[1][1]].map(item => ({ i: item[0], j: item[1] }));
-                //   const gemsColor = nextEntry.value[1][3].flat().map(item => parseInt(item, 10) - 1);
-                //   this.destroyGems(destroyGems, gemsColor);
-                // }
-              }
+              if (k === 0) this.nextTurn();
             }
           });
         }
