@@ -292,12 +292,12 @@ export default class Main extends Phaser.Scene {
       //心珠
       values = parts(nextEntry.value[1][8][2], nextEntry.value[1][8][1].size);
       Array.from(nextEntry.value[1][8][1]).forEach((group, index) => {
-        setTimeout(() => {
-          this.secScene.playerCureAnimate(values[index]);
-        }, 1000 * index);
+        // setTimeout(() => {
+        //   this.secScene.playerCureAnimate(values[index]);
+        // }, 1000 * index);
 
         const gems = group.map(item => ({ i: item[0], j: item[1] }));
-        this.destroyGems(gems, '4');
+        this.destroyGems(gems, '4',values[index]);
       });
     }
     else {
@@ -308,17 +308,18 @@ export default class Main extends Phaser.Scene {
   }
 
   destroyGems(gems, color, value) {
+    console.log(color)
     const gemsCount = gems.length;
     const currentPromise = this.lastPromise.then(async () => {
       await new Promise(resolve => {
-        //center 預定用來當發射座標點 sums 計算用
-        // const sums = [0, 0];
-        gems.forEach((gem, index) => {
-          // sums[0] += this.gameArray[gem.i][gem.j].x;
-          // sums[1] += this.gameArray[gem.i][gem.j].y;
-          // console.log(`[${gem.i},${gem.j}]:x=${this.gameArray[gem.i][gem.j].x}/y=${this.gameArray[gem.i][gem.j].y}`);
-          //屬性動畫
-          
+        //屬性動畫
+        console.log( this.gameArray[gems[0].i][gems[0].j]);
+        const[x,y]=[
+          this.gameArray[gems[0].i][gems[0].j].x,
+          this.gameArray[gems[0].i][gems[0].j].y
+        ]
+        this.secScene.accumulationAnimate(x,y,value,color);
+        gems.forEach((gem, index) => {          
           //消除的動畫
           const gemSprite = this.gameArray[gem.i][gem.j].gemSprite;
           this.tweens.add({
@@ -347,8 +348,6 @@ export default class Main extends Phaser.Scene {
           });
           this.gameArray[gem.i][gem.j].isEmpty = true;
         });
-        // const center = [sums[0] / gems.length, sums[1] / gems.length];
-        // console.log(center);
       });
 
     });
