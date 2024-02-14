@@ -266,13 +266,15 @@ export default class Main extends Phaser.Scene {
 
       this.lastPromise = Promise.resolve();
       //紅珠
-
       console.log(nextEntry.value[1][5][2]);
       let values = parts(nextEntry.value[1][5][2], nextEntry.value[1][5][1].size);
+      console.log(values);
       Array.from(nextEntry.value[1][5][1]).forEach((group, index) => {
+        console.log('*******************************');
         console.log(values[index]);
+        console.log('*******************************');
         const destroyGems = group.map(item => ({ i: item[0], j: item[1] }));
-        this.destroyGems(destroyGems, '1');
+        this.destroyGems(destroyGems, '1',values[index]);
       }
       );
       //藍珠
@@ -280,22 +282,18 @@ export default class Main extends Phaser.Scene {
       Array.from(nextEntry.value[1][6][1]).forEach((group, index) => {
         console.log(values[index]);
         const destroyGems = group.map(item => ({ i: item[0], j: item[1] }));
-        this.destroyGems(destroyGems, '2');
+        this.destroyGems(destroyGems, '2',values[index]);
       });
       //綠珠
       values = parts(nextEntry.value[1][7][2], nextEntry.value[1][7][1].size);
       Array.from(nextEntry.value[1][7][1]).forEach((group, index) => {
         console.log(values[index]);
         const destroyGems = group.map(item => ({ i: item[0], j: item[1] }));
-        this.destroyGems(destroyGems, '3');
+        this.destroyGems(destroyGems, '3',values[index]);
       });
       //心珠
       values = parts(nextEntry.value[1][8][2], nextEntry.value[1][8][1].size);
       Array.from(nextEntry.value[1][8][1]).forEach((group, index) => {
-        // setTimeout(() => {
-        //   this.secScene.playerCureAnimate(values[index]);
-        // }, 1000 * index);
-
         const gems = group.map(item => ({ i: item[0], j: item[1] }));
         this.destroyGems(gems, '4',values[index]);
       });
@@ -304,11 +302,11 @@ export default class Main extends Phaser.Scene {
       this.canDrag = true;
       console.log(DungeonStore.finalDmg[3][0])
       this.secScene.playerCure(DungeonStore.finalDmg[3][0]);
+      this.secScene.heroAttack(DungeonStore.finalDmg);
     }
   }
 
   destroyGems(gems, color, value) {
-    console.log(color)
     const gemsCount = gems.length;
     const currentPromise = this.lastPromise.then(async () => {
       await new Promise(resolve => {

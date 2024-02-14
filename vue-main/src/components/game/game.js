@@ -17,11 +17,13 @@ function launch(containerId) {
     },
     scene: [Main, Secondary],
     plugins: {
-      global: [{
-        key: 'rexRoundRectangleCanvasPlugin',
-        plugin: RoundRectangleCanvasPlugin,
-        start: true
-      },
+      global: [
+        {
+          key: 'rexRoundRectangleCanvasPlugin',
+          plugin: RoundRectangleCanvasPlugin,
+          start: true
+        },
+        
         // ...
       ]
     }

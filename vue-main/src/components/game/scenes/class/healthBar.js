@@ -1,5 +1,4 @@
-import { NONE } from "phaser"
-
+import phaserJuice from "@/components/game/js/phaserJuice.min.js";
 export default class healthBar {
     #healthColor = {
         green: [0x73d544, 0x1Ba93E, false],
@@ -45,7 +44,19 @@ export default class healthBar {
         this.#height = height;
 
     }
-
+    shake(juice){
+        if (!this.shakeHealthBarFrame || !this.shakeHealthBarFrame.shakeTween.isPlaying()) {
+            this.shakeHealthBarFrame = juice.shake(this.#healthBarFrame);
+        }
+        if (!this.shakeHealthBarShadow || !this.shakeHealthBarShadow.shakeTween.isPlaying()) {
+            this.shakeHealthBarShadow = juice.shake(this.#healthBarShadow);
+        }
+        
+        if (!this.shakeHealthBar || !this.shakeHealthBar.shakeTween.isPlaying()) {
+            this.shakeHealthBar = juice.shake(this.#healthBar);
+        }
+        // console.log(this.shakeHealthBar.shakeTween.restart())
+    }
     getX() {
         return this.#x;
     }

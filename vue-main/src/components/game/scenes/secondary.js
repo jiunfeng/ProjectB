@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-
+import phaserJuice from "@/components/game/js/phaserJuice.min.js";
 import pumpkin_devil from '@/components/game/assets/sprites/pumpkin-devil.png'
 
 import lifeBall from '@/components/game/assets/sprites/lifeball.png'
@@ -36,8 +36,10 @@ export default class Secondary extends Phaser.Scene {
     }
   }
   create() {
+    this.juice = new phaserJuice(this);
     const y = this.mainScenes.boardGroup.getFirst(true).y;
     this.lifeBall = this.physics.add.image(8, y, 'lifeBall').setOrigin(0, 1).setScale(0.085).setBodySize(300, 300);
+
     this.cure = {
       x: this.lifeBall.x + this.lifeBall.displayWidth / 2,
       y: this.lifeBall.y - this.lifeBall.displayHeight / 2
@@ -61,28 +63,31 @@ export default class Secondary extends Phaser.Scene {
       this.lifeBall.y - hpBarConfig.height
     ];
     for (let i = 0; i < 3; i++) {
-      let hero = this.physics.add.image(x + 70 * i + gap * i, y, `hero${i + 1}`).setOrigin(0, 1).setScale(0.7).setBodySize(50, 50);
-      // this.add.circle(hero.x + hero.displayWidth / 2, hero.y - hero.displayHeight / 2, 10, 0x6666ff).setOrigin(0.5, 0.5);
+      this.heros[i].body = this.physics.add.image(x + 70 * i + gap * i, y, `hero${i + 1}`).setOrigin(0, 1).setScale(0.7).setBodySize(50, 50);
+      this.heros[i].body.text = this.add.text(this.heros[i].body.x + this.heros[i].body.displayWidth / 2, this.heros[i].body.y - this.heros[i].body.displayHeight / 2, ``, { fontFamily: 'Arial Black', fontSize: 35, color: '#000000', stroke: '#dddddd', strokeThickness: 5 }).setOrigin(0.5);
+      this.heros[i].body.tweens = [];
+      this.heros[i].body.lastValue = 0;
+      this.heros[i].body.X = this.heros[i].body.x + this.heros[i].body.displayWidth / 2;
+      this.heros[i].body.Y = this.heros[i].body.y - this.heros[i].body.displayWidth / 2;
+
+      console.log(this.heros[i]);
       switch (this.heros[i].attribute) {
         case '1':
+          this.heros[i].body.text.setColor('#ff0000');
           this.redHero.push({
-            hero,
-            x: hero.x + hero.displayWidth / 2,
-            y: hero.y - hero.displayHeight / 2
+            hero: this.heros[i].body
           });
           break;
         case '2':
+          this.heros[i].body.text.setColor('#0000ff');
           this.blueHero.push({
-            hero,
-            x: hero.x + hero.displayWidth / 2,
-            y: hero.y - hero.displayHeight / 2
+            hero: this.heros[i].body
           });
           break;
         case '3':
+          this.heros[i].body.text.setColor('#00ff00');
           this.greenHeroHero.push({
-            hero,
-            x: hero.x + hero.displayWidth / 2,
-            y: hero.y - hero.displayHeight / 2
+            hero: this.heros[i].body
           });
           break;
       }
@@ -111,10 +116,14 @@ export default class Secondary extends Phaser.Scene {
     let test2 = 20
     hurtButton.on('pointerdown', () => {
       this.playerGotHurtAnimate(test2);
-
     });
   }
   playerGotHurtAnimate(value, final = false) {
+    this.playerHealthBar.shake(new phaserJuice(this));
+    if (!this.shakeLifeBall || !this.shakeLifeBall.shakeTween.isPlaying()) {
+      this.shakeLifeBall = this.juice.shake(this.lifeBall);
+    }
+
     const lastHp = this.playerHealthBar.reduceHp(value);
     this.playerHealthBar.setHpPercentageAnimated(lastHp / this.fullHp);
     if (this.HpVarietyTextTweens[0] && this.HpVarietyTextTweens[1] && this.HpVarietyTextTweens[2]) {
@@ -206,7 +215,14 @@ export default class Secondary extends Phaser.Scene {
   shot(balls, color) {
     balls.forEach(ball => {
       this.physics.add.existing(ball.ball);
-      this.physics.add.overlap(ball.ball, ball.overLapItem, (self, item) => {
+      this.physics.add.overlap(ball.ball, ball.overLapItem, (self, overLapItem) => {
+        overLapItem.text.setVisible(true);
+        if (overLapItem.tweens[0] && overLapItem.tweens[1]) {
+          overLapItem.tweens[0].stop();
+          overLapItem.tweens[1].stop();
+        }
+        this.setHeroVarietyTextAnimated(overLapItem.text, overLapItem.lastValue, overLapItem.lastValue + ball.value, overLapItem.tweens);
+        overLapItem.lastValue += ball.value;
         self.destroy();
       }, null, this);
 
@@ -218,10 +234,10 @@ export default class Secondary extends Phaser.Scene {
         angle: { min: -120, max: -80 },
         scale: { start: 0.70, end: 0, ease: 'sine.out' },
         blendMode: 'ADD',
-        active: false
+        follow: ball.ball
       });
-      particles.startFollow(ball.ball);
-      particles.active = true
+
+
       this.tweens.add({
         targets: ball.ball,
         x: ball.toX,
@@ -238,16 +254,16 @@ export default class Secondary extends Phaser.Scene {
   }
   accumulationAnimate(x, y, value, color) {
     let balls = [];
-
     switch (color) {
       case '1':
         if (this.redHero.length != 0) {
           this.redHero.forEach(item => {
             balls.push({
               ball: this.add.circle(x, y, 10, 0x6666ff).setOrigin(0.5, 0.5),
-              toX: item.x,
-              toY: item.y,
-              overLapItem: item.hero
+              toX: item.hero.X,
+              toY: item.hero.Y,
+              overLapItem: item.hero,
+              value
             });
           });
           this.shot(balls, 1);
@@ -258,9 +274,10 @@ export default class Secondary extends Phaser.Scene {
           this.blueHero.forEach(item => {
             balls.push({
               ball: this.add.circle(x, y, 10, 0x6666ff).setOrigin(0.5, 0.5),
-              toX: item.x,
-              toY: item.y,
-              overLapItem: item.hero
+              toX: item.hero.X,
+              toY: item.hero.Y,
+              overLapItem: item.hero,
+              value
             });
           });
           this.shot(balls, 2);
@@ -271,9 +288,10 @@ export default class Secondary extends Phaser.Scene {
           this.blueHero.forEach(item => {
             balls.push({
               ball: this.add.circle(x, y, 10, 0x6666ff).setOrigin(0.5, 0.5),
-              toX: item.x,
-              toY: item.y,
-              overLapItem: item.hero
+              toX: item.hero.X,
+              toY: item.hero.Y,
+              overLapItem: item.hero,
+              value
             });
           });
           this.shot(balls, 3);
@@ -287,6 +305,7 @@ export default class Secondary extends Phaser.Scene {
           toY = this.cure.y;
           this.physics.add.existing(ball);
           this.physics.add.overlap(this.lifeBall, ball, (self, ball) => {
+            this.playerCureAnimate(value);
             ball.destroy();
           }, null, this);
         }
@@ -311,11 +330,117 @@ export default class Secondary extends Phaser.Scene {
           callbackScope: this,
           onComplete() {
             console.log('完成');
-            this.playerCureAnimate(value);
             particles.destroy();
           }
         });
         break;
     }
+  }
+  heroAttack(values) {
+    const sc = this;
+    function shot(balls, color) {
+      balls.forEach(ball => {
+        sc.physics.add.existing(ball.ball);
+        // this.physics.add.overlap(ball.ball, ball.overLapItem, (self, overLapItem) => {
+        //   console.log(overLapItem.tweens);
+        //   if (overLapItem.tweens[0] && overLapItem.tweens[1]) {
+        //     overLapItem.tweens[0].stop();
+        //     overLapItem.tweens[1].stop();
+        //   }
+        //   this.setHeroVarietyTextAnimated(overLapItem.text, overLapItem.lastValue, overLapItem.lastValue + ball.value, overLapItem.tweens);
+        //   overLapItem.lastValue += ball.value;
+        //   self.destroy();
+        // }, null, this);
+
+        const particles = sc.add.particles(0, 0, 'particles', {
+          frame: color,
+          speed: 100,
+          scale: { start: 0.7, end: 0 },
+          lifespan: 800,
+          angle: { min: -120, max: -80 },
+          scale: { start: 0.70, end: 0, ease: 'sine.out' },
+          blendMode: 'ADD',
+          follow: ball.ball
+        });
+        sc.tweens.add({
+          targets: ball.ball,
+          x: ball.toX,
+          y: ball.toY,
+          duration: 500,
+          ease: 'Linear',
+          onComplete() {
+            console.log('完成');
+            ball.text.setVisible(false);
+            particles.destroy();
+          }
+        });
+
+      });
+    }
+    this.heros.forEach((hero) => {
+      const attribute = hero.attribute;
+      const allAttack = values[attribute - 1][1];
+      const attackValue = values[attribute - 1][0];
+      console.log(hero)
+      this.setHeroVarietyTextAnimated(hero.body.text, hero.body.lastValue, attackValue, hero.body.tweens);
+      hero.body.lastValue = 0;
+      if(attackValue!=0){
+        if (allAttack) {
+          const balls = [];
+          for (let i = 0; i < 3; i++) {
+            balls.push(
+              {
+                ball: this.add.circle(hero.body.X, hero.body.Y, 10, 0x6666ff).setOrigin(0.5, 0.5),
+                toX: 250,
+                toY: 250,
+                overLapItem: null,
+                attackValue,
+                text: hero.body.text
+              }
+            )
+          }
+          shot(balls, hero.attribute - 1);
+        }
+        else {
+          const ball = [
+            {
+              ball: this.add.circle(hero.body.X, hero.body.Y, 10, 0x6666ff).setOrigin(0.5, 0.5),
+              toX: 250,
+              toY: 250,
+              overLapItem: null,
+              attackValue,
+              text: hero.body.text
+            }
+          ]
+          shot(ball, hero.attribute - 1);
+        }
+      }
+    });
+  }
+  setHeroVarietyTextAnimated(target, value, newValue, tween) {
+    tween[0] = this.tweens.addCounter({
+      from: value,
+      to: newValue,
+      duration: 1500,
+      ease: 'linear',
+      onUpdate: tween => {
+        const value = Math.round(tween.getValue());
+        target.setText(value);
+      }
+    });
+    tween[1] = this.tweens.addCounter({
+      from: 64,
+      to: 20,
+      duration: 1500,
+      ease: 'linear',
+      callbackScope: this,
+      onUpdate: tween => {
+        const value = Math.round(tween.getValue());
+        target.setFontSize(value);
+      },
+      onComplete: () => {
+      },
+      completeDelay: 1500
+    });
   }
 }
