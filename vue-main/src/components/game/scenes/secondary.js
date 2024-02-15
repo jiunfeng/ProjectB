@@ -7,8 +7,9 @@ import particles from '@/components/game/assets/sprites/particles.png'
 import { toRaw } from 'vue';
 
 import healthBar from '@/components/game/scenes/class/healthBar.js';
-
+import monster from '@/components/game/scenes/class/monster.js';
 import { useUserInfoStore } from '@/stores/userInfo';
+import { map } from 'lodash';
 const UserInfoStore = useUserInfoStore();
 
 export default class Secondary extends Phaser.Scene {
@@ -19,7 +20,88 @@ export default class Secondary extends Phaser.Scene {
     this.gameWidth = this.game.config.width;
     this.mainScenes = this.scene.get('Main');
     this.fullHp = 0;
-
+    this.stage = new Map();
+    this.stage.set('1', [
+      {
+        id: '001',
+        cd: 1,
+        hp: 300,
+        attack: 30
+      },
+      {
+        id: '002',
+        cd: 2,
+        hp: 300,
+        attack: 30
+      },
+      {
+        id: '002',
+        cd: 3,
+        hp: 300,
+        attack: 30
+      },
+    ]);
+    this.stage.set('2', [
+      {
+        id: '001',
+        cd: 3,
+        hp: 300,
+        attack: 30
+      },
+      {
+        id: '001',
+        cd: 3,
+        hp: 300,
+        attack: 30
+      },
+    ]);
+    this.stage.set('3', [
+      {
+        id: '003',
+        cd: 3,
+        hp: 300,
+        attack: 30
+      },
+    ]);
+    this.stageIterator = this.stage.entries();
+  }
+  nextStage() {
+    const nextEntry = this.stageIterator.next();
+    if (!nextEntry.done) {
+      let [key, value] = nextEntry.value;
+      let [x, y, gap, sizeRatio] = [
+        this.game.config.width / 2,
+        (this.heros[0].body.y - this.heros[0].body.displayHeight) / 2,
+        0,
+        0.4
+      ]
+      switch (value.length) {
+        case 1:
+          break;
+        case 2:
+          x - 65;
+          gap = 130;
+          sizeRatio = 0.2;
+          break;
+        case 3:
+          x -= 125;
+          gap = 125;
+          sizeRatio = 0.2;
+          break;
+      }
+      let m;
+      value.forEach((item, index) => {
+        this.monsterGroup.add(new monster(this,x + index * gap, y, `monster${item.id}`,sizeRatio));        
+        // this.monsterGroup.add(new monster(this,x + index * gap, y, `monster${item.id}`,sizeRatio));        
+      });
+      
+      console.log(this.monsterGroup.getLength())
+      this.monsterGroup.getChildren()[0].test();
+      console.log(this.monsterGroup.getLength())
+    }
+    else {
+      console.log('勝利');
+    }
   }
   preload() {
     this.load.image('pumpkin_devil', pumpkin_devil);
@@ -34,6 +116,15 @@ export default class Secondary extends Phaser.Scene {
       this.heros.push(toRaw(value));
       this.load.image(`hero${key}`, `/sprites/hero/${value.id}.png`);
     }
+    const monsterImg = [];
+    for (let value of this.stage.values()) {
+      value.forEach(item => {
+        if (!monsterImg.includes(item.id)) {
+          monsterImg.push(item.id);
+          this.load.image(`monster${item.id}`, `/sprites/monster/${item.id}.png`);
+        }
+      });
+    }
   }
   create() {
     this.juice = new phaserJuice(this);
@@ -46,8 +137,9 @@ export default class Secondary extends Phaser.Scene {
     };
 
     this.addHero()
+    this.monsterGroup = this.add.group();
+    this.nextStage();
   }
-
   addHero() {
     const hpBarConfig = {
       width: 350,
@@ -113,9 +205,9 @@ export default class Secondary extends Phaser.Scene {
     const hurtButton = this.add.rexRoundRectangleCanvas(300, 200, 100, 50, 5, 0xff1B05, 0x000000, 0, 0xac353A, false);
 
     hurtButton.setInteractive();
-    let test2 = 20
+    let test2 = 75
     hurtButton.on('pointerdown', () => {
-      this.playerGotHurtAnimate(test2);
+      this.playerGotHurtAnimate(test2,false);//第二參數用來判斷是否為最後的攻擊
     });
   }
   playerGotHurtAnimate(value, final = false) {
@@ -125,7 +217,15 @@ export default class Secondary extends Phaser.Scene {
     }
 
     const lastHp = this.playerHealthBar.reduceHp(value);
-    this.playerHealthBar.setHpPercentageAnimated(lastHp / this.fullHp);
+    this.playerHealthBar.setHpPercentageAnimated(lastHp / this.fullHp).then(result=>{
+      console.log(result);
+      if(final){
+        this.hpVarietyStartValue = 0;
+        if (lastHp == 0) {
+          console.log('game over');
+        }
+      }
+    });
     if (this.HpVarietyTextTweens[0] && this.HpVarietyTextTweens[1] && this.HpVarietyTextTweens[2]) {
       this.HpVarietyTextTweens[0].stop();
       this.HpVarietyTextTweens[1].stop();
@@ -134,12 +234,7 @@ export default class Secondary extends Phaser.Scene {
 
     this.setPlyaerHpVarietyTextAnimated('-', this.hpVarietyStartValue + value, false);
     this.hpVarietyStartValue += value;
-    this.playerHpText.setText(`${lastHp}/${this.playerHealthBar.getFullHp()}`);
-    if (lastHp == 0) {
-      console.log('game over');
-      return;
-    }
-    if (final) this.hpVarietyStartValue = 0;
+    this.playerHpText.setText(`${lastHp}/${this.playerHealthBar.getFullHp()}`); 
   }
 
   playerCureAnimate(value) {
@@ -384,7 +479,7 @@ export default class Secondary extends Phaser.Scene {
       console.log(hero)
       this.setHeroVarietyTextAnimated(hero.body.text, hero.body.lastValue, attackValue, hero.body.tweens);
       hero.body.lastValue = 0;
-      if(attackValue!=0){
+      if (attackValue != 0) {
         if (allAttack) {
           const balls = [];
           for (let i = 0; i < 3; i++) {

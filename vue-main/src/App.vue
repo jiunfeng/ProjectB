@@ -28,6 +28,11 @@ const currentPageComponent = computed(() => {
 const changePage = (page) => {
   userStore.currentPage = page;
 }
+
+
+
+
+
 </script>
 
 

@@ -1,4 +1,4 @@
-import phaserJuice from "@/components/game/js/phaserJuice.min.js";
+
 export default class healthBar {
     #healthColor = {
         green: [0x73d544, 0x1Ba93E, false],
@@ -78,18 +78,24 @@ export default class healthBar {
     reduceHp(variation) {
         return this.#currentHp = Phaser.Math.MinSub(this.#currentHp, variation, 0);
     }
-    setHpPercentageAnimated(percent, duration = 2500) {
-        const width = this.#fullWidth * percent
-        this.#scene.tweens.add({
-            targets: this.#healthBar,
-            width: width,
-            duration,
-            ease: Phaser.Math.Easing.Sine.Out,
-            onUpdate: tween => {
-                this.#healthBar.visible = this.#healthBar.width > 0
-                this.#setColor(tween.getValue() / this.#fullWidth);
-            }
-        })
+    setHpPercentageAnimated(percent, duration = 1000) {
+        return new Promise(resolve=>{
+            const width = this.#fullWidth * percent
+            this.#scene.tweens.add({
+                targets: this.#healthBar,
+                width: width,
+                duration,
+                ease: Phaser.Math.Easing.Sine.Out,
+                onUpdate: tween => {
+                    this.#healthBar.visible = this.#healthBar.width > 0
+                    this.#setColor(tween.getValue() / this.#fullWidth);
+                },
+                callbackScope: this,
+                onComplete: () => {
+                    resolve('血條動畫結束');
+                }
+            })
+        });
     }
     #setColor(percent) {
         if (percent <= 0.3) {
