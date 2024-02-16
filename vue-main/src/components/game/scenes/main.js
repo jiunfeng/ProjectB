@@ -7,6 +7,10 @@ import { useDrawcalStore } from "@/stores/gameRoundCal";
 import { useDungeonStore } from '@/stores/gameDungeon';
 const DrawcalStore = useDrawcalStore();
 const DungeonStore = useDungeonStore();
+//關卡敵人資料填充
+DungeonStore.entryDungeon("1-1")
+console.log(DungeonStore.enemyInfo);
+// 關卡測試敵人資料填充
 let gameOptions = {
   rowSize: 5,
   colSize: 6,
@@ -274,7 +278,7 @@ export default class Main extends Phaser.Scene {
         console.log(values[index]);
         console.log('*******************************');
         const destroyGems = group.map(item => ({ i: item[0], j: item[1] }));
-        this.destroyGems(destroyGems, '1',values[index]);
+        this.destroyGems(destroyGems, '1', values[index]);
       }
       );
       //藍珠
@@ -282,20 +286,20 @@ export default class Main extends Phaser.Scene {
       Array.from(nextEntry.value[1][6][1]).forEach((group, index) => {
         console.log(values[index]);
         const destroyGems = group.map(item => ({ i: item[0], j: item[1] }));
-        this.destroyGems(destroyGems, '2',values[index]);
+        this.destroyGems(destroyGems, '2', values[index]);
       });
       //綠珠
       values = parts(nextEntry.value[1][7][2], nextEntry.value[1][7][1].size);
       Array.from(nextEntry.value[1][7][1]).forEach((group, index) => {
         console.log(values[index]);
         const destroyGems = group.map(item => ({ i: item[0], j: item[1] }));
-        this.destroyGems(destroyGems, '3',values[index]);
+        this.destroyGems(destroyGems, '3', values[index]);
       });
       //心珠
       values = parts(nextEntry.value[1][8][2], nextEntry.value[1][8][1].size);
       Array.from(nextEntry.value[1][8][1]).forEach((group, index) => {
         const gems = group.map(item => ({ i: item[0], j: item[1] }));
-        this.destroyGems(gems, '4',values[index]);
+        this.destroyGems(gems, '4', values[index]);
       });
     }
     else {
@@ -311,13 +315,13 @@ export default class Main extends Phaser.Scene {
     const currentPromise = this.lastPromise.then(async () => {
       await new Promise(resolve => {
         //屬性動畫
-        console.log( this.gameArray[gems[0].i][gems[0].j]);
-        const[x,y]=[
+        console.log(this.gameArray[gems[0].i][gems[0].j]);
+        const [x, y] = [
           this.gameArray[gems[0].i][gems[0].j].x,
           this.gameArray[gems[0].i][gems[0].j].y
         ]
-        this.secScene.accumulationAnimate(x,y,value,color);
-        gems.forEach((gem, index) => {          
+        this.secScene.accumulationAnimate(x, y, value, color);
+        gems.forEach((gem, index) => {
           //消除的動畫
           const gemSprite = this.gameArray[gem.i][gem.j].gemSprite;
           this.tweens.add({

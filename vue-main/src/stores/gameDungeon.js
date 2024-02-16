@@ -6,16 +6,21 @@ import { useDrawcalStore } from "@/stores/gameRoundCal"
 import { useUserInfoStore } from '@/stores/userInfo';
 export const useDungeonStore = defineStore('Dungeon', {
     state: () => ({
+        //由userinfo抓取
         redAttack: 0,
         blueAttack: 0,
         greenAttack: 0,
         coverAttack: 0,
+        leaderPower: [1, 2.5],//隊長倍率[屬性,倍率]
+        enemyInfo: [],//關卡資料 怪物編號,屬性,血量,攻擊力,攻擊回合
+
+
+        //每次給予盤面要重置
         totalCombo: 0,
         redTotalDmg: 0,
         blueTotalDmg: 0,
         greenTotalDmg: 0,
         coverTotalDmg: 0,
-        leaderPower: [1, 2.5],//隊長倍率[屬性,倍率]
         redAll: 0,//全體攻擊開關 條件為 任意一次消除6顆珠子以上  0=單體攻擊 1全體攻擊
         blueAll: 0,
         greenAll: 0,
@@ -26,7 +31,27 @@ export const useDungeonStore = defineStore('Dungeon', {
         turnCoverGem: [],
     }),
     actions: {
+        entryDungeon(dungeonNum) {
+            if (dungeonNum == "1-1") {
+                this.enemyInfo = [[["001", "1", "20000", "50", 3], ["002", "2", "30000", "20", 2]], [["002", "2", "30000", "20", 2], ["003", "3", "100000", "50", 5]], ["004", "1", "200000", "300", 3]]
+                //暫時填充
 
+                this._resetTurn()
+                this._getAttack()
+
+            }
+
+        },
+        _resetTurn() {//每rounnd計算後重置
+            this.redAll = 0
+            this.blueAll = 0
+            this.greenAll = 0
+            this.finalDmg = 0
+            this.turnRedGem = 0
+            this.turnBlueGem = 0
+            this.turnGreenGem = 0
+            this.turnCoverGem = 0
+        },
         _getAttack() {//取得寵物攻擊力恢復力
             const userinfo = useUserInfoStore()
             userinfo.userpetset.forEach((pet, key) => {
