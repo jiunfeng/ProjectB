@@ -12,6 +12,7 @@ import { useUserInfoStore } from '@/stores/userInfo';
 import { map } from 'lodash';
 const UserInfoStore = useUserInfoStore();
 
+
 export default class Secondary extends Phaser.Scene {
   constructor() {
     super({ key: 'Secondary' })//場景命名
@@ -91,13 +92,9 @@ export default class Secondary extends Phaser.Scene {
       }
       let m;
       value.forEach((item, index) => {
-        this.monsterGroup.add(new monster(this,x + index * gap, y, `monster${item.id}`,sizeRatio));        
-        // this.monsterGroup.add(new monster(this,x + index * gap, y, `monster${item.id}`,sizeRatio));        
+        this.monsterGroup.add(monster(this, x + index * gap, y, `monster${item.id}`, sizeRatio, item.hp, item.cd, item.attack));
       });
-      
-      console.log(this.monsterGroup.getLength())
-      this.monsterGroup.getChildren()[0].test();
-      console.log(this.monsterGroup.getLength())
+
     }
     else {
       console.log('勝利');
@@ -207,7 +204,7 @@ export default class Secondary extends Phaser.Scene {
     hurtButton.setInteractive();
     let test2 = 75
     hurtButton.on('pointerdown', () => {
-      this.playerGotHurtAnimate(test2,false);//第二參數用來判斷是否為最後的攻擊
+      this.playerGotHurtAnimate(test2, false);//第二參數用來判斷是否為最後的攻擊
     });
   }
   playerGotHurtAnimate(value, final = false) {
@@ -217,9 +214,9 @@ export default class Secondary extends Phaser.Scene {
     }
 
     const lastHp = this.playerHealthBar.reduceHp(value);
-    this.playerHealthBar.setHpPercentageAnimated(lastHp / this.fullHp).then(result=>{
+    this.playerHealthBar.setHpPercentageAnimated(lastHp / this.fullHp).then(result => {
       console.log(result);
-      if(final){
+      if (final) {
         this.hpVarietyStartValue = 0;
         if (lastHp == 0) {
           console.log('game over');
@@ -234,7 +231,7 @@ export default class Secondary extends Phaser.Scene {
 
     this.setPlyaerHpVarietyTextAnimated('-', this.hpVarietyStartValue + value, false);
     this.hpVarietyStartValue += value;
-    this.playerHpText.setText(`${lastHp}/${this.playerHealthBar.getFullHp()}`); 
+    this.playerHpText.setText(`${lastHp}/${this.playerHealthBar.getFullHp()}`);
   }
 
   playerCureAnimate(value) {
@@ -434,18 +431,23 @@ export default class Secondary extends Phaser.Scene {
   heroAttack(values) {
     const sc = this;
     function shot(balls, color) {
-      balls.forEach(ball => {
+      balls.forEach((ball, index) => {
         sc.physics.add.existing(ball.ball);
-        // this.physics.add.overlap(ball.ball, ball.overLapItem, (self, overLapItem) => {
-        //   console.log(overLapItem.tweens);
-        //   if (overLapItem.tweens[0] && overLapItem.tweens[1]) {
-        //     overLapItem.tweens[0].stop();
-        //     overLapItem.tweens[1].stop();
-        //   }
-        //   this.setHeroVarietyTextAnimated(overLapItem.text, overLapItem.lastValue, overLapItem.lastValue + ball.value, overLapItem.tweens);
-        //   overLapItem.lastValue += ball.value;
-        //   self.destroy();
-        // }, null, this);
+        sc.physics.add.overlap(ball.ball, ball.overLapItem, (self, overLapItem) => {
+          overLapItem.gotHurt(ball.attackValue).then(result => {
+            console.log(result)
+            if (index == balls.length - 1) {
+              if (ball.finalAttack) {
+                sc.checkStageWin();
+              }
+            }
+          });
+          // if(sc.monsterGroup.getChildren()[0]==overLapItem){
+          //   console.log(ball.final);
+          //   // overLapItem.gotHurt(ball.attackValue,ball.final);
+          // }
+          self.destroy();
+        }, null, this);
 
         const particles = sc.add.particles(0, 0, 'particles', {
           frame: color,
@@ -472,45 +474,73 @@ export default class Secondary extends Phaser.Scene {
 
       });
     }
-    this.heros.forEach((hero) => {
+    let finalAttackIndex;
+    this.heros.forEach((hero, index) => {
       const attribute = hero.attribute;
-      const allAttack = values[attribute - 1][1];
       const attackValue = values[attribute - 1][0];
-      console.log(hero)
-      this.setHeroVarietyTextAnimated(hero.body.text, hero.body.lastValue, attackValue, hero.body.tweens);
-      hero.body.lastValue = 0;
       if (attackValue != 0) {
-        if (allAttack) {
-          const balls = [];
-          for (let i = 0; i < 3; i++) {
-            balls.push(
-              {
-                ball: this.add.circle(hero.body.X, hero.body.Y, 10, 0x6666ff).setOrigin(0.5, 0.5),
-                toX: 250,
-                toY: 250,
-                overLapItem: null,
-                attackValue,
-                text: hero.body.text
-              }
-            )
-          }
-          shot(balls, hero.attribute - 1);
-        }
-        else {
-          const ball = [
-            {
-              ball: this.add.circle(hero.body.X, hero.body.Y, 10, 0x6666ff).setOrigin(0.5, 0.5),
-              toX: 250,
-              toY: 250,
-              overLapItem: null,
-              attackValue,
-              text: hero.body.text
-            }
-          ]
-          shot(ball, hero.attribute - 1);
-        }
+        finalAttackIndex = index;
       }
     });
+    if (finalAttackIndex) {
+      this.heros.forEach((hero, index) => {
+        const attribute = hero.attribute;
+        const allAttack = values[attribute - 1][1];
+        const attackValue = values[attribute - 1][0];
+        this.setHeroVarietyTextAnimated(hero.body.text, hero.body.lastValue, attackValue, hero.body.tweens);
+        hero.body.lastValue = 0;
+        if (attackValue != 0) {
+          if (allAttack) {
+            const balls = [];
+            for (let i = 0; i < this.monsterGroup.getLength(); i++) {
+              balls.push(
+                {
+                  ball: this.add.circle(hero.body.X, hero.body.Y, 10, 0x6666ff).setOrigin(0.5, 0.5),
+                  toX: this.monsterGroup.getChildren()[i].x,
+                  toY: this.monsterGroup.getChildren()[i].y,
+                  overLapItem: this.monsterGroup.getChildren(),
+                  attackValue,
+                  text: hero.body.text,
+                  finalAttack: index == finalAttackIndex ? true : false
+                  // final: index == finalIndex ? true : false,
+                  // allfinal: index == allfinalIndex ? true : false
+                }
+              )
+            }
+            shot(balls, hero.attribute - 1);
+          }
+          else {
+            const ball = [
+              {
+                ball: this.add.circle(hero.body.X, hero.body.Y, 10, 0x6666ff).setOrigin(0.5, 0.5),
+                toX: this.monsterGroup.getChildren()[0].x,
+                toY: this.monsterGroup.getChildren()[0].y,
+                overLapItem: this.monsterGroup.getChildren()[0],
+                attackValue,
+                text: hero.body.text,
+                finalAttack: index == finalAttackIndex ? true : false
+                // final: index == finalIndex ? true : false,
+                // allfinal: index == allfinalIndex ? true : false
+              }
+            ]
+            shot(ball, hero.attribute - 1);
+          }
+        }
+      });
+    }
+    else {
+      //確認monster CD 發動攻擊
+      console.log('確認CD');
+    }
+  }
+  checkStageWin() {
+    if (this.monsterGroup.getLength() == 0) {
+      this.nextStage();
+    }
+    else {
+      //確認monster CD 發動攻擊
+      console.log('確認CD');
+    }
   }
   setHeroVarietyTextAnimated(target, value, newValue, tween) {
     tween[0] = this.tweens.addCounter({

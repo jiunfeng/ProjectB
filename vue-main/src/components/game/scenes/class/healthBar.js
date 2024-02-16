@@ -20,23 +20,23 @@ export default class healthBar {
 
     constructor(scene, x, y, fullWidth, height, radius, hp) {
         //rexRoundRectangleCanvas(x, y, width, height, radiusConfig, fillStyle, strokeStyle, strokeWidth, fillColor2, isHorizontalGradient)
-        const FrameStrokeWidth=2.5;
+        const FrameStrokeWidth = 2.5;
         this.#healthBarFrame = scene.add.rexRoundRectangleCanvas(x, y, fullWidth, height, radius, null, 0xF6C555, FrameStrokeWidth, null, false);
         this.#healthBarFrame.setOrigin(0, 1);
 
-        const [FrameX,FrameY]=[this.#healthBarFrame.x,this.#healthBarFrame.y];
-        
-        this.#healthBarShadow = scene.add.rexRoundRectangleCanvas(FrameX+FrameStrokeWidth, FrameY-height/2, fullWidth-FrameStrokeWidth*2, height-FrameStrokeWidth*2, radius, 0xffffff, 0x000000, 0, 0xffffff, false);
+        const [FrameX, FrameY] = [this.#healthBarFrame.x, this.#healthBarFrame.y];
+
+        this.#healthBarShadow = scene.add.rexRoundRectangleCanvas(FrameX + FrameStrokeWidth, FrameY - height / 2, fullWidth - FrameStrokeWidth * 2, height - FrameStrokeWidth * 2, radius, 0xffffff, 0x000000, 0, 0xffffff, false);
         this.#healthBarShadow.setOrigin(0, 0.5);
         this.#healthBarShadow.setAlpha(0.2);
 
 
-        this.#healthBar = scene.add.rexRoundRectangleCanvas(FrameX+FrameStrokeWidth, FrameY-height/2, fullWidth-FrameStrokeWidth*2, height-FrameStrokeWidth*2, radius, 0x000000, 0x000000, 0, 0x000000, false);
+        this.#healthBar = scene.add.rexRoundRectangleCanvas(FrameX + FrameStrokeWidth, FrameY - height / 2, fullWidth - FrameStrokeWidth * 2, height - FrameStrokeWidth * 2, radius, 0x000000, 0x000000, 0, 0x000000, false);
         this.#healthBar.setOrigin(0, 0.5);
         this.#healthBar.setFillStyle(...this.#healthColor.green);
 
         this.#scene = scene;
-        this.#fullWidth = fullWidth-FrameStrokeWidth*2;
+        this.#fullWidth = fullWidth - FrameStrokeWidth * 2;
         this.#fullHp = hp;
         this.#currentHp = hp;
         this.#x = x;
@@ -44,18 +44,17 @@ export default class healthBar {
         this.#height = height;
 
     }
-    shake(juice){
+    shake(juice) {
         if (!this.shakeHealthBarFrame || !this.shakeHealthBarFrame.shakeTween.isPlaying()) {
             this.shakeHealthBarFrame = juice.shake(this.#healthBarFrame);
         }
         if (!this.shakeHealthBarShadow || !this.shakeHealthBarShadow.shakeTween.isPlaying()) {
             this.shakeHealthBarShadow = juice.shake(this.#healthBarShadow);
         }
-        
+
         if (!this.shakeHealthBar || !this.shakeHealthBar.shakeTween.isPlaying()) {
             this.shakeHealthBar = juice.shake(this.#healthBar);
         }
-        // console.log(this.shakeHealthBar.shakeTween.restart())
     }
     getX() {
         return this.#x;
@@ -79,7 +78,7 @@ export default class healthBar {
         return this.#currentHp = Phaser.Math.MinSub(this.#currentHp, variation, 0);
     }
     setHpPercentageAnimated(percent, duration = 1000) {
-        return new Promise(resolve=>{
+        return new Promise(resolve => {
             const width = this.#fullWidth * percent
             this.#scene.tweens.add({
                 targets: this.#healthBar,
@@ -110,6 +109,11 @@ export default class healthBar {
             // 大於 0.7 時綠色
             this.#healthBar.setFillStyle(...this.#healthColor.green);
         }
+    }
+    destroy() {
+        this.#healthBarFrame.destroy();
+        this.#healthBarShadow.destroy();
+        this.#healthBar.destroy();
     }
 }
 
