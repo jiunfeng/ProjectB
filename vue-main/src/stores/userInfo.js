@@ -22,7 +22,7 @@ export const useUserInfoStore = defineStore('info', {
     }),
     actions: {
         _setTestAccount() {
-            this.useraccount = "test01";
+            this.useraccount = "test001";
             this.userpassword = "1qaz2wsx";
             this.username = "測試一號機";
             this.userrank = "20";
