@@ -3,7 +3,7 @@ import phaserJuice from "@/components/game/js/phaserJuice.min.js";
 import pumpkin_devil from '@/components/game/assets/sprites/pumpkin-devil.png'
 
 import lifeBall from '@/components/game/assets/sprites/lifeball.png'
-import particles from '@/components/game/assets/sprites/particles.png'
+// import particles from '@/components/game/assets/sprites/particles.png'
 import { toRaw } from 'vue';
 
 import healthBar from '@/components/game/scenes/class/healthBar.js';
@@ -103,7 +103,7 @@ export default class Secondary extends Phaser.Scene {
   preload() {
     this.load.image('pumpkin_devil', pumpkin_devil);
     this.load.image('lifeBall', lifeBall);
-    this.load.spritesheet("particles", particles, {
+    this.load.spritesheet("particles", 'sprites/particles.png', {
       frameWidth: 50,
       frameHeight: 50
     });
@@ -111,14 +111,14 @@ export default class Secondary extends Phaser.Scene {
     for (let [key, value] of UserInfoStore.userpetset) {
       this.fullHp += value.health;
       this.heros.push(toRaw(value));
-      this.load.image(`hero${key}`, `/sprites/hero/${value.id}.png`);
+      this.load.image(`hero${key}`, `sprites/hero/${value.id}.png`);
     }
     const monsterImg = [];
     for (let value of this.stage.values()) {
       value.forEach(item => {
         if (!monsterImg.includes(item.id)) {
           monsterImg.push(item.id);
-          this.load.image(`monster${item.id}`, `/sprites/monster/${item.id}.png`);
+          this.load.image(`monster${item.id}`, `sprites/monster/${item.id}.png`);
         }
       });
     }
