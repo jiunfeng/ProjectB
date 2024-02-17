@@ -3,77 +3,119 @@ br {
 }
 
 .bg1 {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.bg2 {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.textsize1{
+    font-size: 18px;
+}
+
+.textsize2{
+    font-size: 20px;
 }
 
 .body1 {
-    background-image: url('@/mainside/images/index/03.jpg');
-    width: 850px;
-    height: 1085px;
-    background-size: 100% 100%;
+    background-image: url('@/assets/mainui/images/index/03.jpg');
+    width: 607.5px;
+    height: 1080px;
+    background-size: 135% 100%;
     background-repeat: no-repeat;
-}
-
-.index1 {
-    width: 850px;
     position: relative;
-    height: 150px;
 }
 
-.inbox1-1 {
+.userimg1 {
     position: absolute;
+    height: 13%;
+    aspect-ratio: 1;
+    top: 0%;
+    left: 4.5%;
     user-select: none;
-    top: 1%;
-    left: 5%;
-    width: 150px;
-    height: 150px;
+    z-index: 1;
+}
+.userimg1-1 {
+    position: absolute;
+    height: 7.5%;
+    aspect-ratio: 1.2/1;
+    top: 2.92%;
+    left: 8.5%;
+    border-radius: 50%;
+    user-select: none;
+}
+.userimg1-2 {
+    position: absolute;
+    height: 7.5%;
+    aspect-ratio: 1;
+    top: 2.92%;
+    left: 9.5%;
+    border-radius: 50%;
+    user-select: none;
     z-index: 2;
 }
 
-.inbox1-1-1 {
+.userdiv1 {
     position: absolute;
     user-select: none;
-    border-radius: 35%;
-    top: 19%;
-    left: 8.5%;
-    width: 95px;
-    height: 100px;
-    z-index: 1;
+    border-radius: 10%;
+    top: 12.5%;
+    left: 6%;
 }
 
-.inbox1-1-2 {
+.usermoneydiv1 {
     position: absolute;
-    width: max-content;
-    height: max-content;
-    top: 25%;
-    left: 22%;
-
+    width: 60%;
+    top: 4%;
+    right: 6%;
 }
 
-.inbox1-2 {
+.usermoneyimg1{
+    width: 15%;  
+    aspect-ratio: 1;  
+}
+
+.userexpimg1{
+    width: 13%;
+    aspect-ratio: 1;
+}
+
+.conimg1 {
     position: absolute;
-    width: max-content;
-    height: max-content;
-    top: 30%;
-    left: 45%;
-}
-
-.index2 {
-    position: relative;
-    width: 850px;
-    height: 935px;
-}
-
-.inbox2-1 {
-    position: absolute;
+    width: 90%;
+    aspect-ratio: 1/1.1;
     bottom: 0%;
-    left: 55%;
+    left: 57%;
 }
 
-.inbox2-2 {
+.conchangimg1 {
     position: absolute;
-    bottom: 45%;
-    right: 7%;
+    border-radius: 50%;
+    height: 5%;
+    aspect-ratio: 1/1;
+    bottom: 47%;
+    right: 3%;
+}
+
+.conchangimg1:hover{
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.btnfight1 {
+    position: absolute;
+    height: 8%;
+    aspect-ratio: 2.3/1;
+    top: 14%;
+    right: 12%;
+}
+
+.btnbox1 {
+    position: absolute;
+    height: 8%;
+    aspect-ratio: 2.3/1;
+    top: 23%;
+    right: 3%;
 }
 
 .inbox2-3 {
