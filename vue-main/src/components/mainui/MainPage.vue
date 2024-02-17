@@ -4,39 +4,37 @@
         <!-- 頭貼 左上方，需資料庫資料-->
         <img class="userimg1" src="@/assets/mainui/images/index/1-1-2.png" alt="">
         <input class="userimg1-1" type="image" src="./src/assets/mainui/images/role/002_small.png" alt="" name="" id=""/>
-        <input class="userimg1-2" type="image" src="./src/assets/mainui/images/index/1-1-3.png" alt="" name="" id=""/>
+        <button type="button" class="userimg1-2"></button>
+        <!-- <input class="userimg1-2" type="image" src="./src/assets/mainui/images/index/1-1-3.png" alt="" name="" id=""/> -->
 
         <!-- 人物資訊 左上方，需資料庫資料 -->
         <div class="userdiv1 bg2 textsize1">
-            <span class="text-white mx-2">LV.</span>
+            <span class="text-white mx-2">LV.<span v-text="userStore.userrank"></span></span>
             <br>
-            <span class="text-white mx-3">XXX</span>
+            <span class="text-white mx-3" v-text="userStore.username"></span>
             <div style="height: 3px; user-select: none;"></div>
             <div class="bg-white mx-1" style="height: 2px;"></div>
-            <span class="text-white mx-2">ID:</span><span class="text-white me-3">XXXXXXX</span>
+            <span class="text-white mx-2">ID:</span><span class="text-white me-3" v-text="userStore.userid"></span>
             <div style="height: 3px; user-select: none;"></div>
         </div>
         <!-- 資源 -->
         <div class="usermoneydiv1 bg1 rounded-pill textsize2 br text-center">
             <!-- 錢 上方，需資料庫資料 -->
             <img class="usermoneyimg1" src="@/assets/mainui/images/index/money2.png">
-            <span class="text-white">&nbsp;XXXXXXX</span>
+            <span class="text-white">&nbsp;<span v-text="userStore.usermoney"></span></span>
             <!-- 經驗 上方，需資料庫資料 -->
             <img class="userexpimg1 my-2 ms-2" src="@/assets/mainui/images/index/exp2.png">
-            <span class="text-white mx-1">XXXXXXX</span>
+            <span class="text-white mx-1" v-text="userStore.userexp"></span>
         </div>
         <!-- 下方 -->
         <!-- 角色圖案 下方中間，需資料庫資料-->
         <img class="conimg1 translate-middle-x " src="@/assets/mainui/images/role/role2-1.jpg">
         <!-- 換角色按鈕 下方右邊-->
-        <input class="conchangimg1" type="image" src="./src/assets/mainui/images/index/change.png" alt="" name="" id=""
-            onclick="send();" />
+        <button type="submit" class="conchangimg1"></button>
         <!-- 戰鬥按鈕 中間左邊-->
-        <input class="btnfight1 border" type="image" :src="fightimg1" alt="" name="" id=""
-            @click="changePage('game')"  @mouseover="fightover"  @mouseleave="fightleave"/>
+        <button type="submit" class="btnfight1 border" @click="changePage('game')"  @mouseover="fightover"  @mouseleave="fightleave" v-bind:style="{ backgroundImage: 'url('+fightimg1+')' }"></button>
         <!-- 箱子按鈕 中間左邊-->
-        <input class="btnbox1 border" type="image" :src="boximg1" alt="" name="" id=""
-            @click="changePage('box')" @mouseover="boxover"  @mouseleave="boxleave"/>
+        <button type="submit" class="btnbox1 border" @click="changePage('box')" @mouseover="boxover"  @mouseleave="boxleave" v-bind:style="{ backgroundImage: 'url('+boximg1+')' }"></button>
         <!-- 幻燈片 中間右邊-->
         
     </div>
@@ -81,7 +79,9 @@ function boxleave() {
 // console.log(user);
 
 // 控制使用者currentPage導向
+// 連線userInfo.js的資料
 import { useUserInfoStore } from "@/stores/userInfo";
+// 宣告userStore擁有userInfo.js的資料
 const userStore = useUserInfoStore();
 const changePage = (page) => {
     userStore.currentPage = page;

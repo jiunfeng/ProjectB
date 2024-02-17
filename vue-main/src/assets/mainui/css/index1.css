@@ -48,6 +48,10 @@ br {
     position: absolute;
     height: 7.5%;
     aspect-ratio: 1;
+    background-color: transparent;
+    /* 按鈕的背景顏色變為透明的 */
+    background-image: url('@/assets/mainui/images/index/1-1-3.png');
+    background-size: 100% 100%;
     top: 2.92%;
     left: 9.5%;
     border-radius: 50%;
@@ -90,6 +94,11 @@ br {
 
 .conchangimg1 {
     position: absolute;
+    background-color: transparent;
+    /* 按鈕的背景顏色變為透明的 */
+    border-style: none;
+    background-image: url('@/assets/mainui/images/index/change.png');
+    background-size: 100% 100%;    
     border-radius: 50%;
     height: 5%;
     aspect-ratio: 1/1;
@@ -104,6 +113,10 @@ br {
 
 .btnfight1 {
     position: absolute;
+    background-color: transparent;
+    /* 按鈕的背景顏色變為透明的 */
+    border-style: none;
+    background-size: 100% 100%;    
     height: 8%;
     aspect-ratio: 2.3/1;
     top: 14%;
@@ -112,6 +125,10 @@ br {
 
 .btnbox1 {
     position: absolute;
+    background-color: transparent;
+    /* 按鈕的背景顏色變為透明的 */
+    border-style: none;
+    background-size: 100% 100%; 
     height: 8%;
     aspect-ratio: 2.3/1;
     top: 23%;
