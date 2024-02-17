@@ -34,7 +34,7 @@ export const useDungeonStore = defineStore('Dungeon', {
         entryDungeon(dungeonNum) {
             if (dungeonNum == "1-1") {
                 this.enemyInfo = [[["001", "1", "20000", "50", 3], ["002", "2", "30000", "20", 2]], [["002", "2", "30000", "20", 2], ["003", "3", "100000", "50", 5]], ["004", "1", "200000", "300", 3]]
-                //暫時填充
+                //暫時填充 圖 
 
                 this._resetTurn()
                 this._getAttack()
