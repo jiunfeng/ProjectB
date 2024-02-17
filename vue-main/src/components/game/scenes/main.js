@@ -306,7 +306,7 @@ export default class Main extends Phaser.Scene {
       this.canDrag = true;
       console.log(DungeonStore.finalDmg[3][0])
       this.secScene.playerCure(DungeonStore.finalDmg[3][0]);
-      this.secScene.heroAttack(DungeonStore.finalDmg);
+      this.secScene.heroAttack(DungeonStore.finalDmg);      
     }
   }
 
