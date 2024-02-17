@@ -22,6 +22,7 @@ export const useUserInfoStore = defineStore('info', {
     }),
     actions: {
         _setTestAccount() {
+<<<<<<< HEAD
             this.useraccount = "test01";
             this.userpassword = "1qaz2wsx";
             this.username = "測試一號機";
@@ -55,6 +56,19 @@ export const useUserInfoStore = defineStore('info', {
             });
             this.useritems = ["001", "30"];
             this.userpets = []//使用者擁有的寵物
+=======
+            this.useraccount = "test01",
+                this.userpassword = "1qaz2wsx",
+                this.username = "測試一號機",
+                this.userid = "asd234143";
+                this.userrank = "20",
+                this.usermoney = "99999",
+                this.usercredit = "88888",
+                this.userexp = "100000",
+                this.userpetset = [["001", "20000"], ["002", "30000"], ["003", "400000"]],
+                this.useritems = ["001", "30"],
+                this.userpets = []//使用者擁有的寵物
+>>>>>>> 5c9bd233
         },
     }
 })
