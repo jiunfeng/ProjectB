@@ -8,9 +8,11 @@ import { toRaw } from 'vue';
 
 import healthBar from '@/components/game/scenes/class/healthBar.js';
 import monster from '@/components/game/scenes/class/monster.js';
+
 import { useUserInfoStore } from '@/stores/userInfo';
-import { map } from 'lodash';
 const UserInfoStore = useUserInfoStore();
+import { useDungeonStore } from '@/stores/gameDungeon';
+const DungeonStore = useDungeonStore();
 
 
 export default class Secondary extends Phaser.Scene {
@@ -21,50 +23,61 @@ export default class Secondary extends Phaser.Scene {
     this.gameWidth = this.game.config.width;
     this.mainScenes = this.scene.get('Main');
     this.fullHp = 0;
-    this.stage = new Map();
-    this.stage.set('1', [
-      {
-        id: '001',
-        cd: 1,
-        hp: 300,
-        attack: 30
-      },
-      {
-        id: '002',
-        cd: 2,
-        hp: 300,
-        attack: 30
-      },
-      {
-        id: '002',
-        cd: 3,
-        hp: 300,
-        attack: 30
-      },
-    ]);
-    this.stage.set('2', [
-      {
-        id: '001',
-        cd: 3,
-        hp: 300,
-        attack: 30
-      },
-      {
-        id: '001',
-        cd: 3,
-        hp: 300,
-        attack: 30
-      },
-    ]);
-    this.stage.set('3', [
-      {
-        id: '003',
-        cd: 3,
-        hp: 300,
-        attack: 30
-      },
-    ]);
+    //關卡假資料
+    // this.stage = new Map();
+    // this.stage.set('1', [
+    //   {
+    //     id: '001',
+    //     cd: 1,
+    //     hp: 300,
+    //     attack: 30
+    //   },
+    //   {
+    //     id: '002',
+    //     cd: 2,
+    //     hp: 300,
+    //     attack: 30
+    //   },
+    //   {
+    //     id: '002',
+    //     cd: 3,
+    //     hp: 300,
+    //     attack: 30
+    //   },
+    // ]);
+    // this.stage.set('2', [
+    //   {
+    //     id: '001',
+    //     cd: 3,
+    //     hp: 300,
+    //     attack: 30
+    //   },
+    //   {
+    //     id: '001',
+    //     cd: 3,
+    //     hp: 300,
+    //     attack: 30
+    //   },
+    // ]);
+    // this.stage.set('3', [
+    //   {
+    //     id: '003',
+    //     cd: 3,
+    //     hp: 300,
+    //     attack: 30
+    //   },
+    // ]);
+    // this.stageIterator = this.stage.entries();
+    DungeonStore.entryDungeon("1-1")//填充關卡假資料
+    // console.log('關卡假資料:')
+    this.stage = toRaw(DungeonStore.enemyInfo);
+    // console.log(this.stage);
     this.stageIterator = this.stage.entries();
+  }
+  reudceMonstersCd() {
+    this.monsterGroup.getChildren().forEach(item => {
+      item.reudceCd();
+    });
   }
   nextStage() {
     const nextEntry = this.stageIterator.next();
@@ -80,7 +93,7 @@ export default class Secondary extends Phaser.Scene {
         case 1:
           break;
         case 2:
-          x - 65;
+          x -= 65;
           gap = 130;
           sizeRatio = 0.2;
           break;
@@ -92,9 +105,9 @@ export default class Secondary extends Phaser.Scene {
       }
       let m;
       value.forEach((item, index) => {
-        this.monsterGroup.add(monster(this, x + index * gap, y, `monster${item.id}`, sizeRatio, item.hp, item.cd, item.attack));
+        //scene, x, y, texture, ratio, hp, cd, attack,attribute
+        this.monsterGroup.add(monster(this, x + index * gap, y, `monster${item[0]}`, sizeRatio, item[2], item[4], item[3], item[1]));
       });
-
     }
     else {
       console.log('勝利');
@@ -116,9 +129,9 @@ export default class Secondary extends Phaser.Scene {
     const monsterImg = [];
     for (let value of this.stage.values()) {
       value.forEach(item => {
-        if (!monsterImg.includes(item.id)) {
-          monsterImg.push(item.id);
-          this.load.image(`monster${item.id}`, `sprites/monster/${item.id}.png`);
+        if (!monsterImg.includes(item[0])) {
+          monsterImg.push(item[0]);
+          this.load.image(`monster${item[0]}`, `sprites/monster/${item[0]}.png`);
         }
       });
     }
@@ -189,7 +202,7 @@ export default class Secondary extends Phaser.Scene {
     this.playerHpText.setOrigin(1.1, 1)
     this.playerHpText.setStroke('#555555', 1);
 
-    this.playerHpVarietyText = this.add.text(x + fullWidth / 2, y - height / 2, ``, { fontFamily: 'Arial Black', fontSize: 64, color: '#dddddd' });
+    this.playerHpVarietyText = this.add.text(x + fullWidth / 2, y - height / 2, ``, { fontFamily: 'Arial Black', fontSize: 64, color: '#dddddd' }).setDepth(2);
     this.originFontSize = this.playerHpVarietyText.style.fontSize.substr(0, 2);
     this.playerHpVarietyText.setOrigin(0.5, 0.5)
     this.playerHpVarietyText.setStroke('#555555', 2);
@@ -202,7 +215,7 @@ export default class Secondary extends Phaser.Scene {
     const hurtButton = this.add.rexRoundRectangleCanvas(300, 200, 100, 50, 5, 0xff1B05, 0x000000, 0, 0xac353A, false);
 
     hurtButton.setInteractive();
-    let test2 = 75
+    let test2 = 20
     hurtButton.on('pointerdown', () => {
       this.playerGotHurtAnimate(test2, false);//第二參數用來判斷是否為最後的攻擊
     });
@@ -531,7 +544,42 @@ export default class Secondary extends Phaser.Scene {
     else {
       //確認monster CD 發動攻擊
       console.log('確認CD');
+      this.checkMonstersCd();
     }
+  }
+  checkMonstersCd() {
+    new Promise(resolve => {
+      this.monsterGroup.getChildren().forEach((item, index, arr) => {
+        if (item.checkCd()) {
+          const attackInfo = item.getAttack();
+          let ball =this.add.circle(item.x,item.y,10, 0x6666ff);
+          ball.attack=attackInfo.attack;
+          ball.attribute=attackInfo.attribute;
+          const [toX,toY]=[
+            this.playerHealthBar.getX()+this.playerHealthBar.getWidth()/2,
+            this.playerHealthBar.getY()-this.playerHealthBar.getHeight()/2
+          ];
+          this.tweens.add({
+            targets: ball,
+            x:toX,
+            y: toY,
+            duration: 2500,
+            ease: 'linear',
+            callbackScope: this,
+            onComplete: () => {
+              ball.destroy();
+              console.log(arr.length)
+              if(index==arr.length-1){
+                this.playerGotHurtAnimate(ball.attack, true);//第二參數用來判斷是否為最後的攻擊
+              }
+              else{
+                this.playerGotHurtAnimate(ball.attack, false);//第二參數用來判斷是否為最後的攻擊
+              }
+            },
+          });
+        }
+      });
+    });
   }
   checkStageWin() {
     if (this.monsterGroup.getLength() == 0) {
@@ -540,6 +588,7 @@ export default class Secondary extends Phaser.Scene {
     else {
       //確認monster CD 發動攻擊
       console.log('確認CD');
+      this.checkMonstersCd();
     }
   }
   setHeroVarietyTextAnimated(target, value, newValue, tween) {

@@ -1,10 +1,28 @@
 import healthBar from '@/components/game/scenes/class/healthBar.js';
 import phaserJuice from "@/components/game/js/phaserJuice.min.js";
 
-export default function monster(scene, x, y, texture, ratio, hp, cd, attack) {
-    const m = scene.physics.add.image(x, y, texture).setScale(ratio).setOrigin(0.5).setBodySize(200, 200);
+export default function monster(scene, x, y, texture, ratio, hp, cd, attack,attribute) {
+    const m = scene.physics.add.image(x, y, texture).setScale(ratio).setBodySize(200, 200);
+    const cdText=scene.add.text(m.x+m.displayWidth/2, m.y-m.displayHeight/2, cd, { fontFamily: 'Arial Black', fontSize: 16, color: '#000000', stroke: '#dddddd', strokeThickness: 5 });
+    console.log(cdText.text);
     const hpBar = new healthBar(scene, x - m.displayWidth / 2, y + m.displayHeight / 2 + 25, m.displayWidth, 12, 5, hp);
+    m.getAttack=()=>{
+        return {
+            attribute,
+            attack
+        };
+    }
     m.gethp = () => { return hpBar }
+    m.reudceCd=()=>{       
+        cdText.setText(cdText.text-1);        
+    }
+    m.checkCd=()=>{
+        if(cdText.text==0){
+            cdText.setText(cd);
+            return true;
+        }
+        return false;
+    };
     m.gotHurt = (value) => {
         return new Promise(resolve => {
             const lastHp = hpBar.reduceHp(value);

@@ -7,10 +7,7 @@ import { useDrawcalStore } from "@/stores/gameRoundCal";
 import { useDungeonStore } from '@/stores/gameDungeon';
 const DrawcalStore = useDrawcalStore();
 const DungeonStore = useDungeonStore();
-//關卡敵人資料填充
-DungeonStore.entryDungeon("1-1")
-console.log(DungeonStore.enemyInfo);
-// 關卡測試敵人資料填充
+
 let gameOptions = {
   rowSize: 5,
   colSize: 6,
@@ -139,6 +136,8 @@ export default class Main extends Phaser.Scene {
         // console.log('放開');
         if (this.hasSwitch) {
           //有交換再啟動消珠流程
+          this.secScene.reudceMonstersCd();//扣怪物CD
+
           this.canDrag = false;
           let gameBoard = this.gameArray.map(row => row.map(col => `${col.gemColor + 1}`));
 
