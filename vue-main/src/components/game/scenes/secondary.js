@@ -22,10 +22,12 @@ export default class Secondary extends Phaser.Scene {
   init() {
     this.gameWidth = this.game.config.width;
     this.mainScenes = this.scene.get('Main');
+
+
     this.fullHp = 0;
     //關卡假資料
     // this.stage = new Map();
-    // this.stage.set('1', [
+    // this.stage.set('1', [        
     //   {
     //     id: '001',
     //     cd: 1,
@@ -114,6 +116,7 @@ export default class Secondary extends Phaser.Scene {
     }
   }
   preload() {
+
     this.load.image('pumpkin_devil', pumpkin_devil);
     this.load.image('lifeBall', lifeBall);
     this.load.spritesheet("particles", 'sprites/particles.png', {
@@ -137,6 +140,7 @@ export default class Secondary extends Phaser.Scene {
     }
   }
   create() {
+
     this.juice = new phaserJuice(this);
     const y = this.mainScenes.boardGroup.getFirst(true).y;
     this.lifeBall = this.physics.add.image(8, y, 'lifeBall').setOrigin(0, 1).setScale(0.085).setBodySize(300, 300);
@@ -195,6 +199,17 @@ export default class Secondary extends Phaser.Scene {
       }
     }
   }
+  overGame(state) {
+    //state win:1/fail:0
+    if (state) {
+
+    }
+    else {
+
+    }
+    this.scene.pause('Main');
+    this.scene.pause('Secondary');
+  }
   createPlayerHpBar(x, y, fullWidth, height, radius, hp) {
     this.playerHealthBar = new healthBar(this, x, y, fullWidth, height, radius, hp);
     const fontSize = 16;
@@ -211,14 +226,6 @@ export default class Secondary extends Phaser.Scene {
     this.HpVarietyTextTweens = [];//用來存放要中斷的tweens
     this.hpVarietyStartValue = 0;
 
-    //模擬受傷效果
-    const hurtButton = this.add.rexRoundRectangleCanvas(300, 200, 100, 50, 5, 0xff1B05, 0x000000, 0, 0xac353A, false);
-
-    hurtButton.setInteractive();
-    let test2 = 20
-    hurtButton.on('pointerdown', () => {
-      this.playerGotHurtAnimate(test2, false);//第二參數用來判斷是否為最後的攻擊
-    });
   }
   playerGotHurtAnimate(value, final = false) {
     this.playerHealthBar.shake(new phaserJuice(this));
@@ -233,6 +240,7 @@ export default class Secondary extends Phaser.Scene {
         this.hpVarietyStartValue = 0;
         if (lastHp == 0) {
           console.log('game over');
+          this.overGame();
         }
       }
     });
@@ -447,7 +455,8 @@ export default class Secondary extends Phaser.Scene {
       balls.forEach((ball, index) => {
         sc.physics.add.existing(ball.ball);
         sc.physics.add.overlap(ball.ball, ball.overLapItem, (self, overLapItem) => {
-          overLapItem.gotHurt(ball.attackValue).then(result => {
+
+          overLapItem.gotHurt(ball.attackValue, ball.color).then(result => {
             console.log(result)
             if (index == balls.length - 1) {
               if (ball.finalAttack) {
@@ -514,7 +523,8 @@ export default class Secondary extends Phaser.Scene {
                   overLapItem: this.monsterGroup.getChildren(),
                   attackValue,
                   text: hero.body.text,
-                  finalAttack: index == finalAttackIndex ? true : false
+                  finalAttack: index == finalAttackIndex ? true : false,
+                  color: hero.body.text.style.color
                   // final: index == finalIndex ? true : false,
                   // allfinal: index == allfinalIndex ? true : false
                 }
@@ -531,7 +541,8 @@ export default class Secondary extends Phaser.Scene {
                 overLapItem: this.monsterGroup.getChildren()[0],
                 attackValue,
                 text: hero.body.text,
-                finalAttack: index == finalAttackIndex ? true : false
+                finalAttack: index == finalAttackIndex ? true : false,
+                color: hero.body.text.style.color
                 // final: index == finalIndex ? true : false,
                 // allfinal: index == allfinalIndex ? true : false
               }
@@ -548,37 +559,44 @@ export default class Secondary extends Phaser.Scene {
     }
   }
   checkMonstersCd() {
-    new Promise(resolve => {
-      this.monsterGroup.getChildren().forEach((item, index, arr) => {
-        if (item.checkCd()) {
-          const attackInfo = item.getAttack();
-          let ball =this.add.circle(item.x,item.y,10, 0x6666ff);
-          ball.attack=attackInfo.attack;
-          ball.attribute=attackInfo.attribute;
-          const [toX,toY]=[
-            this.playerHealthBar.getX()+this.playerHealthBar.getWidth()/2,
-            this.playerHealthBar.getY()-this.playerHealthBar.getHeight()/2
-          ];
-          this.tweens.add({
-            targets: ball,
-            x:toX,
-            y: toY,
-            duration: 2500,
-            ease: 'linear',
-            callbackScope: this,
-            onComplete: () => {
-              ball.destroy();
-              console.log(arr.length)
-              if(index==arr.length-1){
-                this.playerGotHurtAnimate(ball.attack, true);//第二參數用來判斷是否為最後的攻擊
-              }
-              else{
-                this.playerGotHurtAnimate(ball.attack, false);//第二參數用來判斷是否為最後的攻擊
-              }
-            },
-          });
-        }
-      });
+    let lastAttackIndex;
+    this.monsterGroup.getChildren().forEach((item, index) => {
+      if (item.checkCd()) {
+        item.attack = true;
+        lastAttackIndex = index;
+      }
+    });
+
+    this.monsterGroup.getChildren().forEach((item, index, arr) => {
+      if (item.attack) {
+        item.attack = false;
+        const attackInfo = item.getAttack();
+        let ball = this.add.circle(item.x, item.y, 10, 0x6666ff);
+        ball.attack = attackInfo.attack;
+        ball.attribute = attackInfo.attribute;
+        const [toX, toY] = [
+          this.playerHealthBar.getX() + this.playerHealthBar.getWidth() / 2,
+          this.playerHealthBar.getY() - this.playerHealthBar.getHeight() / 2
+        ];
+        this.tweens.add({
+          targets: ball,
+          x: toX,
+          y: toY,
+          duration: 2500,
+          ease: 'linear',
+          callbackScope: this,
+          onComplete: () => {
+            ball.destroy();
+            console.log(arr.length)
+            if (index == lastAttackIndex) {
+              this.playerGotHurtAnimate(parseInt(ball.attack), true);//第二參數用來判斷是否為最後的攻擊
+            }
+            else {
+              this.playerGotHurtAnimate(parseInt(ball.attack), false);//第二參數用來判斷是否為最後的攻擊
+            }
+          },
+        });
+      }
     });
   }
   checkStageWin() {

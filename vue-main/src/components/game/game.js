@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import RoundRectangleCanvasPlugin from 'phaser3-rex-plugins/plugins/roundrectanglecanvas-plugin.js';
+import GrayScalePipelinePlugin from 'phaser3-rex-plugins/plugins/grayscalepipeline-plugin.js';
 import Main from '@/components/game/scenes/main'
 import Secondary from '@/components/game/scenes/secondary'
 function launch(containerId) {
@@ -19,11 +20,16 @@ function launch(containerId) {
     plugins: {
       global: [
         {
-          key: 'rexRoundRectangleCanvasPlugin',
+          key: 'rexRoundRectangleCanvas',
           plugin: RoundRectangleCanvasPlugin,
           start: true
         },
-        
+        {
+          key: 'rexGrayScalePipeline',
+          plugin: GrayScalePipelinePlugin,
+          start: true
+        },
+
         // ...
       ]
     }

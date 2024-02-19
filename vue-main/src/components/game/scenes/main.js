@@ -27,6 +27,7 @@ export default class Main extends Phaser.Scene {
     this.load.audio('gemSwitchSound', gemSwitchSound);
   }
   create() {
+    this.self=this;
     this.canDrag = true;
     this.input.mouse.disableContextMenu();
     // 获取游戏画布的 DOM 元素
@@ -162,6 +163,8 @@ export default class Main extends Phaser.Scene {
     this.secScene = this.scene.get('Secondary');
 
   }
+
+
   isGem(object) {
     return this.gemGroup.contains(object);
   }
@@ -234,8 +237,6 @@ export default class Main extends Phaser.Scene {
     gem.setInteractive();//將此遊戲物件傳遞給輸入管理器以啟用它的輸入。        
     gem.input.hitArea.setTo(65 / 2, 65 / 2, 40, 40);// 设置输入事件的範圍
 
-
-
   }
 
   isMatch(row, col) {
@@ -304,8 +305,10 @@ export default class Main extends Phaser.Scene {
     else {
       this.canDrag = true;
       console.log(DungeonStore.finalDmg[3][0])
-      this.secScene.playerCure(DungeonStore.finalDmg[3][0]);
-      this.secScene.heroAttack(DungeonStore.finalDmg);      
+      if (DungeonStore.finalDmg[3][0] != 0) {
+        this.secScene.playerCure(DungeonStore.finalDmg[3][0]);
+      }
+      this.secScene.heroAttack(DungeonStore.finalDmg);
     }
   }
 
