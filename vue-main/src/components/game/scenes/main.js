@@ -160,6 +160,8 @@ export default class Main extends Phaser.Scene {
     });
     this.initGameArea();
     this.scene.run('Secondary');//上方場景
+    // this.scene.run('Dun');//背景
+    // this.scene.moveDown('Dun')
     this.secScene = this.scene.get('Secondary');
 
   }

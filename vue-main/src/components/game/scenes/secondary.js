@@ -22,7 +22,7 @@ export default class Secondary extends Phaser.Scene {
   init() {
     this.gameWidth = this.game.config.width;
     this.mainScenes = this.scene.get('Main');
-
+    this.dunScenes = this.scene.get('Dun');
 
     this.fullHp = 0;
     //關卡假資料
@@ -82,42 +82,44 @@ export default class Secondary extends Phaser.Scene {
     });
   }
   nextStage() {
+
     const nextEntry = this.stageIterator.next();
     if (!nextEntry.done) {
-      let [key, value] = nextEntry.value;
-      let [x, y, gap, sizeRatio] = [
-        this.game.config.width / 2,
-        (this.heros[0].body.y - this.heros[0].body.displayHeight) / 2,
-        0,
-        0.4
-      ]
-      switch (value.length) {
-        case 1:
-          break;
-        case 2:
-          x -= 65;
-          gap = 130;
-          sizeRatio = 0.2;
-          break;
-        case 3:
-          x -= 125;
-          gap = 125;
-          sizeRatio = 0.2;
-          break;
-      }
-      let m;
-      value.forEach((item, index) => {
-        //scene, x, y, texture, ratio, hp, cd, attack,attribute
-        this.monsterGroup.add(monster(this, x + index * gap, y, `monster${item[0]}`, sizeRatio, item[2], item[4], item[3], item[1]));
+      this.dunScenes.shakeY().then(result => {
+        let [key, value] = nextEntry.value;
+        let [x, y, gap, sizeRatio] = [
+          this.game.config.width / 2,
+          (this.heros[0].body.y - this.heros[0].body.displayHeight) / 2,
+          0,
+          0.4
+        ]
+        switch (value.length) {
+          case 1:
+            break;
+          case 2:
+            x -= 65;
+            gap = 130;
+            sizeRatio = 0.2;
+            break;
+          case 3:
+            x -= 125;
+            gap = 125;
+            sizeRatio = 0.2;
+            break;
+        }
+        let m;
+        value.forEach((item, index) => {
+          //scene, x, y, texture, ratio, hp, cd, attack,attribute
+          this.monsterGroup.add(monster(this, x + index * gap, y, `monster${item[0]}`, sizeRatio, item[2], item[4], item[3], item[1]));
+        });
       });
     }
     else {
       console.log('勝利');
+      this.overGame(1);
     }
   }
   preload() {
-
-    this.load.image('pumpkin_devil', pumpkin_devil);
     this.load.image('lifeBall', lifeBall);
     this.load.spritesheet("particles", 'sprites/particles.png', {
       frameWidth: 50,
@@ -140,7 +142,6 @@ export default class Secondary extends Phaser.Scene {
     }
   }
   create() {
-
     this.juice = new phaserJuice(this);
     const y = this.mainScenes.boardGroup.getFirst(true).y;
     this.lifeBall = this.physics.add.image(8, y, 'lifeBall').setOrigin(0, 1).setScale(0.085).setBodySize(300, 300);
@@ -201,12 +202,8 @@ export default class Secondary extends Phaser.Scene {
   }
   overGame(state) {
     //state win:1/fail:0
-    if (state) {
-
-    }
-    else {
-
-    }
+    const overGameScene = this.scene.get('OverGame');
+    overGameScene.show(state);
     this.scene.pause('Main');
     this.scene.pause('Secondary');
   }
@@ -240,7 +237,7 @@ export default class Secondary extends Phaser.Scene {
         this.hpVarietyStartValue = 0;
         if (lastHp == 0) {
           console.log('game over');
-          this.overGame();
+          this.overGame(0);
         }
       }
     });
@@ -572,27 +569,39 @@ export default class Secondary extends Phaser.Scene {
         item.attack = false;
         const attackInfo = item.getAttack();
         let ball = this.add.circle(item.x, item.y, 10, 0x6666ff);
-        ball.attack = attackInfo.attack;
-        ball.attribute = attackInfo.attribute;
+
         const [toX, toY] = [
           this.playerHealthBar.getX() + this.playerHealthBar.getWidth() / 2,
           this.playerHealthBar.getY() - this.playerHealthBar.getHeight() / 2
         ];
+        console.log(item);
+        console.log(item.attribute)
+        const particles = this.add.particles(0, 0, 'particles', {
+          frame: attackInfo.attribute - 1,
+          speed: 100,
+          scale: { start: 0.7, end: 0 },
+          lifespan: 800,
+          angle: { min: -120, max: -80 },
+          scale: { start: 0.70, end: 0, ease: 'sine.out' },
+          blendMode: 'ADD',
+          follow: ball
+        });
         this.tweens.add({
           targets: ball,
           x: toX,
           y: toY,
-          duration: 2500,
-          ease: 'linear',
+          duration: 500,
+          ease: 'sine.inOut',
           callbackScope: this,
           onComplete: () => {
             ball.destroy();
+            particles.destroy();
             console.log(arr.length)
             if (index == lastAttackIndex) {
-              this.playerGotHurtAnimate(parseInt(ball.attack), true);//第二參數用來判斷是否為最後的攻擊
+              this.playerGotHurtAnimate(parseInt(attackInfo.attack), true);//第二參數用來判斷是否為最後的攻擊
             }
             else {
-              this.playerGotHurtAnimate(parseInt(ball.attack), false);//第二參數用來判斷是否為最後的攻擊
+              this.playerGotHurtAnimate(parseInt(attackInfo.attack), false);//第二參數用來判斷是否為最後的攻擊
             }
           },
         });
