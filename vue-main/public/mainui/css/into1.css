@@ -7,20 +7,19 @@ br {
 }
 
 .body1 {
+    position: relative;
     background-image: url('/mainui/images/into/04.jpg');
-    width: 850px;
-    height: 1085px;
-    background-size: 100% 100%;
+    width: 603.562px;
+    height: 100%;
+    background-size: 145% 100%;
     background-repeat: no-repeat;
-
 }
 
 .box {
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 130px;
-    width: 600px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 80%;
     height: 650px;
 }
 
@@ -124,6 +123,19 @@ br {
 .inbox8 {
     position: absolute;
     font-size: 30px;
+    top: 510px;
+    left: 350px;
+    width: 180px;
+    height: 90px;
+}
+
+.btn1{
+    position: absolute;
+    background-image: url('https://fakeimg.pl/50x50/200/?text=change');
+    background-color: transparent;
+    /* 按鈕的背景顏色變為透明的 */
+    border-style: none;
+    background-size: 100% 100%; 
     top: 510px;
     left: 350px;
     width: 180px;

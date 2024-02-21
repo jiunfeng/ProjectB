@@ -28,7 +28,7 @@
         </div>
         <!-- 下方 -->
         <!-- 角色圖案 下方中間，需資料庫資料-->
-        <img class="conimg1 translate-middle-x " src="/mainui/images/role/role2-1.jpg">
+        <img class="conimg1 translate-middle-x" src="/mainui/images/role/role2-1.jpg">
         <!-- 換角色按鈕 下方右邊-->
         <button type="submit" class="conchangimg1"></button>
         <!-- 戰鬥按鈕 中間左邊-->
@@ -40,7 +40,7 @@
         <!-- 引用在public中的css -->
         <link rel="stylesheet" href="/mainui/css/index1.css">
         <link rel="stylesheet" href="/mainui/css/bootstrap.min.css">
-                
+
     </div>
 </template>
 
