@@ -18,7 +18,7 @@ br {
 }
 
 .body1 {
-    background-image: url('src/assets/mainui/images/index/03.jpg');
+    background-image: url('/mainui/images/index/03.jpg');
     width: 607.5px;
     height: 1080px;
     background-size: 135% 100%;
@@ -50,7 +50,7 @@ br {
     aspect-ratio: 1;
     background-color: transparent;
     /* 按鈕的背景顏色變為透明的 */
-    background-image: url('src/assets/mainui/images/index/1-1-3.png');
+    background-image: url('/mainui/images/index/1-1-3.png');
     background-size: 100% 100%;
     top: 2.92%;
     left: 9.5%;
@@ -97,7 +97,7 @@ br {
     background-color: transparent;
     /* 按鈕的背景顏色變為透明的 */
     border-style: none;
-    background-image: url('src/assets/mainui/images/index/change.png');
+    background-image: url('/mainui/images/index/change.png');
     background-size: 100% 100%;    
     border-radius: 50%;
     height: 5%;

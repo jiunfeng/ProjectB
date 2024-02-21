@@ -7,7 +7,7 @@ br {
 }
 
 .body1 {
-    background-image: url('@/mainside/images/into/04.jpg');
+    background-image: url('/mainui/images/into/04.jpg');
     width: 850px;
     height: 1085px;
     background-size: 100% 100%;

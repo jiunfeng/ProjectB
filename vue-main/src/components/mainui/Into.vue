@@ -26,10 +26,12 @@
                 name="" id="" onclick="send();" />
         </div>
     </div>
+
+    <link rel="stylesheet" href="/mainui/css/into1.css">
+    <link rel="stylesheet" href="/mainui/css/bootstrap.min.css">
 </template>
 
 <script setup>
-import '@/mainside/css/bootstrap.min.css'
-import '@/mainside/css/into1.css'
+
 </script>
 

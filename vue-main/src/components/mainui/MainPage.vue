@@ -2,8 +2,8 @@
     <div class="body1 mx-auto br">
         <!-- 上方 -->
         <!-- 頭貼 左上方，需資料庫資料-->
-        <img class="userimg1" src="@/assets/mainui/images/index/1-1-2.png" alt="">
-        <img class="userimg1-1" src="@/assets/mainui/images/role/002_small.png" alt="">
+        <img class="userimg1" src="/mainui/images/index/1-1-2.png" alt="">
+        <img class="userimg1-1" src="/mainui/images/role/002_small.png" alt="">
         <button type="button" class="userimg1-2"></button>
         <!-- <input class="userimg1-2" type="image" src="./src/assets/mainui/images/index/1-1-3.png" alt="" name="" id=""/> -->
 
@@ -20,15 +20,15 @@
         <!-- 資源 -->
         <div class="usermoneydiv1 bg1 rounded-pill textsize2 br text-center">
             <!-- 錢 上方，需資料庫資料 -->
-            <img class="usermoneyimg1" src="@/assets/mainui/images/index/money2.png">
+            <img class="usermoneyimg1" src="/mainui/images/index/money2.png">
             <span class="text-white">&nbsp;<span v-text="userStore.usermoney"></span></span>
             <!-- 經驗 上方，需資料庫資料 -->
-            <img class="userexpimg1 my-2 ms-2" src="@/assets/mainui/images/index/exp2.png">
+            <img class="userexpimg1 my-2 ms-2" src="/mainui/images/index/exp2.png">
             <span class="text-white mx-1" v-text="userStore.userexp"></span>
         </div>
         <!-- 下方 -->
         <!-- 角色圖案 下方中間，需資料庫資料-->
-        <img class="conimg1 translate-middle-x " src="@/assets/mainui/images/role/role2-1.jpg">
+        <img class="conimg1 translate-middle-x " src="/mainui/images/role/role2-1.jpg">
         <!-- 換角色按鈕 下方右邊-->
         <button type="submit" class="conchangimg1"></button>
         <!-- 戰鬥按鈕 中間左邊-->
@@ -36,36 +36,37 @@
         <!-- 箱子按鈕 中間左邊-->
         <button type="submit" class="btnbox1 border" @click="changePage('box')" @mouseover="boxover"  @mouseleave="boxleave" v-bind:style="{ backgroundImage: 'url('+boximg1+')' }"></button>
         <!-- 幻燈片 中間右邊-->
-        
+
+        <!-- 引用在public中的css -->
+        <link rel="stylesheet" href="/mainui/css/index1.css">
+        <link rel="stylesheet" href="/mainui/css/bootstrap.min.css">
+                
     </div>
 </template>
 
 <script setup>
-import '@/assets/mainui/css/bootstrap.min.css'
-import '@/assets/mainui/css/index1.css'
-
 // 須自己打的預設
 import { ref } from 'vue'
 // fightimg圖片改變
-const fightimg1=ref('src/assets/mainui/images/index/exp2.png');
+const fightimg1=ref('/mainui/images/index/exp2.png');
 // 進入元素
 function fightover() {
-    fightimg1.value='src/assets/mainui/images/index/money2.png'
+    fightimg1.value='/mainui/images/index/money2.png'
 }
 // 離開元素
 function fightleave() {
-    fightimg1.value='src/assets/mainui/images/index/exp2.png'
+    fightimg1.value='/mainui/images/index/exp2.png'
 }
 
 // boximg圖片改變
-const boximg1=ref('src/assets/mainui/images/index/exp2.png');
+const boximg1=ref('/mainui/images/index/exp2.png');
 // 進入元素
 function boxover() {
-    boximg1.value='src/assets/mainui/images/index/money2.png'
+    boximg1.value='/mainui/images/index/money2.png'
 }
 // 離開元素
 function boxleave() {
-    boximg1.value='src/assets/mainui/images/index/exp2.png'
+    boximg1.value='/mainui/images/index/exp2.png'
 }
 
 // import { computed } from 'vue';
