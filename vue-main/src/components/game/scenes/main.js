@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import { toRaw } from 'vue';
 import gems from '@/components/game/assets/sprites/gems.png'
 import gemSwitchSound from '@/components/game/assets/audio/test.mp3'
-
+import timeBar from './class/timeBar';
 import { useDrawcalStore } from "@/stores/gameRoundCal";
 import { useDungeonStore } from '@/stores/gameDungeon';
 const DrawcalStore = useDrawcalStore();
@@ -26,9 +26,21 @@ export default class Main extends Phaser.Scene {
     });
     this.load.audio('gemSwitchSound', gemSwitchSound);
   }
-  create() {
-    this.self=this;
+  Drag() {
     this.canDrag = true;
+  }
+  createTimeBar() {
+    // const BarConfig = {
+    //   x: this.timeBall.x + this.timeBall.displayWidth,
+    //   y: this.timeBall.y,
+    //   width: 350,
+    //   height: 20
+    // }
+    this.timeBar = new timeBar(this, 60, 300, 350, 20, 5);
+  }
+  create() {
+    this.self = this;
+    this.canDrag = false;
     this.input.mouse.disableContextMenu();
     // 获取游戏画布的 DOM 元素
     const canvasElement = this.game.canvas;
@@ -75,7 +87,11 @@ export default class Main extends Phaser.Scene {
             // 撥放前 2 秒
             //sourceNode.start(0, 3, 1);  // 開始播放，延遲 0 秒，從第3秒開始，持續時間為 2 秒
             //------------------------------------------------
-
+            if (!this.hasSwitch) {
+              this.timeBar.startCountingDown(15).then(result=>{
+                this.input.emit('pointerup');
+              });
+            }
             this.hasSwitch = true;
             const swapGem = this.gameArray[other.i][other.j].gemSprite;
             const swapGemColor = this.gameArray[other.i][other.j].gemColor;
@@ -137,6 +153,7 @@ export default class Main extends Phaser.Scene {
         // console.log('放開');
         if (this.hasSwitch) {
           //有交換再啟動消珠流程
+          this.timeBar.stopCountingDown();
           this.secScene.reudceMonstersCd();//扣怪物CD
 
           this.canDrag = false;
@@ -159,11 +176,9 @@ export default class Main extends Phaser.Scene {
       }
     });
     this.initGameArea();
+    this.createTimeBar();
     this.scene.run('Secondary');//上方場景
-    // this.scene.run('Dun');//背景
-    // this.scene.moveDown('Dun')
     this.secScene = this.scene.get('Secondary');
-
   }
 
 
@@ -331,7 +346,7 @@ export default class Main extends Phaser.Scene {
           this.tweens.add({
             targets: gemSprite,
             alpha: 0.5,
-            duration: 800,
+            duration: 500,
             ease: 'quad.out',
             callbackScope: this,
             onComplete: () => {
@@ -374,7 +389,7 @@ export default class Main extends Phaser.Scene {
           this.tweens.add({
             targets: this.gameArray[i][j].gemSprite,
             y: this.gameArray[i][j].y + (this.cellSetting.size * emptyCount),  // 目標 y 座標
-            duration: 1000,  // 持續時間（毫秒）
+            duration: 500,  // 持續時間（毫秒）
             ease: 'quad.out',  // 使用的緩動函數（例如 'Linear'、'Cubic' 等）
             callbackScope: this,
             onComplete: () => {
@@ -427,7 +442,7 @@ export default class Main extends Phaser.Scene {
           this.tweens.add({
             targets: gemSprite,
             y: currentGem.y,
-            duration: 1000,
+            duration: 500,
             ease: 'quad.out',
             callbackScope: this,
             onComplete: () => {

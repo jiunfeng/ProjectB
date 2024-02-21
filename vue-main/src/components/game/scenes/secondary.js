@@ -7,6 +7,7 @@ import lifeBall from '@/components/game/assets/sprites/lifeball.png'
 import { toRaw } from 'vue';
 
 import healthBar from '@/components/game/scenes/class/healthBar.js';
+
 import monster from '@/components/game/scenes/class/monster.js';
 
 import { useUserInfoStore } from '@/stores/userInfo';
@@ -112,6 +113,7 @@ export default class Secondary extends Phaser.Scene {
           //scene, x, y, texture, ratio, hp, cd, attack,attribute
           this.monsterGroup.add(monster(this, x + index * gap, y, `monster${item[0]}`, sizeRatio, item[2], item[4], item[3], item[1]));
         });
+        this.mainScenes.Drag();
       });
     }
     else {
@@ -156,18 +158,21 @@ export default class Secondary extends Phaser.Scene {
     this.nextStage();
   }
   addHero() {
-    const hpBarConfig = {
+    const BarConfig = {
+      x:this.lifeBall.x + this.lifeBall.displayWidth,
+      y:this.lifeBall.y,
       width: 350,
       height: 20
     }
     this.redHero = [];
     this.blueHero = [];
     this.greenHero = [];
-    this.createPlayerHpBar(this.lifeBall.x + this.lifeBall.displayWidth, this.lifeBall.y, hpBarConfig.width, hpBarConfig.height, 5, this.fullHp);
+
+    this.createPlayerHpBar(BarConfig.x,BarConfig.y , BarConfig.width, BarConfig.height, 5, this.fullHp);
     const gap = (350 - 70 * 3) / 3
     let [x, y] = [
       this.lifeBall.x + this.lifeBall.displayWidth + (350 - 70 * 3) / 6,
-      this.lifeBall.y - hpBarConfig.height
+      this.lifeBall.y - BarConfig.height
     ];
     for (let i = 0; i < 3; i++) {
       this.heros[i].body = this.physics.add.image(x + 70 * i + gap * i, y, `hero${i + 1}`).setOrigin(0, 1).setScale(0.7).setBodySize(50, 50);
@@ -207,8 +212,10 @@ export default class Secondary extends Phaser.Scene {
     this.scene.pause('Main');
     this.scene.pause('Secondary');
   }
+
   createPlayerHpBar(x, y, fullWidth, height, radius, hp) {
     this.playerHealthBar = new healthBar(this, x, y, fullWidth, height, radius, hp);
+    
     const fontSize = 16;
     this.playerHpText = this.add.text(x + fullWidth, y, `${hp}/${hp}`, { fontFamily: 'Arial Black', fontSize: fontSize, color: '#dddddd' });
     this.playerHpText.setOrigin(1.1, 1)
