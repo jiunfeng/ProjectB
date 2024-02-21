@@ -143,6 +143,14 @@ export default class Secondary extends Phaser.Scene {
       });
     }
   }
+  showLife(){
+    this.lifeBall.setVisible(true);
+    this.playerHealthBar.show();
+  }
+  hideLife(){
+    this.lifeBall.setVisible(false);
+    this.playerHealthBar.hide();
+  }
   create() {
     this.juice = new phaserJuice(this);
     const y = this.mainScenes.boardGroup.getFirst(true).y;

@@ -25,18 +25,22 @@ export default class Main extends Phaser.Scene {
       frameHeight: gameOptions.gemSize
     });
     this.load.audio('gemSwitchSound', gemSwitchSound);
+    this.load.image('timeBall','sprites/time1.png');
   }
   Drag() {
     this.canDrag = true;
   }
   createTimeBar() {
-    // const BarConfig = {
-    //   x: this.timeBall.x + this.timeBall.displayWidth,
-    //   y: this.timeBall.y,
-    //   width: 350,
-    //   height: 20
-    // }
-    this.timeBar = new timeBar(this, 60, 300, 350, 20, 5);
+    const y = this.boardGroup.getFirst(true).y;
+    this.timeBall = this.add.image(8, y, 'timeBall').setOrigin(0, 1).setScale(0.085);
+    console.log(this.timeBall);
+    const BarConfig = {
+      x: this.timeBall.x + this.timeBall.displayWidth,
+      y: this.timeBall.y,
+      width: 350,
+      height: 20
+    }
+    this.timeBar = new timeBar(this,BarConfig.x,BarConfig.y, BarConfig.width,BarConfig.height, 5);
   }
   create() {
     this.self = this;
@@ -88,8 +92,10 @@ export default class Main extends Phaser.Scene {
             //sourceNode.start(0, 3, 1);  // 開始播放，延遲 0 秒，從第3秒開始，持續時間為 2 秒
             //------------------------------------------------
             if (!this.hasSwitch) {
+              this.secScene.hideLife();
               this.timeBar.startCountingDown(15).then(result=>{
                 this.input.emit('pointerup');
+                this.secScene.showLife();
               });
             }
             this.hasSwitch = true;
