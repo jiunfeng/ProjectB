@@ -1,8 +1,9 @@
 import Phaser from 'phaser'
 import RoundRectangleCanvasPlugin from 'phaser3-rex-plugins/plugins/roundrectanglecanvas-plugin.js';
-import GrayScalePipelinePlugin from 'phaser3-rex-plugins/plugins/grayscalepipeline-plugin.js';
 import Main from '@/components/game/scenes/main'
 import Secondary from '@/components/game/scenes/secondary'
+import Dun from '@/components/game/scenes/dun'
+import OverGame from './scenes/overGame';
 function launch(containerId) {
   return new Phaser.Game({
     type: Phaser.AUTO,
@@ -16,7 +17,7 @@ function launch(containerId) {
         debug: true,
       }
     },
-    scene: [Main, Secondary],
+    scene: [Dun, Main, Secondary,OverGame],
     plugins: {
       global: [
         {
@@ -24,12 +25,6 @@ function launch(containerId) {
           plugin: RoundRectangleCanvasPlugin,
           start: true
         },
-        {
-          key: 'rexGrayScalePipeline',
-          plugin: GrayScalePipelinePlugin,
-          start: true
-        },
-
         // ...
       ]
     }

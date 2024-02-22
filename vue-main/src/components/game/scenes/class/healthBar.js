@@ -115,5 +115,15 @@ export default class healthBar {
         this.#healthBarShadow.destroy();
         this.#healthBar.destroy();
     }
+    show(){
+        this.#healthBarFrame.setVisible(true);
+        this.#healthBarShadow.setVisible(true);
+        this.#healthBar.setVisible(true);
+    }
+    hide(){
+        this.#healthBarFrame.setVisible(false);
+        this.#healthBarShadow.setVisible(false);
+        this.#healthBar.setVisible(false);
+    }
 }
 
