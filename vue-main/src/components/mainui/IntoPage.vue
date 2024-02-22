@@ -6,12 +6,12 @@
             <!-- 帳號 -->
             <label for="in1" class="text1 text-white">帳號 :</label>
             <div class="inputdiv1">
-                <input type="text" class="input1 form-control is-invalid" name="in1" id="in1" placeholder="請輸入5~8個之間的英文數字"
+                <input type="text" class="input1 form-control is-invalid" v-model="account" name="in1" id="in1" placeholder="請輸入5~8個之間的英文數字"
                     oninput="value=value.replace(/[^\w\.\/]/ig,'')" style="font-size: 20px;">
                 <!-- 只能輸入數字和英文 -->
                 <div class="valid-feedback input1-1" style="font-size: 25px;">&nbsp;字數符合</div>
                 <div class="invalid-feedback input1-2" id="inva01" style="font-size: 25px;">&nbsp;字數請在5~8之內</div>
-                <div class="invalid-feedback input1-3 d-none" id="inva02" >&nbsp;帳號已存在</div>
+                <div class="invalid-feedback input1-3 d-none" id="inva02">&nbsp;帳號已存在</div>
             </div>
             <!-- 密碼 -->
             <label for="in2" class="text2 text-white">密碼 :</label>
@@ -22,7 +22,7 @@
                 <div class="input2-2 invalid-feedback" id="inva01" style="font-size: 25px;">&nbsp;字數請在5~8之內</div>
             </div>
             <!-- 登入按鈕 -->
-            <button class="btn1 border border-success" type="button"></button>
+            <button class="btn1 border border-success" type="button" @click="into"></button>
             <!-- 註冊按鈕 -->
             <button class="btn2 border border-success" type="button"></button>
         </div>
@@ -33,10 +33,23 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+// 控制使用者currentPage導向
+// 連線userInfo.js的資料
+import { useUserInfoStore } from "@/stores/userInfo";
+// 宣告userStore擁有userInfo.js的資料
+const userStore = useUserInfoStore();
+const changePage = (page) => {
+    userStore.currentPage = page;
+}
+
+function into(){
+    if(account=)
+    {}
+}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
 
 
 

@@ -27,7 +27,7 @@ br {
     position: absolute;
     left: 51.5%;
     top: 15%;
-    width: 120%;
+    width: 140%;
     height: 63%;
 
 }
@@ -55,10 +55,8 @@ br {
 .text2 {
     position: absolute;
     font-size: 35px;
-    top: 360px;
-    left: 28px;
-    width: 300px;
-    height: 130px;
+    top: 55%;
+    left: 5%;
 }
 
 .inputdiv2{
