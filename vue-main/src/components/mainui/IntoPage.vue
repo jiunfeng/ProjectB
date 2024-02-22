@@ -1,8 +1,8 @@
 <template>
-    <div class="body1 mx-auto row">
+    <div class="body1 mx-auto">
         <!-- 灰色內容 -->
-        <div class="box bg1 row">
-            <img class="inbox1 translate-middle-x" src="https://fakeimg.pl/100x100/200">
+        <div class="box bg1 translate-middle">
+            <img src="/mainui/images/into/welcome.png" alt="">
             <!-- 帳號 -->
             <label for="in1" class="inbox2 text-white">帳號 :</label>
             <div>
@@ -24,12 +24,18 @@
             <!-- 登入按鈕 -->
             <input class="inbox8 border border-success" type="image" src="https://fakeimg.pl/50x50/200/?text=change" alt=""
                 name="" id="" onclick="send();" />
+            <button class="btn1 border border-success" type="button"></button>
         </div>
     </div>
+
+    <link rel="stylesheet" href="/mainui/css/into1.css">
+    <link rel="stylesheet" href="/mainui/css/bootstrap.min.css">
 </template>
 
 <script setup>
-import '@/mainside/css/bootstrap.min.css'
-import '@/mainside/css/into1.css'
+
 </script>
+
+<style scoped>
+</style>
 

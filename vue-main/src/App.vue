@@ -2,6 +2,7 @@
 // import { RouterLink, RouterView } from 'vue-router'
 import { computed } from 'vue';
 import GamePage from "@/views/GameView.vue";
+import IntoPage from "@/views/IntoView.vue";
 import MainUIPage from "@/views/MainUIView.vue"
 import BoxPage from "@/views/PetBoxView.vue";
 import { useUserInfoStore } from "@/stores/userInfo";
@@ -13,6 +14,8 @@ userStore._setTestAccount()//預塞測試帳號資料
 // 控制使用者currentPage導向
 const currentPageComponent = computed(() => {
   switch (userStore.currentPage) {
+    case 'into':
+      return IntoPage;
     case 'main':
       return MainUIPage;
     case 'game':
@@ -56,6 +59,7 @@ const changePage = (page) => {
   </main>
   <div class="ccc">
     <h1>main test</h1>
+    <button @click="changePage('into')">IntoPage</button>
     <button @click="changePage('main')">MainPage</button>
     <button @click="changePage('game')">game</button>
     <button @click="changePage('box')">box</button>
