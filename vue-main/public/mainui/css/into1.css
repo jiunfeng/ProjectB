@@ -20,113 +20,56 @@ br {
     left: 50%;
     top: 50%;
     width: 80%;
-    height: 650px;
+    height: 55%;
 }
 
-.inbox1 {
+.welcome{
     position: absolute;
-    top: 20px;
-    left: 300px;
-    width: 300px;
-    height: 130px;
+    left: 51.5%;
+    top: 15%;
+    width: 140%;
+    height: 63%;
+
 }
 
-.inbox2 {
-    position: absolute;
-    font-size: 35px;
-    top: 208px;
-    left: 28px;
-    width: 300px;
-    height: 130px;
-}
-
-.inbox3 {
-    position: absolute;
-    font-size: 30px;
-    top: 200px;
-    left: 150px;
-    width: 400px;
-    height: 80px;
-}
-
-.inbox3-1 {
-    position: absolute;
-    font-size: 30px;
-    top: 280px;
-    left: 160px;
-}
-
-.inbox3-2 {
-    position: absolute;
-    font-size: 30px;
-    top: 280px;
-    left: 160px;
-}
-
-.inbox3-3 {
-    position: absolute;
-    font-size: 30px;
-    top: 280px;
-    left: 160px;
-}
-
-.inbox4 {
+.text1 {
     position: absolute;
     font-size: 35px;
-    top: 360px;
-    left: 28px;
-    width: 300px;
-    height: 130px;
+    top: 33%;
+    left: 5%;
 }
 
-.inbox5 {
+.inputdiv1{
     position: absolute;
-    font-size: 30px;
-    top: 350px;
-    left: 150px;
-    width: 400px;
-    height: 80px;
+    top: 32%;
+    left: 26%;
+    width: 70%;
+    height: 13%;
 }
 
-.inbox5-1 {
-    position: absolute;
-    font-size: 30px;
-    top: 432px;
-    left: 160px;
+.input1 {
+    width: 100%;
+    height: 80%;
 }
 
-.inbox5-2 {
+.text2 {
     position: absolute;
-    font-size: 30px;
-    top: 432px;
-    left: 160px;
+    font-size: 35px;
+    top: 55%;
+    left: 5%;
 }
 
-.inbox6 {
+.inputdiv2{
     position: absolute;
-    font-size: 25px;
-    top: 512px;
-    left: 28px;
-    width: 300px;
-    height: 130px;
+    top: 55%;
+    left: 26%;
+    width: 70%;
+    height: 13%;
 }
 
-.inbox7 {
-    position: absolute;
-    font-size: 30px;
-    top: 505px;
-    left: 220px;
-    width: 330px;
-    height: 80px;
-}
-
-.inbox8 {
-    position: absolute;
-    font-size: 30px;
-    top: 510px;
-    left: 350px;
-    width: 180px;
-    height: 90px;
+.input2 {
+    width: 100%;
+    height: 80%;
 }
 
 .btn1{
@@ -136,8 +79,23 @@ br {
     /* 按鈕的背景顏色變為透明的 */
     border-style: none;
     background-size: 100% 100%; 
-    top: 510px;
-    left: 350px;
-    width: 180px;
-    height: 90px;
+    top: 77%;
+    right: 5%;
+    width: 35%;
+    height: 16%;
 }
+
+.btn2{
+    position: absolute;
+    background-image: url('https://fakeimg.pl/50x50/200/?text=change');
+    background-color: transparent;
+    /* 按鈕的背景顏色變為透明的 */
+    border-style: none;
+    background-size: 100% 100%; 
+    top: 77%;
+    left: 10%;
+    width: 35%;
+    height: 16%;
+}
+
+
