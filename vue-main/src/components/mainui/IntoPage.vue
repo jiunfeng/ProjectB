@@ -6,33 +6,38 @@
             <!-- 帳號 -->
             <label for="in1" class="text1 text-white">帳號 :</label>
             <div class="inputdiv1">
-                <input type="text" class="input1 form-control is-invalid" v-model="account" name="in1" id="in1"
-                    placeholder="請輸入5~8個之間的英文數字" oninput="value=value.replace(/[^\w\.\/]/ig,'')" style="font-size: 20px;">
+                <input type="text" class="input1 form-control"
+                    :class="{ 'is-invalid': account.length < 5 || account.length > 10, 'is-valid': account.length >= 5 && account.length <= 10 }"
+                    v-model="account" name="in1" id="in1" placeholder="請輸入5~8個之間的英文數字"
+                    oninput="value=value.replace(/[^\w\.\/]/ig,'')" style="font-size: 20px;">
                 <!-- 只能輸入數字和英文 -->
                 <div class="valid-feedback input1-1" style="font-size: 25px;">&nbsp;字數符合</div>
                 <div class="invalid-feedback input1-2" id="inva01" style="font-size: 25px;">&nbsp;字數請在5~8之內</div>
-                <div class="invalid-feedback input1-3 d-none" id="inva02">&nbsp;帳號已存在</div>
+                <!-- <div class="invalid-feedback input1-3 d-none" id="inva02">&nbsp;帳號已存在</div> -->
             </div>
             <!-- 密碼 -->
             <label for="in2" class="text2 text-white">密碼 :</label>
             <div class="inputdiv2">
-                <input type="password" class="input2 form-control is-invalid" v-model="password" name="in2" id="in2"
-                    placeholder="請輸入5~8個之間的英文數字" oninput="value=value.replace(/[^\w\.\/]/ig,'')" style="font-size: 20px;">
+                <input type="password" class="input2 form-control"
+                    :class="{ 'is-invalid': password.length < 5 || password.length > 10, 'is-valid': password.length >= 5 && password.length <= 10 }"
+                    v-model="password" name="in2" id="in2" placeholder="請輸入5~8個之間的英文數字"
+                    oninput="value=value.replace(/[^\w\.\/]/ig,'')" style="font-size: 20px;">
                 <div class="input2-1 valid-feedback" style="font-size: 25px;">&nbsp;字數符合</div>
                 <div class="input2-2 invalid-feedback" id="inva01" style="font-size: 25px;">&nbsp;字數請在5~8之內</div>
             </div>
             <!-- 登入按鈕 -->
             <button class="btn1 border border-success" type="button" @click="into"></button>
             <!-- 註冊按鈕 -->
-            <button class="btn2 border border-success" type="button" data-bs-toggle="modal"
-                data-bs-target="#exampleModal"></button>
+            <button class="btn2 border border-success" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                @click="reg"></button>
         </div>
-    </div>
 
-    <!-- 註冊頁面 -->
-    <div class="reg-mask mx-auto" :style="regdivsty">
-        <div class="reg-container" @click.self="reg">
-            <div class="reg-body"></div>
+        <!-- 註冊頁面 -->
+        <div class="reg-mask mx-auto" :style="regdivsty" @click.self="regmask">
+            <div class="reg-container translate-middle" :style="regdivsty1">
+                <button class="reg-btn border-4 translate-middle" @click.self="regmask"></button>
+                <img src="/mainui/images/into/reg.png" alt="">
+            </div>
         </div>
     </div>
 
@@ -41,7 +46,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+// import "@/assets/into1.css"
+import { ref, computed } from 'vue'
 // 控制使用者currentPage導向
 // 連線userInfo.js的資料
 import { useUserInfoStore } from "@/stores/userInfo";
@@ -51,7 +57,8 @@ const userStore = useUserInfoStore();
 const account = ref('')
 const password = ref('')
 const main = ref('main')
-const isShow=ref(true);
+// const regdivsty = ref(false)
+
 function into() {
     // console.log(account.value);
     if (account.value == userStore.useraccount && password.value == userStore.userpassword) {
@@ -61,13 +68,31 @@ function into() {
     }
 }
 // 註冊
+const isShow = ref(false);
 const regdivsty = computed(() => {
-  return  {'display': isShow ? '' : 'none'}    
-})
+    return { "height": isShow.value ? "100%" : "0%" };
+});
+const regdivsty1 = computed(() => {
+    return { "height": isShow.value ? "55%" : "0%" };
+});
+
+console.log(regdivsty);
+function reg() {
+    isShow.value = true;
+    console.log(isShow.value);
+    console.log(regdivsty.value);
+}
+
+function regmask() {
+    isShow.value = false;
+    console.log(isShow.value);
+    console.log(regdivsty.value);
+}
 
 </script>
 
 <style scoped></style>
+
 
 
 

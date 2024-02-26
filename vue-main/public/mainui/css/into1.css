@@ -21,6 +21,8 @@ br {
     top: 50%;
     width: 80%;
     height: 55%;
+    z-index: 2;
+    border-radius: 20px;
 }
 
 .welcome{
@@ -96,6 +98,34 @@ br {
     left: 10%;
     width: 35%;
     height: 16%;
+}
+
+/* 註冊 */
+.reg-mask{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    width: 100%;   
+}
+
+.reg-container{
+    position: absolute;
+    background-color: rgb(235, 162, 15);
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    border-radius: 20px;
+    transition:0.3s linear;
+}
+
+.reg-btn{
+    position: absolute;
+    background-image: url('/mainui/images/into/X.png');
+    right: -10%;
+    top: 0%;
+    width: 10%;
+    height: 10%;
+    border-radius: 50%;
 }
 
 
