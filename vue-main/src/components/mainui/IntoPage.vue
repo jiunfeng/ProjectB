@@ -23,8 +23,8 @@
             </div>
             <!-- 登入按鈕 -->
             <input class="inbox8 border border-success" type="image" src="https://fakeimg.pl/50x50/200/?text=change" alt=""
-                name="" id="" onclick="send();" />
-            <button class="btn1 border border-success" type="button"></button>
+                name="" id="" />
+            <button class="btn1 border border-success" type="button" @click="send"></button>
         </div>
     </div>
 
@@ -33,9 +33,15 @@
 </template>
 
 <script setup>
-
+import { useUserInfoStore } from "@/stores/userInfo";
+// 宣告userStore擁有userInfo.js的資料
+const userStore = useUserInfoStore();
+const send = () => {
+    const account = document.getElementById('in1').value;
+    const password = document.getElementById('in2').value;
+    userStore.login(account, password);
+}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
 

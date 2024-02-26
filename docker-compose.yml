@@ -1,0 +1,27 @@
+version: '3.6'
+services:
+  db:
+    build: db-server/ #使用此目錄內 dockerfile 建構的image 建構服務
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+    depends_on:
+      - db
+
+  backend:
+    image: projectb-backend:1.0
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - db

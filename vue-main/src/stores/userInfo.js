@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
@@ -18,7 +19,7 @@ export const useUserInfoStore = defineStore('info', {
         userpetset: new Map(),////寵物編號,屬性,等級,血量,攻擊力
         useritems: [],//使用者道具箱，目前暫時只有經驗果實
         userpets: [],//使用者擁有的寵物
-        currentPage: "game",//使用者目前頁面
+        currentPage: "into",//使用者目前頁面
     }),
     actions: {
         _setTestAccount() {
@@ -56,5 +57,18 @@ export const useUserInfoStore = defineStore('info', {
             this.useritems = ["001", "30"];
             this.userpets = []//使用者擁有的寵物
         },
+        async login(account, password) {
+            const reqData = {
+                account: account,
+                password: password
+            }
+            try {
+                const res = await axios.post('http://localhost:3001/userLogin', reqData)
+                console.log(res.data);
+                this.currentPage = "game"
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
     }
 })

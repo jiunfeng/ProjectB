@@ -2,12 +2,13 @@
 const express = require('express');
 const mysql = require('mysql')
 const bodyParser = require('body-parser');
+const cors = require('cors')
 
 const app = express();
 
 //db連線程序設定
 const connection = mysql.createConnection({
-    host: 'localhost',
+    host: 'db',
     port: '3306',
     user: 'root',
     password: '123456',
@@ -23,8 +24,10 @@ connection.connect((err) => {
     console.log('Connected to database successfully');
 })
 
+app.use(cors())
 app.use(bodyParser.json());
 
+//確認server是否存活
 app.get('/', (req, res) => {
     res.json({ message: 'API server is living' })
 });
@@ -41,7 +44,7 @@ app.post('/userLogin', (req, res) => {
         }
         //檢查用戶是否存在或者密碼錯誤
         if (results.length > 0 && password == results[0].password) {
-            res.json(results)
+            res.json(results[0])
         } else {
             res.json({ message: '帳號或密碼錯誤' })
         }
@@ -62,8 +65,8 @@ app.post('/userCreate', (req, res) => {
         }
         if (results.length > 0) {
             return res.json({ message: '該帳號已有人使用' })
-        } else {//新增帳號
-
+        } else {
+            //新增帳號
             //預設新帳號內容物
             const newAccountContain = {
                 account,
@@ -78,7 +81,6 @@ app.post('/userCreate', (req, res) => {
             }
 
             const insertQuery = 'INSERT INTO user_account SET ?';
-            const insertValues = [JSON.stringify(newAccountContain)]
 
             connection.query(insertQuery, newAccountContain, (error, results) => {
                 if (error) {
@@ -89,19 +91,45 @@ app.post('/userCreate', (req, res) => {
                 return res.json({ message: '帳號創建完成' })
             })
 
-            // const addUser = 'INSERT INTO user_account (account,password) VALUES (?,?)'
-            // const values = [account,password]
-
         }
     })
 
 
 
-})
+});
+
+//使用者帳號刪除
+app.post('/userDelete', (req, res) => {
+    const { account } = req.body;
+    connection.query('SELECT * FROM user_account WHERE account=?', [account], (error, results) => {
+        if (error) {
+            console.error('錯誤查詢:', error);
+            return res.json({ message: '發生異常錯誤，帳號無法刪除。' });
+        }
+
+        //檢查用戶是否存在
+        if (results.length == 0) {
+            return res.json({ message: '該用戶不存在' })
+        } else {
+            connection.query('DELETE FROM user_account WHERE account=?', [account], (error, results) => {
+                if (error) {
+                    console.error('錯誤查詢:', error)
+                    return res.json({ message: '發生異常錯誤，帳號無法刪除。' });
+                } else {
+                    console.log('Data deleted successfully');
+                    return res.json({ message: '帳號' + account + '已刪除' })
+                }
+            })
+        }
+
+
+    })
+
+});
 
 
 //監聽
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
