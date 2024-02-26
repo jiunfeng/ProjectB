@@ -37,7 +37,7 @@ br {
 .text1 {
     position: absolute;
     font-size: 35px;
-    top: 33%;
+    top: 32%;
     left: 5%;
 }
 
@@ -74,30 +74,40 @@ br {
     height: 80%;
 }
 
-.btn1{
+.btninto{
     position: absolute;
-    background-image: url('https://fakeimg.pl/50x50/200/?text=change');
-    background-color: transparent;
-    /* 按鈕的背景顏色變為透明的 */
-    border-style: none;
-    background-size: 100% 100%; 
+    background-color: #ffd28d;
+    color: 	#5B5B5B;
+    font-size: 45px;
     top: 77%;
     right: 5%;
     width: 35%;
     height: 16%;
+    border-radius:45%;
+    transition:0.6s linear;
+}
+.btninto:hover{
+    font-size: 55px;
+    color: #FF0000;
+    border-radius:10%;
 }
 
 .btn2{
     position: absolute;
-    background-image: url('https://fakeimg.pl/50x50/200/?text=change');
-    background-color: transparent;
-    /* 按鈕的背景顏色變為透明的 */
-    border-style: none;
-    background-size: 100% 100%; 
+    background-color: #00A600;
+    color: 	#272727;
+    font-size: 45px;
     top: 77%;
     left: 10%;
     width: 35%;
     height: 16%;
+    border-radius:45%;
+    transition:0.6s linear;
+}
+.btn2:hover{
+    font-size: 55px;
+    color: #FF0000;
+    border-radius:10%;
 }
 
 /* 註冊 */
@@ -110,7 +120,7 @@ br {
 
 .reg-container{
     position: absolute;
-    background-color: rgb(235, 162, 15);
+    background-image: url('/mainui/images/into/reg2.jpg');
     top: 50%;
     left: 50%;
     width: 80%;
@@ -118,14 +128,78 @@ br {
     transition:0.3s linear;
 }
 
-.reg-btn{
+.reg-leavbtn{
     position: absolute;
-    background-image: url('/mainui/images/into/X.png');
+    background-image: url('/mainui/images/into/x.png');
+    background-size: 104% 100%;
+    background-repeat: no-repeat;
     right: -10%;
     top: 0%;
     width: 10%;
     height: 10%;
     border-radius: 50%;
+}
+
+.reg-img1{
+    position: absolute;
+    left: 50%;
+    top: -3%;
+    width: 60%;
+    height: 35%;
+    border-radius: 50%;
+}
+
+.reg-text1 {
+    position: absolute;
+    font-size: 35px;
+    top: 32%;
+    left: 5%;
+}
+
+.reg-inputdiv1{
+    position: absolute;
+    top: 32%;
+    left: 26%;
+    width: 70%;
+    height: 13%;
+}
+
+.reg-input1 {
+    width: 100%;
+    height: 80%;
+}
+
+.reg-text2 {
+    position: absolute;
+    font-size: 35px;
+    top: 55%;
+    left: 5%;
+}
+
+.reg-inputdiv2{
+    position: absolute;
+    top: 55%;
+    left: 26%;
+    width: 70%;
+    height: 13%;
+}
+
+.reg-btn{
+    position: absolute;
+    background-color: #00A600;
+    color: 	#AE0000;
+    font-size: 45px;
+    top: 77%;
+    left: 50%;
+    width: 35%;
+    height: 16%;
+    border-radius:45%;
+    transition:0.6s linear;
+}
+.reg-btn:hover{
+    font-size: 55px;
+    color: #FF2D2D;
+    border-radius:10%;
 }
 
 
