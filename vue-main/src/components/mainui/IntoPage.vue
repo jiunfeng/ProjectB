@@ -89,10 +89,12 @@ const regpassword = ref('')
 
 function into() {
     if ((account.value.length >= 5 && account.value.length <= 8) && (password.value.length >= 5 && password.value.length <= 8)) {
-        console.log(account.value);
-        console.log(password.value);
-        const message = userStore.login(account.value, password.value);
-        console.log(message)
+        userStore.login(account.value, password.value).then(() => {
+            console.log(userStore.usermoney + "內money")
+            console.log(userStore.message + "內訊息")
+            userStore.currentPage = "main"
+        })
+
     }
     else {
         alert('請輸入正確的字數')

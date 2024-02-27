@@ -8,7 +8,7 @@ const app = express();
 
 //db連線程序設定
 const connection = mysql.createConnection({
-    host: 'localhost',
+    host: 'db',
     port: '3306',
     user: 'root',
     password: '123456',
@@ -44,7 +44,9 @@ app.post('/userLogin', (req, res) => {
         }
         //檢查用戶是否存在或者密碼錯誤
         if (results.length > 0 && password == results[0].password) {
-            res.json(results[0])
+
+            const userData = { ...results[0], message: '登入成功' }
+            res.json(userData)
         } else {
             res.json({ message: '帳號或密碼錯誤' })
         }
