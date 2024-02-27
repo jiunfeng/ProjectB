@@ -9,13 +9,13 @@
 
         <!-- 人物資訊 左上方，需資料庫資料 -->
         <div class="userdiv1 bg2 textsize1">
-            <span class="text-white mx-2">LV.<span v-text="userStore.userrank"></span></span>
+            <span class="text-white mx-4">&nbsp;&nbsp;LV.<span v-text="userStore.userrank"></span></span>
             <br>
             <span class="text-white mx-3" v-text="userStore.username"></span>
             <div style="height: 3px; user-select: none;"></div>
-            <div class="bg-white mx-1" style="height: 2px;"></div>
+            <!-- <div class="bg-white mx-1" style="height: 2px;"></div>
             <span class="text-white mx-2">ID:</span><span class="text-white me-3" v-text="userStore.userid"></span>
-            <div style="height: 3px; user-select: none;"></div>
+            <div style="height: 3px; user-select: none;"></div> -->
         </div>
         <!-- 資源 -->
         <div class="usermoneydiv1 bg1 rounded-pill textsize2 br text-center">

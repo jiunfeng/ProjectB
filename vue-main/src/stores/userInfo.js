@@ -65,6 +65,7 @@ export const useUserInfoStore = defineStore('info', {
             try {
                 const res = await axios.post('http://localhost:3001/userLogin', reqData)
                 console.log(res.data);
+                
                 this.currentPage = "game"
             } catch (error) {
                 console.error('Error fetching data:', error);
