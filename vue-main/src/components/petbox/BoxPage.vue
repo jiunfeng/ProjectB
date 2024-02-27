@@ -6,13 +6,13 @@
             </div>
             <div class="content">
                 <div class="character" id="character">
-                     <div class="box_s box01_1" :id=turn[0] :style="{backgroundImage:'url(sprites/hero/'+turn[1].id+'.png'}" v-for="turn in userInfoStore.userpetset">
+                     <div class="box_s box01_1" :id=pets[0] :style="{backgroundImage:'url(sprites/hero/'+pets[1].id+'.png'}" v-for="pets in userInfoStore.userpets">
                         <div class="rank" @click="fightover">
-                            <h5>{{ turn[1].level }}</h5>
+                            <h5>{{ pets[1].level }}</h5>
                         </div>
                     </div>
                 </div>
-                <div class="select d-flex align-items-center  justify-content-center" id="character_select" @click = "add = !add">
+                <div class="select d-flex align-items-center  justify-content-center mt-auto" id="character_select" @click = "add = !add">
                     <h5 class="fw900 text-center align-middle text-danger" v-if="add">
                         角色編成
                     </h5>
@@ -41,9 +41,9 @@ const userInfoStore = useUserInfoStore()
 const add = ref(true)
 const image = ref('')
 const box_s= ref('box01')
-console.log(userInfoStore.userpetset);
+console.log(userInfoStore.userpets);
 function fightover() {
-    console.log(userInfoStore.userpetset.get(2).level);
+    console.log(userInfoStore.userpets);
     image.value= '001';
     box_s.value = 'box01_1'
 }
