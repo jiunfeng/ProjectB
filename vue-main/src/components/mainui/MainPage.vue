@@ -9,7 +9,7 @@
 
         <!-- 人物資訊 左上方，需資料庫資料 -->
         <div class="userdiv1 bg2 textsize1">
-            <span class="text-white mx-4">&nbsp;&nbsp;LV.<span v-text="userStore.userrank"></span></span>
+            <span class="text-white mx-auto">&nbsp;&nbsp;LV.<span v-text="userStore.userrank"></span></span>
             <br>
             <span class="text-white mx-3" v-text="userStore.username"></span>
             <div style="height: 3px; user-select: none;"></div>

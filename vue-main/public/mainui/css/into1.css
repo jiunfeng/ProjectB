@@ -131,7 +131,7 @@ br {
 .reg-leavbtn{
     position: absolute;
     background-image: url('/mainui/images/into/x.png');
-    background-size: 104% 100%;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
     right: -10%;
     top: 0%;
@@ -172,13 +172,28 @@ br {
 .reg-text2 {
     position: absolute;
     font-size: 35px;
-    top: 55%;
+    top: 49%;
     left: 5%;
 }
 
 .reg-inputdiv2{
     position: absolute;
-    top: 55%;
+    top: 50%;
+    left: 26%;
+    width: 70%;
+    height: 13%;
+}
+
+.reg-text3 {
+    position: absolute;
+    font-size: 35px;
+    top: 66%;
+    left: 5%;
+}
+
+.reg-inputdiv3{
+    position: absolute;
+    top: 67%;
     left: 26%;
     width: 70%;
     height: 13%;
@@ -188,16 +203,16 @@ br {
     position: absolute;
     background-color: #00A600;
     color: 	#AE0000;
-    font-size: 45px;
-    top: 77%;
+    font-size: 35px;
+    bottom: 1%;
     left: 50%;
-    width: 35%;
-    height: 16%;
+    width: 30%;
+    height: 13%;
     border-radius:45%;
     transition:0.6s linear;
 }
 .reg-btn:hover{
-    font-size: 55px;
+    font-size: 45px;
     color: #FF2D2D;
     border-radius:10%;
 }
