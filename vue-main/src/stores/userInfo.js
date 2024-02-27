@@ -26,7 +26,7 @@ export const useUserInfoStore = defineStore('info', {
         _setTestAccount() {
             this.useraccount = "test001";
             this.userpassword = "1qaz2wsx";
-            this.username = "測試一號機";
+            this.username = "測試一號";
             this.userrank = "20";
             this.usermoney = "99999";
             this.usercredit = "88888";
