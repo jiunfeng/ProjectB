@@ -6,7 +6,7 @@
             </div>
             <div class="content">
                 <div class="character" id="character">
-                     <div class="box_s box01_1" :style="{backgroundImage:'url(sprites/hero/'+turn[1].id+'.png'}" v-for="turn in userInfoStore.userpetset">
+                     <div class="box_s box01_1" :id=turn[0] :style="{backgroundImage:'url(sprites/hero/'+turn[1].id+'.png'}" v-for="turn in userInfoStore.userpetset">
                         <div class="rank" @click="fightover">
                             <h5>{{ turn[1].level }}</h5>
                         </div>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="footer">
                     <div class="put-in">
-                        <div class="box01"></div>
+                        <div :class="box_s" @click="fightover" :style="{backgroundImage:'url(sprites/hero/'+image+'.png'}"></div>
                         <div class="box01"></div>
                         <div class="box01"></div>
                     </div>
@@ -39,9 +39,12 @@ import { ref } from 'vue'
 
 const userInfoStore = useUserInfoStore()
 const add = ref(true)
-console.log(userInfoStore.userpetset.get(2));
+const image = ref('')
+const box_s= ref('box01')
+console.log(userInfoStore.userpetset);
 function fightover() {
     console.log(userInfoStore.userpetset.get(2).level);
-    h5.text='100';
+    image.value= '001';
+    box_s.value = 'box01_1'
 }
 </script>
