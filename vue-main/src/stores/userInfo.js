@@ -55,6 +55,54 @@ export const useUserInfoStore = defineStore('info', {
                 attack: 100,
                 cover: 100
             });
+            this.userpetset.set(4, {
+                id: "004",
+                attribute: "2",
+                level: 5,
+                health: 100,
+                attack: 300,
+                cover: 100
+            });
+            this.userpetset.set(5, {
+                id: "005",
+                attribute: "3",
+                level: 5,
+                health: 100,
+                attack: 100,
+                cover: 100
+            });
+            this.userpetset.set(6, {
+                id: "006",
+                attribute: "3",
+                level: 5,
+                health: 100,
+                attack: 300,
+                cover: 100
+            });
+            this.userpetset.set(7, {
+                id: "007",
+                attribute: "1",
+                level: 5,
+                health: 100,
+                attack: 100,
+                cover: 100
+            });
+            this.userpetset.set(8, {
+                id: "008",
+                attribute: "2",
+                level: 5,
+                health: 100,
+                attack: 300,
+                cover: 100
+            });
+            this.userpetset.set(9, {
+                id: "009",
+                attribute: "3",
+                level: 5,
+                health: 100,
+                attack: 100,
+                cover: 100
+            });
             this.useritems = ["001", "30"];
             this.userpets = []//使用者擁有的寵物
         },
