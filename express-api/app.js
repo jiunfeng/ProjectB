@@ -44,7 +44,9 @@ app.post('/userLogin', (req, res) => {
         }
         //檢查用戶是否存在或者密碼錯誤
         if (results.length > 0 && password == results[0].password) {
-            res.json(results[0])
+
+            const userData = { ...results[0], message: '登入成功' }
+            res.json(userData)
         } else {
             res.json({ message: '帳號或密碼錯誤' })
         }
@@ -111,6 +113,7 @@ app.post('/userDelete', (req, res) => {
         if (results.length == 0) {
             return res.json({ message: '該用戶不存在' })
         } else {
+
             connection.query('DELETE FROM user_account WHERE account=?', [account], (error, results) => {
                 if (error) {
                     console.error('錯誤查詢:', error)
@@ -127,6 +130,35 @@ app.post('/userDelete', (req, res) => {
 
 });
 
+// 使用者資料更新
+app.post('/userUpdate', (req, res) => {
+
+    const { account, ...updates } = req.body;//提取account將剩下的存到updates
+    connection.query('SELECT * FROM user_account WHERE account=?', [account], (error, results) => {
+        if (error) {
+            console.error('錯誤查詢:', error);
+            return res.json({ message: '發生異常錯誤，帳號無法更新。' });
+        }
+
+        //檢查用戶是否存在
+        if (results.length == 0) {
+            return res.json({ message: '該用戶不存在' })
+        } else {
+
+            connection.query('UPDATE user_account SET ? WHERE account = ?', [updates, account], (error, results) => {
+                if (error) {
+                    console.error('錯誤查詢:', error)
+                    return res.json({ message: '發生異常錯誤，帳號無法更新，請確認格式是否正確。' });
+                } else {
+                    console.log('Update successfully');
+                    return res.json({ message: '帳號' + account + '更新完成' })
+                }
+            })
+        }
+
+
+    })
+})
 
 //監聽
 const PORT = process.env.PORT || 3000;

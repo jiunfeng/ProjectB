@@ -19,7 +19,7 @@ services:
       - db
 
   backend:
-    image: projectb-backend:1.0
+    build: express-api/
     restart: always
     ports:
       - 3000:3000

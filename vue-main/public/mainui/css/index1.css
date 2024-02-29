@@ -65,6 +65,7 @@ br {
     border-radius: 10%;
     top: 12.5%;
     left: 6%;
+    
 }
 
 .usermoneydiv1 {
@@ -72,6 +73,7 @@ br {
     width: 60%;
     top: 4%;
     right: 6%;
+    z-index: 1;
 }
 
 .usermoneyimg1{

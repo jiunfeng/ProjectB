@@ -53,7 +53,7 @@
                 <label for="reg2" class="reg-text2" :style="regdivsty2">密碼 :</label>
                 <div class="reg-inputdiv2" :style="regdivsty2">
                     <input type="password" class="reg-input2 form-control"
-                        :class="{ 'is-invalid': regpassword.length < min || regpassword.length > max, 'is-valid': regpassword.length >= min && regpassword.length <=max }"
+                        :class="{ 'is-invalid': regpassword.length < min || regpassword.length > max, 'is-valid': regpassword.length >= min && regpassword.length <= max }"
                         v-model="regpassword" name="reg2" id="reg2" placeholder="請填入8~16個英文或數字"
                         oninput="value=value.replace(/[^\w\.\/]/ig,'')" style="font-size: 20px;">
                     <div class="input2-1 valid-feedback" style="font-size: 25px;">&nbsp;字數符合</div>
@@ -63,13 +63,13 @@
                 <label for="reg3" class="reg-text3" :style="regdivsty2">名字 :</label>
                 <div class="reg-inputdiv3" :style="regdivsty2">
                     <input type="text" class="reg-input3 form-control"
-                        :class="{ 'is-invalid': regname.length < namemin || regname.length > namemax, 'is-valid': regname.length >= namemin && regname.length <=namemax }"
+                        :class="{ 'is-invalid': regname.length < namemin || regname.length > namemax, 'is-valid': regname.length >= namemin && regname.length <= namemax }"
                         v-model="regname" name="reg3" id="reg3" placeholder="請填入1~6個字" style="font-size: 20px;">
                     <div class="input3-1 valid-feedback" style="font-size: 25px;">&nbsp;字數符合</div>
                     <div class="input3-2 invalid-feedback" id="inva01" style="font-size: 25px;">&nbsp;請填入1~6個字</div>
                 </div>
                 <!-- 註冊按鈕 -->
-                <button class="reg-btn translate-middle-x" type="button"  @click="regin" :style="regdivsty2">註冊</button>
+                <button class="reg-btn translate-middle-x" type="button" @click="regin" :style="regdivsty2">註冊</button>
             </div>
         </div>
     </div>
@@ -87,10 +87,10 @@ import { useUserInfoStore } from "@/stores/userInfo";
 // 宣告userStore擁有userInfo.js的資料
 const userStore = useUserInfoStore();
 // 字數
-var min=8;
-var max=16;
-var namemin=1;
-var namemax=6
+var min = 8;
+var max = 16;
+var namemin = 1;
+var namemax = 6
 // 登入
 const account = ref('')
 const password = ref('')
@@ -104,8 +104,14 @@ function into() {
     if ((account.value.length >= min && account.value.length <= max) && (password.value.length >= min && password.value.length <= max)) {
         console.log(account.value);
         console.log(password.value);
-        const message = userStore.login(account.value, password.value);
-        console.log(message)
+        userStore.login(account.value, password.value).then(() => {
+            console.log("message:" + userStore.message);
+            console.log("money:" + userStore.usermoney);
+            console.log("rank:" + userStore.userrank[0]);
+            console.log("exp:" + userStore.usercredit);
+            userStore.currentPage="main";
+        });
+
     }
     else {
         alert('請輸入正確的字數')
@@ -142,8 +148,8 @@ function regmask() {
     console.log(regdivsty.value);
 }
 // 註冊執行
-function regin(){
-    min=8;
+function regin() {
+    min = 8;
     if ((regaccount.value.length >= min && regaccount.value.length <= max) && (regpassword.value.length >= min && regpassword.value.length <= max)) {
         console.log(regaccount.value);
         console.log(regpassword.value);
