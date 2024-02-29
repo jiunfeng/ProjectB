@@ -104,8 +104,10 @@ function into() {
     if ((account.value.length >= min && account.value.length <= max) && (password.value.length >= min && password.value.length <= max)) {
         console.log(account.value);
         console.log(password.value);
-        const message = userStore.login(account.value, password.value);
-        console.log(message)
+        const message = userStore.login(account.value, password.value).then(() => {
+
+            console.log(userStore.message)
+        })
     }
     else {
         alert('請輸入正確的字數')
