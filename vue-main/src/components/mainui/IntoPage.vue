@@ -105,12 +105,13 @@ function into() {
         console.log(account.value);
         console.log(password.value);
         userStore.login(account.value, password.value).then(() => {
+            console.log("message:" + userStore.message);
+            console.log("money:" + userStore.usermoney);
+            console.log("rank:" + userStore.userrank[0]);
+            console.log("exp:" + userStore.usercredit);
+            userStore.currentPage = "main";
+        });
 
-            if (userStore.message.length > 0) {
-                console.log(userStore.message)
-                userStore.currentPage = "main"
-            }
-        })
     }
     else {
         alert('請輸入正確的字數')
