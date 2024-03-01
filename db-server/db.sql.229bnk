@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： db
--- 產生時間： 2024 年 02 月 29 日 00:53
--- 伺服器版本： 10.4.8-MariaDB-1:10.4.8+maria~bionic
+-- 產生時間： 2024 年 02 月 22 日 07:04
+-- 伺服器版本： 10.6.16-MariaDB-1:10.6.16+maria~ubu2004
 -- PHP 版本： 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -26,25 +26,6 @@ USE `projectb`;
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `pets_card`
---
-
-CREATE TABLE `pets_card` (
-  `id` int(11) NOT NULL,
-  `number` varchar(16) NOT NULL,
-  `name` varchar(16) NOT NULL,
-  `story` varchar(256) DEFAULT NULL,
-  `element_attributes` varchar(3) NOT NULL,
-  `quality` varchar(3) NOT NULL,
-  `health_point` int(16) NOT NULL,
-  `health_point_coefficient` int(16) NOT NULL,
-  `resilience` int(16) NOT NULL,
-  `resilience_coefficient` int(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- 資料表結構 `user_account`
 --
 
@@ -59,37 +40,18 @@ CREATE TABLE `user_account` (
   `experience` int(4) NOT NULL,
   `pet_team` varchar(16) NOT NULL,
   `items` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `user_account`
 --
 
 INSERT INTO `user_account` (`id`, `account`, `password`, `username`, `rank`, `money`, `credit`, `experience`, `pet_team`, `items`) VALUES
-(1, 'test0001', 'test001pas', 'testaccount', 3, 5000, 3000, 300, '001|002|003', '001,20|002,10|004,10');
-
--- --------------------------------------------------------
-
---
--- 資料表結構 `user_pets`
---
-
-CREATE TABLE `user_pets` (
-  `id` int(11) NOT NULL,
-  `user_account` varchar(16) NOT NULL COMMENT '外來鍵(user_info:account)',
-  `pet_number` varchar(16) NOT NULL COMMENT '外來鍵(pet_card:number)',
-  `experience` varchar(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(1, 'test001', 'test001pas', 'testaccount', 3, 5000, 3000, 300, '001|002|003', '001,20|002,10|004,10');
 
 --
 -- 已傾印資料表的索引
 --
-
---
--- 資料表索引 `pets_card`
---
-ALTER TABLE `pets_card`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- 資料表索引 `user_account`
@@ -98,32 +60,14 @@ ALTER TABLE `user_account`
   ADD PRIMARY KEY (`id`);
 
 --
--- 資料表索引 `user_pets`
---
-ALTER TABLE `user_pets`
-  ADD PRIMARY KEY (`id`);
-
---
 -- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
 --
-
---
--- 使用資料表自動遞增(AUTO_INCREMENT) `pets_card`
---
-ALTER TABLE `pets_card`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user_account`
 --
 ALTER TABLE `user_account`
   MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- 使用資料表自動遞增(AUTO_INCREMENT) `user_pets`
---
-ALTER TABLE `user_pets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

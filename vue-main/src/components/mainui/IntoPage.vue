@@ -104,19 +104,22 @@ function into() {
     if ((account.value.length >= min && account.value.length <= max) && (password.value.length >= min && password.value.length <= max)) {
         console.log(account.value);
         console.log(password.value);
-        const message = userStore.login(account.value, password.value).then(() => {
+        userStore.login(account.value, password.value).then(() => {
 
-            console.log(userStore.message)
+            if (userStore.message.length > 0) {
+                console.log(userStore.message)
+                userStore.currentPage = "main"
+            }
         })
     }
     else {
         alert('請輸入正確的字數')
     }
-    // if (account.value == userStore.useraccount && password.value == userStore.userpassword) {
-    //     // console.log(userStore.useraccount);
-    //     // console.log(userStore.userpassword);
-    //     userStore.currentPage = main;
-    // }
+    if (account.value == userStore.useraccount && password.value == userStore.userpassword) {
+        // console.log(userStore.useraccount);
+        // console.log(userStore.userpassword);
+        userStore.currentPage = main;
+    }
 }
 // 註冊
 const isShow = ref(false);

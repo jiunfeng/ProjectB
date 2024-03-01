@@ -158,7 +158,7 @@ export const useUserInfoStore = defineStore('info', {
             ]
         },
         async login(account, password) {
-            this.$reset()
+            // this.$reset()
             const reqData = {
                 account: account,
                 password: password
@@ -174,12 +174,38 @@ export const useUserInfoStore = defineStore('info', {
                     this.userrank = [Math.floor(res.data.experience / 100), res.data.experience % 100]
                     this.usermoney = res.data.money
                     this.usercredit = res.data.credit
-                    this.userpetset = res.data.pet_team
+                    // this.userpetset = res.data.pet_team
+                    // 還未完成
                     this.useritems = res.data.items
+                    this.userpetset.set(1, {
+                        id: '001',
+                        attribute: '1',
+                        level: 5,
+                        health: 100,
+                        attack: 500,
+                        cover: 100
+                    })
+                    this.userpetset.set(2, {
+                        id: '002',
+                        attribute: '1',
+                        level: 5,
+                        health: 100,
+                        attack: 300,
+                        cover: 100
+                    })
+                    this.userpetset.set(3, {
+                        id: '003',
+                        attribute: '2',
+                        level: 5,
+                        health: 100,
+                        attack: 100,
+                        cover: 100
+                    })
                 }
             } catch (error) {
                 console.error('Error fetching data:', error)
             }
-        }
+        },
+        async register(account, password, username) { }
     }
 })
