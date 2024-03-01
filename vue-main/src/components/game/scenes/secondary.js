@@ -207,7 +207,7 @@ export default class Secondary extends Phaser.Scene {
           break;
         case '3':
           this.heros[i].body.text.setColor('#00ff00');
-          this.greenHeroHero.push({
+          this.greenHero.push({
             hero: this.heros[i].body
           });
           break;
