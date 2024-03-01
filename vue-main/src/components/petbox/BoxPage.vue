@@ -6,25 +6,28 @@
             </div>
             <div class="content">
                 <div class="character" id="character">
-                     <div class="box_s box01_1" :id=pets[0] :style="{backgroundImage:'url(sprites/hero/'+pets[1].id+'.png'}" v-for="pets in userInfoStore.userpets">
-                        <div class="rank" @click="fightover">
+                    <div class="box_s box01_1" :id=pets[0] :style="{ backgroundImage: 'url(sprites/hero/' + pets[1].id + '.png' }"
+                        v-for="pets in userInfoStore.userpets" @click="add?'':fightover(pets[1].id)">
+                        <div class="rank">
                             <h5>{{ pets[1].level }}</h5>
                         </div>
                     </div>
                 </div>
-                <div class="select d-flex align-items-center  justify-content-center mt-auto" id="character_select" @click = "add = !add">
+                <div class="select d-flex align-items-center  justify-content-center mt-auto" id="character_select"
+                    @click="add = !add">
                     <h5 class="fw900 text-center align-middle text-danger" v-if="add">
                         角色編成
                     </h5>
-                    <h5 class="fw900 text-center align-middle text-danger " v-else>
+                    <h5 class="fw900 text-center align-middle text-danger " v-else @click = "selectchactor(userInfoStore.userpets[4][1])">
                         確定
                     </h5>
                 </div>
                 <div class="footer">
                     <div class="put-in">
-                        <div :class="box_s" @click="fightover" :style="{backgroundImage:'url(sprites/hero/'+image+'.png'}"></div>
-                        <div class="box01"></div>
-                        <div class="box01"></div>
+                        <div class="box01_1" :style="{ backgroundImage: 'url(sprites/hero/' + (add?set[1].id:image) + '.png' }" v-for="set in userInfoStore.userpetset">
+                        </div>
+                        <!-- <div class="box01"></div>
+                        <div class="box01"></div> -->
                     </div>
                 </div>
             </div>
@@ -40,11 +43,19 @@ import { ref } from 'vue'
 const userInfoStore = useUserInfoStore()
 const add = ref(true)
 const image = ref('')
-const box_s= ref('box01')
+const box_s = ref('box01')
 console.log(userInfoStore.userpets);
-function fightover() {
+function fightover(data) {
     console.log(userInfoStore.userpets);
-    image.value= '001';
+    image.value = data
     box_s.value = 'box01_1'
+}
+
+function selectchactor(data){
+    // console.log(data);
+    // console.log(userInfoStore.userpetset.get(3));
+    console.log(userInfoStore.userpetset.get(2));
+    console.log(userInfoStore.userpets[4][1]);
+    return userInfoStore.userpetset.set(1,data),userInfoStore.userpetset.set(2,data);
 }
 </script>

@@ -87,7 +87,7 @@ import { useUserInfoStore } from "@/stores/userInfo";
 // 宣告userStore擁有userInfo.js的資料
 const userStore = useUserInfoStore();
 // 字數
-var min = 8;
+var min = 5;
 var max = 16;
 var namemin = 1;
 var namemax = 6
