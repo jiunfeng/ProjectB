@@ -1,4 +1,5 @@
 <template>
+    <div class="">{{ key1}},{{ key2 }},{{ key3 }}</div>
     <div class="container">
         <div class="wapper">
             <div>
@@ -34,15 +35,12 @@
                         <div class="box01_1" :style="{ backgroundImage: 'url(sprites/hero/' + key3 + '.png' }"
                             @click="add ? '' : delimage(2)">
                         </div>
-                        <!-- <div class="box01_1" :style="{ backgroundImage: 'url(sprites/hero/' + (add?set[1].id:setimage()) + '.png' }" v-for="set in userInfoStore.userpetset">
-                        </div> -->
-                        <!-- <div class="box01"></div>
-                        <div class="box01"></div> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <link rel="stylesheet" href="/box/css/index_box.css">
     <link rel="stylesheet" href="/box/css/bootstrap.min.css">
 </template>
@@ -53,25 +51,15 @@ import { ref } from 'vue'
 
 const userInfoStore = useUserInfoStore()
 var key_s = [];
+var key_id =[];
 for (let keys of userInfoStore.userpetset.values()) {
     key_s.push(keys);
+    key_id.push(keys.id)
 }
-
-for (let keys of userInfoStore.userpetset.values()) {
-    console.log(keys);
-}
-
 const add = ref(true)
-const box_s = ref('box01')
 const key1 = ref(key_s[0].id)
 const key2 = ref(key_s[1].id)
 const key3 = ref(key_s[2].id)
-// function setimage(data){
-// for(let keys of userInfoStore.userpetset.values()){
-//     key_s.push(keys);
-// }
-// return key_s[data].id
-// }
 
 function delimage(data) {
     key_s.splice(data, 1, '');
@@ -80,26 +68,56 @@ function delimage(data) {
     key3.value = key_s[2].id
 }
 
-// console.log(userInfoStore.userpets);
 function fightover(data) {
-    console.log(data.id);
-    if (key_s[0] == '') {
-        key_s.splice(0, 1, data);
-    } else if (key_s[1] == '') {
-        key_s.splice(1, 1, data);
-    } else if (key_s[2] == '') {
-        key_s.splice(2, 1, data);
+    // console.log(data);
+    // console.log(key_s);
+    // console.log(key_s.includes(1));
+    // console.log(key_s.indexOf(''));
+    // console.log(key_s.includes(''));
+    // if (key_s[0] == '') {
+    //     key_s.splice(0, 1, data);
+    // } else if (data.id == key_s[0].id){
+    //     key_s.splice(0, 1, '')
+    // }
+
+    // if(key_s[1] == '') {
+    //     key_s.splice(1, 1, data);
+    // } else if(key_s[1].id == data.id) {
+    //     key_s.splice(1, 1, '');
+    // } 
+
+    // if (key_s[2].id == data.id) {
+    //     key_s.splice(2, 1, '');
+    // }else if(key_s[2] == '') {
+    //     key_s.splice(2, 1, data);
+    // }
+    if (key_s.includes('')) {
+        key_s.splice(key_s.indexOf(''), 1, data);
+        console.log("hello1");
+        key1.value = key_s[0].id
+        key2.value = key_s[1].id
+        key3.value = key_s[2].id
+        return
     }
-    key1.value = key_s[0].id
-    key2.value = key_s[1].id
-    key3.value = key_s[2].id
-    console.log(key_s);
-    box_s.value = 'box01_1'
+
+    var key_s1= []
+    for (var i = 0; i < 3; i++) {
+        key_s1.push(key_s[i].id);
+        if (key_s1.includes(data.id)) {
+            key_s.splice(key_s1.indexOf(data.id), 1, '');
+            key1.value = key_s[0].id
+            key2.value = key_s[1].id
+            key3.value = key_s[2].id
+            return
+        }
+    }
+
+
 }
 
 function selectchactor() {
-    for (var i=0;i<3;i++) {
-        userInfoStore.userpetset.set(i+1, key_s[i]);
+    for (var i = 0; i < 3; i++) {
+        userInfoStore.userpetset.set(i + 1, key_s[i]);
     }
     console.log(userInfoStore.userpetset.get(1));
     console.log(userInfoStore.userpetset.get(2));
