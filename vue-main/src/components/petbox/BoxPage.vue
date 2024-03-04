@@ -8,10 +8,10 @@
             <div class="content">
                 <div class="character" id="character">
                     <div class="box_s box01_1" :id=pets[0]
-                        :style="{ backgroundImage: 'url(sprites/hero/' + pets[1].id + '.png' }"
-                        v-for="pets in userInfoStore.userpets" @click="add ? '' : fightover(pets[1]) ">
+                        :style="{ backgroundImage: 'url(sprites/hero/' + key + '.png' }"
+                        v-for="(key,pets) in userInfoStore.userpets" @click="add ? '' : fightover(pets[1]) ">
                         <div class="rank">
-                            <h5>{{ pets[1].level }}</h5>
+                            <h5>{{ pets['name'] }}</h5>
                         </div>
                     </div>
                 </div>
@@ -63,6 +63,8 @@ const add = ref(true)
 const key1 = ref(key_id[0])
 const key2 = ref(key_id[1])
 const key3 = ref(key_id[2])
+console.log(userInfoStore.userpets)
+console.log(userInfoStore.userpets)
 
 function delimage(data) {
     key_id.splice(data, 1, '');
