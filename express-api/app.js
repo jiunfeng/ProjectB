@@ -5,9 +5,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 
 const app = express();
-
+const pets_card = {}
 //db連線程序設定
 const connection = mysql.createConnection({
+    // host: 'localhost', dev使用
     host: 'db',
     port: '3306',
     user: 'root',
@@ -22,7 +23,25 @@ connection.connect((err) => {
         return
     }
     console.log('Connected to database successfully');
-})
+
+    //抓取寵物總表
+    connection.query('SELECT * FROM pets_card', (error, results, fields) => {
+        if (error) {
+            console.error('Error querying pet_cart: ', error);
+            return;
+        }
+        // 結果
+
+        results.forEach(element => {
+            const { id, ...petInfo } = element
+            pets_card[id] = petInfo
+        });
+
+        console.log('Pet cart data:', pets_card);
+    })
+});
+
+
 
 app.use(cors())
 app.use(bodyParser.json());
@@ -40,13 +59,35 @@ app.post('/userLogin', (req, res) => {
     connection.query('SELECT * FROM user_account WHERE account = ?', [account], (error, results) => {
         if (error) {
             console.error('錯誤查詢:', error);
-
+            res.json({ message: '未知錯誤' })
         }
         //檢查用戶是否存在或者密碼錯誤
         if (results.length > 0 && password == results[0].password) {
 
-            const userData = { ...results[0], message: '登入成功' }
-            res.json(userData)
+            //抓取使用者寵物資訊
+            connection.query('SELECT * FROM user_pets WHERE user_account = ?', [results[0].id], (error, pets) => {
+                let userpets = {}
+                pets.forEach(pet => {
+                    const petnow = pets_card[pet['pet_number']]
+                    const petexp = pet['experience']
+
+                    //計算寵物目前能力
+                    const lv = [petexp / 100, petexp % 100]
+                    const hp = petnow.health_point + (petnow.health_point_coefficient * lv[0])
+                    const atk = petnow.attack + (petnow.attack_coefficient * lv[0])
+                    const cover = petnow.resilience + (petnow.resilience_coefficient * lv[0])
+                    console.log(hp);
+                    userpets[petnow['number']] = { 'name': petnow.name, 'story': petnow.story, 'attribute': petnow.element_attributes, 'level': lv, 'health': hp, 'attack': atk, 'cover': cover }
+
+                });
+
+                const userData = { ...results[0], userpets, message: '登入成功' }
+                console.log(userpets);
+                console.log(userData);
+                res.json(userData)
+            })
+
+
         } else {
             res.json({ message: '帳號或密碼錯誤' })
         }

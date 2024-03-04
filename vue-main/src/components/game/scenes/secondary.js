@@ -128,6 +128,7 @@ export default class Secondary extends Phaser.Scene {
       frameHeight: 50
     });
     this.heros = [];
+    console.log(UserInfoStore.userpetset + "WWWWWW");
     for (let [key, value] of UserInfoStore.userpetset) {
       this.fullHp += value.health;
       this.heros.push(toRaw(value));
@@ -143,11 +144,11 @@ export default class Secondary extends Phaser.Scene {
       });
     }
   }
-  showLife(){
+  showLife() {
     this.lifeBall.setVisible(true);
     this.playerHealthBar.show();
   }
-  hideLife(){
+  hideLife() {
     this.lifeBall.setVisible(false);
     this.playerHealthBar.hide();
   }
@@ -167,8 +168,8 @@ export default class Secondary extends Phaser.Scene {
   }
   addHero() {
     const BarConfig = {
-      x:this.lifeBall.x + this.lifeBall.displayWidth,
-      y:this.lifeBall.y,
+      x: this.lifeBall.x + this.lifeBall.displayWidth,
+      y: this.lifeBall.y,
       width: 350,
       height: 20
     }
@@ -176,7 +177,7 @@ export default class Secondary extends Phaser.Scene {
     this.blueHero = [];
     this.greenHero = [];
 
-    this.createPlayerHpBar(BarConfig.x,BarConfig.y , BarConfig.width, BarConfig.height, 5, this.fullHp);
+    this.createPlayerHpBar(BarConfig.x, BarConfig.y, BarConfig.width, BarConfig.height, 5, this.fullHp);
     const gap = (350 - 70 * 3) / 3
     let [x, y] = [
       this.lifeBall.x + this.lifeBall.displayWidth + (350 - 70 * 3) / 6,
@@ -206,7 +207,7 @@ export default class Secondary extends Phaser.Scene {
           break;
         case '3':
           this.heros[i].body.text.setColor('#00ff00');
-          this.greenHeroHero.push({
+          this.greenHero.push({
             hero: this.heros[i].body
           });
           break;
@@ -223,7 +224,7 @@ export default class Secondary extends Phaser.Scene {
 
   createPlayerHpBar(x, y, fullWidth, height, radius, hp) {
     this.playerHealthBar = new healthBar(this, x, y, fullWidth, height, radius, hp);
-    
+
     const fontSize = 16;
     this.playerHpText = this.add.text(x + fullWidth, y, `${hp}/${hp}`, { fontFamily: 'Arial Black', fontSize: fontSize, color: '#dddddd' });
     this.playerHpText.setOrigin(1.1, 1)
