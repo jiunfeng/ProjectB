@@ -3,26 +3,27 @@ services:
   db:
     build: db-server/ #使用此目錄內 dockerfile 建構的image 建構服務
     restart: always
-    ports:
-      - 3306:3306
+    # ports:
+      # - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: 123456
 
   phpmyadmin:
     image: phpmyadmin
     restart: always
-    ports:
-      - 8080:80
+    # ports:
+      # - 8080:80
     environment:
       - PMA_ARBITRARY=1
+      - PMA_ABSOLUTE_URI=http://localhost/projectb-phpmyadmin/
     depends_on:
       - db
 
   backend:
     build: express-api/
     restart: always
-    ports:
-      - 3000:3000
+    # ports:
+      # - 3000:3000
     depends_on:
       - db
 
@@ -32,7 +33,13 @@ services:
     build: vue-main/
     restart: always
     ports:
-      - 80:80
+      - 3006:80
     depends_on:
       - db
       - backend
+
+  nginx:
+    build: nginx/
+    restart: always
+    ports:
+      - 80:80
