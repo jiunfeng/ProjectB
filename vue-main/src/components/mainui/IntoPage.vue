@@ -104,17 +104,23 @@ function into() {
     if ((account.value.length >= min && account.value.length <= max) && (password.value.length >= min && password.value.length <= max)) {
         console.log(account.value);
         console.log(password.value);
-        const message = userStore.login(account.value, password.value);
-        console.log(message)
+        userStore.login(account.value, password.value).then(() => {
+            console.log("message:" + userStore.message);
+            console.log("money:" + userStore.usermoney);
+            console.log("rank:" + userStore.userrank[0]);
+            console.log("exp:" + userStore.usercredit);
+            userStore.currentPage = "main";
+        });
+
     }
     else {
         alert('請輸入正確的字數')
     }
-    // if (account.value == userStore.useraccount && password.value == userStore.userpassword) {
-    //     // console.log(userStore.useraccount);
-    //     // console.log(userStore.userpassword);
-    //     userStore.currentPage = main;
-    // }
+    if (account.value == userStore.useraccount && password.value == userStore.userpassword) {
+        // console.log(userStore.useraccount);
+        // console.log(userStore.userpassword);
+        userStore.currentPage = main;
+    }
 }
 // 註冊
 const isShow = ref(false);

@@ -1,5 +1,4 @@
 <template>
-    <div class="">{{ key1}},{{ key2 }},{{ key3 }}</div>
     <div class="container">
         <div class="wapper">
             <div>
@@ -9,9 +8,9 @@
                 <div class="character" id="character">
                     <div class="box_s box01_1" :id=pets[0]
                         :style="{ backgroundImage: 'url(sprites/hero/' + pets[1].id + '.png' }"
-                        v-for="pets in userInfoStore.userpets" @click="add ? '' : fightover(pets[1])">
+                        v-for="pets in userInfoStore.userpets" @click="add ? '' : fightover(pets[1].id)">
                         <div class="rank">
-                            <h5>{{ pets[1].level }}</h5>
+                            <h5>{{ pets['name'] }}</h5>
                         </div>
                     </div>
                 </div>
@@ -20,7 +19,7 @@
                     <h5 class="fw900 text-center align-middle text-danger" v-if="add">
                         角色編成
                     </h5>
-                    <h5 class="fw900 text-center align-middle text-danger " v-else @click="selectchactor">
+                    <h5 class="fw900 text-center align-middle text-danger " v-else @click="selectchactor()">
                         確定
                     </h5>
                 </div>
@@ -44,6 +43,7 @@
     <link rel="stylesheet" href="/box/css/index_box.css">
     <link rel="stylesheet" href="/box/css/bootstrap.min.css">
 </template>
+
 <script setup>
 import { useUserInfoStore } from '@/stores/userInfo';
 import { ref } from 'vue'
@@ -51,76 +51,60 @@ import { ref } from 'vue'
 
 const userInfoStore = useUserInfoStore()
 var key_s = [];
-var key_id =[];
 for (let keys of userInfoStore.userpetset.values()) {
-    key_s.push(keys);
-    key_id.push(keys.id)
+    key_s.push(keys.id);
 }
+
+console.log(key_id);
+// console.log(parseInt(key_id[1])); 使用迴圈輸出int
+
 const add = ref(true)
-const key1 = ref(key_s[0].id)
-const key2 = ref(key_s[1].id)
-const key3 = ref(key_s[2].id)
+const box_s = ref('box01')
+const key1 = ref(key_s[0])
+const key2 = ref(key_s[1])
+const key3 = ref(key_s[2])
+// function setimage(data){
+// for(let keys of userInfoStore.userpetset.values()){
+//     key_s.push(keys);
+// }
+// return key_s[data].id
+// }
 
 function delimage(data) {
-    key_s.splice(data, 1, '');
-    key1.value = key_s[0].id
-    key2.value = key_s[1].id
-    key3.value = key_s[2].id
+    key_id.splice(data, 1, '');
+    key1.value = key_id[0]
+    key2.value = key_id[1]
+    key3.value = key_id[2]
 }
 
 function fightover(data) {
-    // console.log(data);
-    // console.log(key_s);
-    // console.log(key_s.includes(1));
-    // console.log(key_s.indexOf(''));
-    // console.log(key_s.includes(''));
-    // if (key_s[0] == '') {
-    //     key_s.splice(0, 1, data);
-    // } else if (data.id == key_s[0].id){
-    //     key_s.splice(0, 1, '')
-    // }
-
-    // if(key_s[1] == '') {
-    //     key_s.splice(1, 1, data);
-    // } else if(key_s[1].id == data.id) {
-    //     key_s.splice(1, 1, '');
-    // } 
-
-    // if (key_s[2].id == data.id) {
-    //     key_s.splice(2, 1, '');
-    // }else if(key_s[2] == '') {
-    //     key_s.splice(2, 1, data);
-    // }
-    if (key_s.includes('')) {
-        key_s.splice(key_s.indexOf(''), 1, data);
-        console.log("hello1");
-        key1.value = key_s[0].id
-        key2.value = key_s[1].id
-        key3.value = key_s[2].id
-        return
+    if (key_s[0] == '') {
+        key_s.splice(0,1,data);
+    }else if(key_s[1] == ''){
+        key_s.splice(1,1,data);
+    }else if(key_s[2] == ''){
+        key_s.splice(2,1,data);
     }
-
-    var key_s1= []
-    for (var i = 0; i < 3; i++) {
-        key_s1.push(key_s[i].id);
-        if (key_s1.includes(data.id)) {
-            key_s.splice(key_s1.indexOf(data.id), 1, '');
-            key1.value = key_s[0].id
-            key2.value = key_s[1].id
-            key3.value = key_s[2].id
-            return
-        }
-    }
-
-
+    key1.value = key_s[0]
+    key2.value = key_s[1]
+    key3.value = key_s[2]
+    box_s.value = 'box01_1'
 }
 
 function selectchactor() {
-    for (var i = 0; i < 3; i++) {
-        userInfoStore.userpetset.set(i + 1, key_s[i]);
-    }
-    console.log(userInfoStore.userpetset.get(1));
-    console.log(userInfoStore.userpetset.get(2));
-    console.log(userInfoStore.userpetset.get(3));
+    // console.log(data);
+    // console.log(userInfoStore.userpetset.get(3));
+    // console.log(userInfoStore.userpetset.get(2));
+    // console.log(userInfoStore.userpets[4][1]);
+    // console.log(userInfoStore.userpetset.size);
+    console.log(key_s);
+    // userInfoStore.userpetset.set(1,userInfoStore.userpets[data1][1]);
+    // userInfoStore.userpetset.set(2,userInfoStore.userpets[data2][1]);
+    // userInfoStore.userpetset.set(3,userInfoStore.userpets[data3][1]);
+    // for(var i=0;i<userInfoStore.userpetset.size;i++){
+    //     console.log(userInfoStore.userpetset.get(i+1));
+    // }
+
+    // return userInfoStore.userpetset.set(1,userInfoStore.userpets[data1-1][1]),userInfoStore.userpetset.set(2,userInfoStore.userpets[data2-1][1]),userInfoStore.userpetset.set(3,userInfoStore.userpets[data3-1][1]);
 }
 </script>
