@@ -105,9 +105,9 @@ export const useUserInfoStore = defineStore('info', {
                     {
                         id: '005',
                         attribute: '3',
-                        level: 50,
-                        health: 300,
-                        attack: 100,
+                        level: 5,
+                        health: 100,
+                        attack: 300,
                         cover: 100
                     }
                 ],

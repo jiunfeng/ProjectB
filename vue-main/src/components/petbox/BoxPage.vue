@@ -9,20 +9,20 @@
                 <div class="character" id="character">
                     <div class="box_s box01_1" :id=pets[0]
                         :style="{ backgroundImage: 'url(sprites/hero/' + pets[1].id + '.png' }"
-                        v-for="pets in userInfoStore.userpets" @click="add ? '' : fightover(pets[1])">
+                        v-for="pets in userInfoStore.userpets" @click="add ? '' : fightover(pets[1]) ">
                         <div class="rank">
                             <h5>{{ pets[1].level }}</h5>
                         </div>
                     </div>
                 </div>
-                <div class="select d-flex align-items-center  justify-content-center mt-auto" id="character_select"
-                    @click="add = !add">
-                    <h5 class="fw900 text-center align-middle text-danger" v-if="add">
-                        角色編成
-                    </h5>
-                    <h5 class="fw900 text-center align-middle text-danger " v-else @click="selectchactor">
-                        確定
-                    </h5>
+                <div class="button select d-flex align-items-center  justify-content-center mt-auto"
+                    id="character_select" @click="add = !add,add?selectchactor():''">
+                        <h5 class="fw900 text-center align-middle text-danger" v-if="add">
+                            角色編成
+                        </h5>
+                        <h5 class="fw900 text-center align-middle text-danger " v-else>
+                            確定
+                        </h5>
                 </div>
                 <div class="footer">
                     <div class="put-in">
@@ -51,10 +51,8 @@ import { ref } from 'vue'
 
 
 const userInfoStore = useUserInfoStore()
-var key_s = [];
 var key_id = [];
 for (let keys of userInfoStore.userpetset.values()) {
-    key_s.push(keys);
     key_id.push(keys.id)
 }
 
@@ -89,11 +87,11 @@ function fightover(data) {
 
 function selectchactor() {
     for (var i = 0; i < 3; i++) {
-        userInfoStore.userpetset.set(i + 1, userInfoStore.userpets[parseInt(key_id[i])-1]);
+        userInfoStore.userpetset.set(i + 1, userInfoStore.userpets[parseInt(key_id[i]) - 1][1]);
     }
 
     console.log(parseInt(key_id[1]));
-    console.log(userInfoStore.userpets[parseInt(key_id[1])-1]);
+    console.log(userInfoStore.userpets[parseInt(key_id[1]) - 1]);
     console.log(userInfoStore.userpetset.get(1));
     console.log(userInfoStore.userpetset.get(2));
     console.log(userInfoStore.userpetset.get(3));
