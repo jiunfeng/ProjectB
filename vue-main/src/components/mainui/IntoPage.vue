@@ -168,7 +168,7 @@ function regin() {
         console.log(regpassword.value);
         userStore.register(regaccount.value, regpassword.value, regname.value)
         // const message = userStore.login(regaccount.value, regpassword.value);
-        console.log(message)
+        // console.log(message)
     }
     else {
         alert('請輸入正確的字數')

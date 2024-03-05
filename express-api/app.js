@@ -8,8 +8,8 @@ const app = express();
 const pets_card = {}
 //db連線程序設定
 const connection = mysql.createConnection({
-    // host: 'localhost',dev用
-    host: 'db',
+    host: 'localhost',
+    // host: 'db',
     port: '3306',
     user: 'root',
     password: '123456',
@@ -162,7 +162,7 @@ app.post('/userCreate', (req, res) => {
 //使用者帳號刪除
 app.post('/userDelete', (req, res) => {
     const { account } = req.body;
-    connection.query('SELECT c* FROM user_account WHERE account=?', [account], (error, results) => {
+    connection.query('SELECT * FROM user_account WHERE account=?', [account], (error, results) => {
         if (error) {
             console.error('錯誤查詢:', error);
             return res.json({ message: '發生異常錯誤，帳號無法刪除。' });
