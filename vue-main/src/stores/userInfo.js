@@ -162,7 +162,7 @@ export const useUserInfoStore = defineStore('info', {
             const reqData = {
                 account: account,
                 password: password
-            } 
+            }
             try {
                 const res = await axios.post(import.meta.env.VITE_APP_API + '/userLogin', reqData)
                 // console.log(res.data);
@@ -217,6 +217,22 @@ export const useUserInfoStore = defineStore('info', {
                 console.error('Error fetching data:', error)
             }
         },
-        async register(account, password, username) { }
+        async register(account, password, username) {
+
+            const reqData = {
+                account: account,
+                password: password,
+                username: username
+            }
+            console.log(reqData + "要傳送的資料");
+            try {
+                const res = await axios.post(import.meta.env.VITE_APP_API + '/userCreate', reqData)
+
+                this.message = res.data.message
+                console.log(this.message);
+            } catch (error) {
+                console.error('Error fetching data:', error)
+            }
+        }
     }
 })
