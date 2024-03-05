@@ -35,7 +35,8 @@
         <div class="reg-mask mx-auto" :style="regdivsty" @click.self="regmask">
             <div class="reg-container translate-middle" :style="regdivsty1">
                 <!-- 離開按鈕 -->
-                <button class="reg-leavbtn border-4 translate-middle" @click.self="regmask" :style="regdivsty2"></button>
+                <button class="reg-leavbtn border-4 translate-middle" @click.self="regmask"
+                    :style="regdivsty2"></button>
                 <img class="reg-img1 translate-middle-x" src="/mainui/images/into/reg.png" alt="" :style="regdivsty2">
                 <!-- 帳號 -->
                 <label for="reg1" class="reg-text1" :style="regdivsty2">帳號 :</label>
@@ -46,7 +47,8 @@
                         oninput="value=value.replace(/[^\w\.\/]/ig,'')" style="font-size: 20px;">
                     <!-- 只能輸入數字和英文 -->
                     <div class="valid-feedback input1-1" style="font-size: 25px;">&nbsp;字數符合</div>
-                    <div class="invalid-feedback input1-2" id="inva01" style="font-size: 25px;">&nbsp;請填入8~16個英文或數字</div>
+                    <div class="invalid-feedback input1-2" id="inva01" style="font-size: 25px;">&nbsp;請填入8~16個英文或數字
+                    </div>
                     <!-- <div class="invalid-feedback input1-3 d-none" id="inva02">&nbsp;帳號已存在</div> -->
                 </div>
                 <!-- 密碼 -->
@@ -57,7 +59,8 @@
                         v-model="regpassword" name="reg2" id="reg2" placeholder="請填入8~16個英文或數字"
                         oninput="value=value.replace(/[^\w\.\/]/ig,'')" style="font-size: 20px;">
                     <div class="input2-1 valid-feedback" style="font-size: 25px;">&nbsp;字數符合</div>
-                    <div class="input2-2 invalid-feedback" id="inva01" style="font-size: 25px;">&nbsp;請填入8~16個英文或數字</div>
+                    <div class="input2-2 invalid-feedback" id="inva01" style="font-size: 25px;">&nbsp;請填入8~16個英文或數字
+                    </div>
                 </div>
                 <!-- 使用者名稱 -->
                 <label for="reg3" class="reg-text3" :style="regdivsty2">名字 :</label>
@@ -102,14 +105,24 @@ const regname = ref('')
 
 function into() {
     if ((account.value.length >= min && account.value.length <= max) && (password.value.length >= min && password.value.length <= max)) {
-        console.log(account.value);
-        console.log(password.value);
         userStore.login(account.value, password.value).then(() => {
             console.log("message:" + userStore.message);
-            console.log("money:" + userStore.usermoney);
-            console.log("rank:" + userStore.userrank[0]);
-            console.log("exp:" + userStore.usercredit);
-            userStore.currentPage = "main";
+            if (userStore.message == "登入成功") {
+                console.log(account.value);
+                console.log(password.value);
+                userStore.login(account.value, password.value).then(() => {
+                    console.log("message:" + userStore.message);
+                    console.log("money:" + userStore.usermoney);
+                    console.log("rank:" + userStore.userrank[0]);
+                    console.log("exp:" + userStore.usercredit);
+                    userStore.currentPage = "main";
+                });
+            }
+            else if (userStore.message == "帳號或密碼錯誤") {
+                account.value = "";
+                password.value = "";
+                alert('請輸入正確的帳號或密碼');
+            }
         });
 
     }
@@ -164,8 +177,3 @@ function regin() {
 </script>
 
 <style scoped></style>
-
-
-
-
-
