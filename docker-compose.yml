@@ -32,8 +32,8 @@ services:
   vue-main:
     build: vue-main/
     restart: always
-    ports:
-      - 3006:80
+    # ports:
+      # - 3006:80
     depends_on:
       - db
       - backend
