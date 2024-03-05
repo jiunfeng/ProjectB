@@ -8,7 +8,7 @@ const app = express();
 const pets_card = {}
 //db連線程序設定
 const connection = mysql.createConnection({
-    // host: 'localhost', dev使用
+    // host: 'localhost',dev用
     host: 'db',
     port: '3306',
     user: 'root',
@@ -130,9 +130,27 @@ app.post('/userCreate', (req, res) => {
                     console.error('Error insert data', error);
                     return res.json({ message: '帳號創建失敗' })
                 }
+                console.log(results.insertId);
                 console.log('Data inserted successfully');
+
+                //插入使用者寵物資料
+                const petData = [
+                    { user_account: results.insertId, pet_number: 1, experience: '100' },
+                    { user_account: results.insertId, pet_number: 2, experience: '100' },
+                    { user_account: results.insertId, pet_number: 5, experience: '100' }
+                ];
+
+                const insertQuery = `INSERT INTO user_pets (user_account,pet_number,experience) VALUES ?`;
+                connection.query(insertQuery, [petData.map(item => [item.user_account, item.pet_number, item.experience])], (Error, Results, Fields) => {
+                    if (Error) {
+                        console.error('Error inserting data:', insertError);
+                        res.status(500).send('寵物資料創建失敗異常錯誤');
+                        return;
+                    }
+                });
                 return res.json({ message: '帳號創建完成' })
             })
+
 
         }
     })
