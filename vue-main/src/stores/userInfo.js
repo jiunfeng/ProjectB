@@ -55,114 +55,114 @@ export const useUserInfoStore = defineStore('info', {
             //     cover: 100
             // })
             this.useritems = ['001', '30']
-            this.userpets = [
-                [
-                    1,
-                    {
-                        id: '001',
-                        attribute: '1',
-                        level: 5,
-                        health: 100,
-                        attack: 500,
-                        cover: 100
-                    }
-                ],
-                [
-                    2,
-                    {
-                        id: '002',
-                        attribute: '1',
-                        level: 5,
-                        health: 100,
-                        attack: 300,
-                        cover: 100
-                    }
-                ],
-                [
-                    3,
-                    {
-                        id: '003',
-                        attribute: '2',
-                        level: 5,
-                        health: 100,
-                        attack: 100,
-                        cover: 100
-                    }
-                ],
-                [
-                    4,
-                    {
-                        id: '004',
-                        attribute: '2',
-                        level: 5,
-                        health: 100,
-                        attack: 300,
-                        cover: 100
-                    }
-                ],
-                [
-                    5,
-                    {
-                        id: '005',
-                        attribute: '3',
-                        level: 50,
-                        health: 300,
-                        attack: 100,
-                        cover: 100
-                    }
-                ],
-                [
-                    6,
-                    {
-                        id: '006',
-                        attribute: '3',
-                        level: 5,
-                        health: 100,
-                        attack: 300,
-                        cover: 100
-                    }
-                ],
-                [
-                    7,
-                    {
-                        id: '007',
-                        attribute: '1',
-                        level: 5,
-                        health: 100,
-                        attack: 100,
-                        cover: 100
-                    }
-                ],
-                [
-                    8,
-                    {
-                        id: '008',
-                        attribute: '2',
-                        level: 5,
-                        health: 100,
-                        attack: 300,
-                        cover: 100
-                    }
-                ],
-                [
-                    9,
-                    {
-                        id: '009',
-                        attribute: '3',
-                        level: 5,
-                        health: 100,
-                        attack: 100,
-                        cover: 100
-                    }
-                ]
-            ]
+            // this.userpets = [
+            //     [
+            //         1,
+            //         {
+            //             id: '001',
+            //             attribute: '1',
+            //             level: 5,
+            //             health: 100,
+            //             attack: 500,
+            //             cover: 100
+            //         }
+            //     ],
+            //     [
+            //         2,
+            //         {
+            //             id: '002',
+            //             attribute: '1',
+            //             level: 5,
+            //             health: 100,
+            //             attack: 300,
+            //             cover: 100
+            //         }
+            //     ],
+            //     [
+            //         3,
+            //         {
+            //             id: '003',
+            //             attribute: '2',
+            //             level: 5,
+            //             health: 100,
+            //             attack: 100,
+            //             cover: 100
+            //         }
+            //     ],
+            //     [
+            //         4,
+            //         {
+            //             id: '004',
+            //             attribute: '2',
+            //             level: 5,
+            //             health: 100,
+            //             attack: 300,
+            //             cover: 100
+            //         }
+            //     ],
+            //     [
+            //         5,
+            //         {
+            //             id: '005',
+            //             attribute: '3',
+            //             level: 5,
+            //             health: 100,
+            //             attack: 300,
+            //             cover: 100
+            //         }
+            //     ],
+            //     [
+            //         6,
+            //         {
+            //             id: '006',
+            //             attribute: '3',
+            //             level: 5,
+            //             health: 100,
+            //             attack: 300,
+            //             cover: 100
+            //         }
+            //     ],
+            //     [
+            //         7,
+            //         {
+            //             id: '007',
+            //             attribute: '1',
+            //             level: 5,
+            //             health: 100,
+            //             attack: 100,
+            //             cover: 100
+            //         }
+            //     ],
+            //     [
+            //         8,
+            //         {
+            //             id: '008',
+            //             attribute: '2',
+            //             level: 5,
+            //             health: 100,
+            //             attack: 300,
+            //             cover: 100
+            //         }
+            //     ],
+            //     [
+            //         9,
+            //         {
+            //             id: '009',
+            //             attribute: '3',
+            //             level: 5,
+            //             health: 100,
+            //             attack: 100,
+            //             cover: 100
+            //         }
+            //     ]
+            // ]
         },
         async login(account, password) {
             // this.$reset()
             const reqData = {
                 account: account,
                 password: password
-            }
+            } 
             try {
                 const res = await axios.post(import.meta.env.VITE_APP_API + '/userLogin', reqData)
                 // console.log(res.data);
