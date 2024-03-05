@@ -115,7 +115,7 @@ function into() {
                     console.log("money:" + userStore.usermoney);
                     console.log("rank:" + userStore.userrank[0]);
                     console.log("exp:" + userStore.usercredit);
-                    // userStore.currentPage="main";
+                    userStore.currentPage = "main";
                 });
             }
             else if (userStore.message == "帳號或密碼錯誤") {
