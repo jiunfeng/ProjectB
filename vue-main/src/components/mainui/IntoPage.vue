@@ -102,14 +102,24 @@ const regname = ref('')
 
 function into() {
     if ((account.value.length >= min && account.value.length <= max) && (password.value.length >= min && password.value.length <= max)) {
-        console.log(account.value);
-        console.log(password.value);
         userStore.login(account.value, password.value).then(() => {
             console.log("message:" + userStore.message);
-            console.log("money:" + userStore.usermoney);
-            console.log("rank:" + userStore.userrank[0]);
-            console.log("exp:" + userStore.usercredit);
-            userStore.currentPage="main";
+            if (userStore.message == "登入成功") {
+                console.log(account.value);
+                console.log(password.value);
+                userStore.login(account.value, password.value).then(() => {
+                    console.log("message:" + userStore.message);
+                    console.log("money:" + userStore.usermoney);
+                    console.log("rank:" + userStore.userrank[0]);
+                    console.log("exp:" + userStore.usercredit);
+                    // userStore.currentPage="main";
+                });
+            }
+            else if (userStore.message == "帳號或密碼錯誤") {
+                account.value="";
+                password.value="";
+                alert('請輸入正確的帳號或密碼');
+            }
         });
 
     }

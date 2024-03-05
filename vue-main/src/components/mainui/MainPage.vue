@@ -32,10 +32,10 @@
         <!-- 換角色按鈕 下方右邊-->
         <button type="submit" class="conchangimg1"></button>
         <!-- 戰鬥按鈕 中間左邊-->
-        <button type="submit" class="btnfight1 border" @click="changePage('game')" @mouseover="fightover"
+        <button type="submit" class="btnfight1" @click="changePage('game')" @mouseover="fightover"
             @mouseleave="fightleave" v-bind:style="{ backgroundImage: 'url(' + fightimg1 + ')' }"></button>
         <!-- 箱子按鈕 中間左邊-->
-        <button type="submit" class="btnbox1 border" @click="changePage('box')" @mouseover="boxover" @mouseleave="boxleave"
+        <button type="submit" class="btnbox1" @click="changePage('box')" @mouseover="boxover" @mouseleave="boxleave"
             v-bind:style="{ backgroundImage: 'url(' + boximg1 + ')' }"></button>
         <!-- 幻燈片 中間右邊-->
 
@@ -58,25 +58,25 @@ const changePage = (page) => {
     userStore.currentPage = page;
 }
 // fightimg圖片改變
-const fightimg1 = ref('/mainui/images/index/exp2.png');
+const fightimg1 = ref('/mainui/images/index/fight1.png');
 // 進入元素
 function fightover() {
-    fightimg1.value = '/mainui/images/index/money2.png'
+    fightimg1.value = '/mainui/images/index/fight2.png'
 }
 // 離開元素
 function fightleave() {
-    fightimg1.value = '/mainui/images/index/exp2.png'
+    fightimg1.value = '/mainui/images/index/fight1.png'
 }
 
 // boximg圖片改變
-const boximg1 = ref('/mainui/images/index/exp2.png');
+const boximg1 = ref('/mainui/images/index/box1.png');
 // 進入元素
 function boxover() {
-    boximg1.value = '/mainui/images/index/money2.png'
+    boximg1.value = '/mainui/images/index/box2.png'
 }
 // 離開元素
 function boxleave() {
-    boximg1.value = '/mainui/images/index/exp2.png'
+    boximg1.value = '/mainui/images/index/box1.png'
 }
 console.log("rank:" + userStore.userrank[0]);
 
