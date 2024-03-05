@@ -166,7 +166,8 @@ function regin() {
     if ((regaccount.value.length >= min && regaccount.value.length <= max) && (regpassword.value.length >= min && regpassword.value.length <= max)) {
         console.log(regaccount.value);
         console.log(regpassword.value);
-        const message = userStore.login(regaccount.value, regpassword.value);
+        userStore.register(regaccount.value, regpassword.value, regname.value)
+        // const message = userStore.login(regaccount.value, regpassword.value);
         console.log(message)
     }
     else {

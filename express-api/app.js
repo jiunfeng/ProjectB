@@ -101,12 +101,12 @@ app.post('/userCreate', (req, res) => {
     const { account, password, username } = req.body;
 
     //檢查帳號是否存在
-    connection.query('SELECT * FROM user_account WHERE account = ?', [account], (error, results) => {
+    connection.query('SELECT COUNT(*) AS count FROM user_account WHERE account = ?', [account], (error, results) => {
         if (error) {
             console.error('錯誤查詢:', error)
             return res.json({ message: '發生異常錯誤，帳號無法創建。' });
         }
-        if (results.length > 0) {
+        if (results[0].count > 0) {
             return res.json({ message: '該帳號已有人使用' })
         } else {
             //新增帳號
@@ -144,7 +144,7 @@ app.post('/userCreate', (req, res) => {
 //使用者帳號刪除
 app.post('/userDelete', (req, res) => {
     const { account } = req.body;
-    connection.query('SELECT * FROM user_account WHERE account=?', [account], (error, results) => {
+    connection.query('SELECT c* FROM user_account WHERE account=?', [account], (error, results) => {
         if (error) {
             console.error('錯誤查詢:', error);
             return res.json({ message: '發生異常錯誤，帳號無法刪除。' });
