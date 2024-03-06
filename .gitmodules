@@ -1,0 +1,6 @@
+[submodule "actregister"]
+	path = actregister
+	url = https://github.com/jiunfeng/actregister.git
+[submodule "portfolio"]
+	path = portfolio
+	url = https://github.com/jiunfeng/portfolio.git
