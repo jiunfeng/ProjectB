@@ -90,10 +90,10 @@ import { useUserInfoStore } from "@/stores/userInfo";
 // 宣告userStore擁有userInfo.js的資料
 const userStore = useUserInfoStore();
 // 字數
-var min = 5;
+var min = 8;
 var max = 16;
 var namemin = 1;
-var namemax = 6
+var namemax = 6;
 // 登入
 const account = ref('')
 const password = ref('')
@@ -103,6 +103,7 @@ const regpassword = ref('')
 const regname = ref('')
 // const regdivsty = ref(false)
 
+// 登入
 function into() {
     if ((account.value.length >= min && account.value.length <= max) && (password.value.length >= min && password.value.length <= max)) {
         userStore.login(account.value, password.value).then(() => {
@@ -110,18 +111,22 @@ function into() {
             if (userStore.message == "登入成功") {
                 console.log(account.value);
                 console.log(password.value);
-                userStore.login(account.value, password.value).then(() => {
-                    console.log("message:" + userStore.message);
-                    console.log("money:" + userStore.usermoney);
-                    console.log("rank:" + userStore.userrank[0]);
-                    console.log("exp:" + userStore.usercredit);
-                    userStore.currentPage = "main";
-                });
+                console.log("message:" + userStore.message);
+                console.log("money:" + userStore.usermoney);
+                console.log("rank:" + userStore.userrank[0]);
+                console.log("exp:" + userStore.usercredit);
+
+                userStore.currentPage = "main";
             }
             else if (userStore.message == "帳號或密碼錯誤") {
                 account.value = "";
                 password.value = "";
                 alert('請輸入正確的帳號或密碼');
+            }
+            else if (userStore.message == "未知錯誤") {
+                account.value = "";
+                password.value = "";
+                alert('連線錯誤');
             }
         });
 
@@ -129,12 +134,8 @@ function into() {
     else {
         alert('請輸入正確的字數')
     }
-    if (account.value == userStore.useraccount && password.value == userStore.userpassword) {
-        // console.log(userStore.useraccount);
-        // console.log(userStore.userpassword);
-        userStore.currentPage = main;
-    }
 }
+
 // 註冊
 const isShow = ref(false);
 const regdivsty = computed(() => {
@@ -163,10 +164,28 @@ function regmask() {
 // 註冊執行
 function regin() {
     min = 8;
-    if ((regaccount.value.length >= min && regaccount.value.length <= max) && (regpassword.value.length >= min && regpassword.value.length <= max)) {
+    namemin = 1;
+    namemax = 6;
+    if ((regaccount.value.length >= min && regaccount.value.length <= max) && (regpassword.value.length >= min && regpassword.value.length <= max) && (regname.value.length >= namemin && regname.value.length <= namemax)) {
         console.log(regaccount.value);
         console.log(regpassword.value);
-        userStore.register(regaccount.value, regpassword.value, regname.value)
+        console.log(regname.value);
+        userStore.register(regaccount.value, regpassword.value, regname.value).then(() => {
+            if (userStore.message == "帳號創建完成") {
+                alert('帳號註冊成功');
+                isShow.value = false;
+                account.value=regaccount.value;
+            }
+            else if (userStore.message == "該帳號已有人使用") {
+                regaccount.value = "";
+                alert('該帳號名稱已有人使用');
+            }
+            else if (userStore.message == "發生異常錯誤，帳號無法創建。") {
+                account.value = "";
+                password.value = "";
+                alert('連線錯誤');
+            }
+        });
         // const message = userStore.login(regaccount.value, regpassword.value);
         // console.log(message)
     }

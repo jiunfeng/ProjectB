@@ -130,13 +130,13 @@ br {
 
 .reg-leavbtn{
     position: absolute;
-    background-image: url('/mainui/images/into/x.png');
+    background-image: url('/mainui/images/into/X.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     right: -10%;
     top: 0%;
     width: 10%;
-    height: 10%;
+    aspect-ratio: 1/1;
     border-radius: 50%;
 }
 
