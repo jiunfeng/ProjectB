@@ -11,7 +11,8 @@
                 <div class="character" id="character">
                     <div class="box_s box01_1" :id=pets[0]
                         :style="{ backgroundImage: 'url(sprites/hero/' + index + '.png' }"
-                        v-for="(pets, index) in userInfoStore.userpets" @click="add ? '' : fightover(index)">
+                        v-for="(pets, index) in userInfoStore.userpets"
+                        @click="add ? reg(pets, index) : fightover(index)">
                         <div class="rank">
                             <h5>{{ pets['level'][0] }}</h5>
                         </div>
@@ -40,6 +41,19 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="upgrade" :class="[isShow ? 'visible' : 'invisible']" @click="isShow = !isShow">
+            <div class="upgrade-table translate-middle" :style="{ height: isShow ? '75%' : '0%' }">
+                <div class="d-flex">
+                    <img v-bind:src="'sprites/hero/' + c_img + '.png'" alt="">
+                    <div>
+                        <p>{{ pet.name }} LV {{ pet.level }}</p>
+                        <p>HP {{ pet.health }} ATK {{ pet.attack }}</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -71,6 +85,12 @@ const add = ref(true)
 const key1 = ref(key_id[0])
 const key2 = ref(key_id[1])
 const key3 = ref(key_id[2])
+const c_img = ref()
+// const c_name = ref()
+// const c_level = ref()
+// const c_hp = ref()
+// const c_atk = ref()
+const pet = ref([])
 
 function delimage(data) {
     key_id.splice(data, 1, '');
@@ -99,8 +119,8 @@ function selectchactor() {
         for (var i = 0; i < 3; i++) {
             userInfoStore.userpetset.set(i + 1, { ...userInfoStore.userpets[key_id[i]], 'id': key_id[i] });
         }
-    }else{
-        add.value=false;
+    } else {
+        add.value = false;
         alert("未選取三隻精靈");
     }
 
@@ -110,5 +130,17 @@ function selectchactor() {
     // console.log(userInfoStore.userpetset.get(1));
     // console.log(userInfoStore.userpetset.get(2));
     // console.log(userInfoStore.userpetset.get(3));
+}
+const isShow = ref(false);
+function reg(pets, index) {
+    isShow.value = true;
+    console.log(index);
+    c_img.value = index;
+    // c_name.value = pets.name;
+    // c_level.value = pets.level[0];
+    // c_hp.value = pets.health;
+    // c_atk.value = pets.attack;
+    pet.value = pets;
+    console.log(pet.value.level[0])
 }
 </script>
