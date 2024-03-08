@@ -5,15 +5,16 @@ br {
 .bg1 {
     background-color: rgba(0, 0, 0, 0.5);
 }
+
 .bg2 {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-.textsize1{
+.textsize1 {
     font-size: 18px;
 }
 
-.textsize2{
+.textsize2 {
     font-size: 20px;
 }
 
@@ -35,6 +36,7 @@ br {
     user-select: none;
     z-index: 1;
 }
+
 .userimg1-1 {
     position: absolute;
     height: 7.5%;
@@ -44,6 +46,7 @@ br {
     border-radius: 50%;
     user-select: none;
 }
+
 .userimg1-2 {
     position: absolute;
     height: 7.5%;
@@ -64,8 +67,7 @@ br {
     user-select: none;
     border-radius: 10%;
     top: 12.5%;
-    left: 6%;
-    
+    left: 17%;
 }
 
 .usermoneydiv1 {
@@ -76,22 +78,22 @@ br {
     z-index: 1;
 }
 
-.usermoneyimg1{
-    width: 15%;  
-    aspect-ratio: 1;  
+.usermoneyimg1 {
+    width: 15%;
+    aspect-ratio: 1;
 }
 
-.userexpimg1{
+.userexpimg1 {
     width: 13%;
     aspect-ratio: 1;
 }
 
 .conimg1 {
     position: absolute;
-    width: 90%;
-    aspect-ratio: 1/1.1;
+    width: 100%;
+    aspect-ratio: 1/1;
     bottom: 0%;
-    left: 57%;
+    left: 50%;
 }
 
 .conchangimg1 {
@@ -100,15 +102,15 @@ br {
     /* 按鈕的背景顏色變為透明的 */
     border-style: none;
     background-image: url('/mainui/images/index/change.png');
-    background-size: 100% 100%;    
+    background-size: 100% 100%;
     border-radius: 50%;
     height: 5%;
     aspect-ratio: 1/1;
-    bottom: 47%;
+    bottom: 57%;
     right: 3%;
 }
 
-.conchangimg1:hover{
+.conchangimg1:hover {
     background-blend-mode: multiply;
     background-color: rgba(0, 0, 0, 0.6);
 }
@@ -118,7 +120,7 @@ br {
     background-color: transparent;
     /* 按鈕的背景顏色變為透明的 */
     border-style: none;
-    background-size: 100% 100%;    
+    background-size: 100% 100%;
     height: 8.5%;
     aspect-ratio: 3/1;
     top: 14%;
@@ -130,7 +132,7 @@ br {
     background-color: transparent;
     /* 按鈕的背景顏色變為透明的 */
     border-style: none;
-    background-size: 100% 100%; 
+    background-size: 100% 100%;
     height: 7%;
     aspect-ratio: 2.8/1;
     top: 23%;
@@ -156,4 +158,71 @@ br {
     width: 300px;
     height: 185px;
     z-index: 2;
+}
+
+/* 換角色頁面的css */
+.chg-mask {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+}
+
+.chg-container {
+    position: absolute;
+    background-image: url('/mainui/images/into/reg2.jpg');
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    border-radius: 20px;
+    transition: 0.3s linear;
+}
+
+.chg-leavbtn {
+    position: absolute;
+    background-image: url('/mainui/images/into/X.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    right: -10%;
+    top: 0%;
+    width: 10%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+}
+
+.chgimg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    /* 按鈕的背景顏色變為透明的 */
+    top: 0%;
+    left: 0%;
+    width: 120px;
+    aspect-ratio: 1.5/1;
+    background-size: contain;
+    background-position: center;
+    user-select: none;
+    margin: 5px;
+}
+
+.chg-btn {
+    position: absolute;
+    background-color: #00A600;
+    color: #AE0000;
+    font-size: 35px;
+    bottom: 1%;
+    left: 50%;
+    width: 30%;
+    height: 13%;
+    border-radius: 45%;
+    transition: 0.6s linear;
+}
+
+.chg-btn:hover {
+    font-size: 45px;
+    color: #FF2D2D;
+    border-radius: 10%;
 }
