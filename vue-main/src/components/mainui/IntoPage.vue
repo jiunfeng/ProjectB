@@ -161,6 +161,7 @@ function regmask() {
     console.log(isShow.value);
     console.log(regdivsty.value);
 }
+
 // 註冊執行
 function regin() {
     min = 8;
