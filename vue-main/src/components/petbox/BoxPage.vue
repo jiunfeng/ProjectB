@@ -1,25 +1,29 @@
 <template>
     <div class="container">
         <div class="wapper">
-            <div>
-                <h1 class="fw900 text-center p-5">背包</h1>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-dark" @click="changePage('MainPage')">主畫面</button>
+            </div>
+            <div class="p-3">
+                <h1 class="fw900 text-center p-3">背包</h1>
             </div>
             <div class="content">
                 <div class="character" id="character">
                     <div class="box_s box01_1" :id=pets[0]
                         :style="{ backgroundImage: 'url(sprites/hero/' + index + '.png' }"
-                        v-for="(pets, index) in userInfoStore.userpets" @click="add ? '' : fightover(index)">
+                        v-for="(pets, index) in userInfoStore.userpets"
+                        @click="add ? reg(pets, index) : fightover(index)">
                         <div class="rank">
                             <h5>{{ pets['level'][0] }}</h5>
                         </div>
                     </div>
                 </div>
                 <div class="select d-flex align-items-center  justify-content-center mt-auto" id="character_select"
-                    @click="add = !add , add?selectchactor():''">
+                    @click="add = !add, add ? selectchactor() : ''">
                     <h5 class="fw900 text-center align-middle text-danger" v-if="add">
                         角色編成
                     </h5>
-                    <h5 class="fw900 text-center align-middle text-danger " v-else >
+                    <h5 class="fw900 text-center align-middle text-danger " v-else>
                         確定
                     </h5>
                 </div>
@@ -38,21 +42,39 @@
                 </div>
             </div>
         </div>
+
+        <div class="upgrade" :class="[isShow ? 'visible' : 'invisible']" @click="isShow = !isShow">
+            <div class="upgrade-table translate-middle" :style="{ height: isShow ? '75%' : '0%' }">
+                <div class="d-flex">
+                    <img v-bind:src="'sprites/hero/' + c_img + '.png'" alt="">
+                    <div>
+                        <p>{{ pet.name }} LV {{ pet.level }}</p>
+                        <p>HP {{ pet.health }} ATK {{ pet.attack }}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <link rel="stylesheet" href="/box/css/index_box.css">
     <link rel="stylesheet" href="/box/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/box/css/sweetalert2.min.css">
 </template>
+
 
 <script setup>
 import { useUserInfoStore } from '@/stores/userInfo';
 import { ref } from 'vue'
 
-
 const userInfoStore = useUserInfoStore()
+const changePage = (page) => {
+    userInfoStore.currentPage = page;
+}
 var key_id = [];
 for (let keys of userInfoStore.userpetset.values()) {
     key_id.push(keys.id);
+    console.log(userInfoStore.userpets)
 }
 // console.log('set:'+userInfoStore.userpetset.values());
 
@@ -63,7 +85,12 @@ const add = ref(true)
 const key1 = ref(key_id[0])
 const key2 = ref(key_id[1])
 const key3 = ref(key_id[2])
-console.log(userInfoStore.userpetset);
+const c_img = ref()
+// const c_name = ref()
+// const c_level = ref()
+// const c_hp = ref()
+// const c_atk = ref()
+const pet = ref([])
 
 function delimage(data) {
     key_id.splice(data, 1, '');
@@ -88,16 +115,32 @@ function fightover(data) {
 }
 
 function selectchactor() {
-    // console.log(userInfoStore.userpetset);
-    for (var i = 0; i < 3; i++) {
-        userInfoStore.userpetset.set(i + 1, {...userInfoStore.userpets[key_id[i]], 'id':key_id[i]});
+    if (key_id.indexOf('') == '-1') {
+        for (var i = 0; i < 3; i++) {
+            userInfoStore.userpetset.set(i + 1, { ...userInfoStore.userpets[key_id[i]], 'id': key_id[i] });
+        }
+    } else {
+        add.value = false;
+        alert("未選取三隻精靈");
     }
 
     // console.log(key_id[1]);
-    console.log(userInfoStore.userpetset);
+    //console.log(userInfoStore.userpetset);
     // console.log(userInfoStore.userpets[key_id[1]]);
     // console.log(userInfoStore.userpetset.get(1));
     // console.log(userInfoStore.userpetset.get(2));
     // console.log(userInfoStore.userpetset.get(3));
+}
+const isShow = ref(false);
+function reg(pets, index) {
+    isShow.value = true;
+    console.log(index);
+    c_img.value = index;
+    // c_name.value = pets.name;
+    // c_level.value = pets.level[0];
+    // c_hp.value = pets.health;
+    // c_atk.value = pets.attack;
+    pet.value = pets;
+    console.log(pet.value.level[0])
 }
 </script>
