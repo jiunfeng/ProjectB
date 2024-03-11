@@ -216,7 +216,7 @@ export default class Secondary extends Phaser.Scene {
   }
   overGame(state) {
     //state win:1/fail:0
-    if(state){
+    if (state) {
       UserInfoStore.successDungeon('1-1');
     }
     const overGameScene = this.scene.get('OverGame');

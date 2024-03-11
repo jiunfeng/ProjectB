@@ -218,7 +218,7 @@ export const useUserInfoStore = defineStore('info', {
                 console.error('Error fetching data:', error)
             }
 
-            this.successDungeon("1-1")
+
         },
         async register(account, password, username) {
 
@@ -250,6 +250,7 @@ export const useUserInfoStore = defineStore('info', {
             let nowexp = parseInt(this.userexp)
             console.log(this.userexp);
             this.userexp = parseInt(addexp) + nowexp
+            this.userrank = [Math.floor(this.userexp / 100), this.userexp % 100]
             console.log(this.userexp);
 
             let items = {}
