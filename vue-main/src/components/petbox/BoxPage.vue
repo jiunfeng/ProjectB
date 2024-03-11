@@ -43,13 +43,47 @@
             </div>
         </div>
 
-        <div class="upgrade" :class="[isShow ? 'visible' : 'invisible']" @click="isShow = !isShow">
+        <div class="upgrade" :class="[isShow ? 'visible' : 'invisible']" @click.self="isShow = !isShow">
             <div class="upgrade-table translate-middle" :style="{ height: isShow ? '75%' : '0%' }">
-                <div class="d-flex">
-                    <img v-bind:src="'sprites/hero/' + c_img + '.png'" alt="">
-                    <div>
-                        <p>{{ pet.name }} LV {{ pet.level }}</p>
-                        <p>HP {{ pet.health }} ATK {{ pet.attack }}</p>
+                <div class="border rounded m-4 bg-danger p-5">
+                    <div class="d-flex">
+                        <img v-bind:src="'sprites/hero/' + c_img + '.png'" alt="">
+                        <div class="ms-5 flex-fill">
+                            <p>{{ pet.name }} LV {{ c_level }}</p>
+                            <p>HP {{ pet.health }}ATK {{ pet.attack }}</p>
+                            <div class="level" style="width: 100%;height: 2px;background-color: #fff;">
+                                <div class="transition"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border rounded m-4 bg-danger p-5">
+                    <div class="d-flex flex-column" style="height:400px;">
+                        <transition name="f1">
+                            <div id="exp-fruit1" class="border block" @click="show = !show, displaynone(show ? 0 : 1)"
+                                v-show="visibleDiv == 1 || visibleDiv === 0" :key="vf - 1">
+                                <img v-bind:src="'sprites/hero/007.png'" alt="">
+                            </div>
+                        </transition>
+                        <!-- <transition name="f1">
+                            <div id="exp-fruit1" class="border block" @click="show = !show, displaynone(show ? 0 : 1)"
+                                v-show="visibleDiv == 1 || visibleDiv === 0"
+                                :class="{ 'hidden': visibleDiv !== 1 && visibleDiv !== 0 }"
+                                :style="{ height: visibleDiv ? '400px' : '100px' }" :key="vf-1">
+                                <img v-bind:src="'sprites/hero/007.png'" alt="">
+                            </div>
+                        </transition> -->
+                        <!-- <transition name="f2">
+                            <div id="exp-fruit2" class="border " @click="show = !show, displaynone(show ? 0 : 2)"
+                                v-show="visibleDiv == 2 || visibleDiv === 0"
+                                :class="{ 'hidden': visibleDiv !== 2 && visibleDiv !== 0 }"
+                                :style="{ height: visibleDiv ? '400px' : '100px'}">
+                                <img v-bind:src="'sprites/hero/008.png'" alt="" class="">
+                            </div>
+                        </transition> -->
+                        <!-- <div id="exp-fruit3" class="border flex-fill" @click="show=!show,displaynone(show?0:3)" v-show="visibleDiv == 3|| visibleDiv === 0" :class="{ 'hidden': visibleDiv !== 3 && visibleDiv !== 0 }" :style="{ height: visibleDiv ? '400px' : '100px'}">
+                            <img v-bind:src="'sprites/hero/009.png'" alt="" class="">
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -62,6 +96,60 @@
     <link rel="stylesheet" href="/box/css/sweetalert2.min.css">
 </template>
 
+<style>
+.transition {
+    width: 0%;
+    height: 2px;
+    background-color: #000;
+    transition: 1s;
+}
+
+.level:hover .transition {
+    width: 100%;
+    transition: 1s;
+}
+
+#exp-fruit1 {
+    margin-bottom: 50px;
+}
+
+#exp-fruit2 {
+    margin-bottom: 50px;
+}
+
+.f1-enter-active {
+    transition: all 10s ease;
+}
+
+.f1-enter-to {
+    transform: translateY(150%);
+    height: 400px;
+}
+
+.f1-enter-from {
+    transform: translateY(150%);
+    height: 100px;
+}
+
+/* .f2-leave-active {
+    transition: all 0.5s linear;
+}
+
+
+.f2-enter-from{
+    transform: translateY(100%);
+}
+
+.f2-leave-to{
+
+} */
+
+
+/* #exp-fruit3{
+height: 100px;
+transition:1s;
+}  */
+</style>
 
 <script setup>
 import { useUserInfoStore } from '@/stores/userInfo';
@@ -74,7 +162,6 @@ const changePage = (page) => {
 var key_id = [];
 for (let keys of userInfoStore.userpetset.values()) {
     key_id.push(keys.id);
-    console.log(userInfoStore.userpets)
 }
 // console.log('set:'+userInfoStore.userpetset.values());
 
@@ -86,11 +173,8 @@ const key1 = ref(key_id[0])
 const key2 = ref(key_id[1])
 const key3 = ref(key_id[2])
 const c_img = ref()
-// const c_name = ref()
-// const c_level = ref()
-// const c_hp = ref()
-// const c_atk = ref()
 const pet = ref([])
+const c_level = ref()
 
 function delimage(data) {
     key_id.splice(data, 1, '');
@@ -136,11 +220,15 @@ function reg(pets, index) {
     isShow.value = true;
     console.log(index);
     c_img.value = index;
-    // c_name.value = pets.name;
-    // c_level.value = pets.level[0];
-    // c_hp.value = pets.health;
-    // c_atk.value = pets.attack;
     pet.value = pets;
+    c_level.value = pets.level[0];
     console.log(pet.value.level[0])
 }
+const show = ref(true)
+const visibleDiv = ref(0);
+const displaynone = (data) => {
+    visibleDiv.value = data;
+    console.log(visibleDiv.value);
+}
+
 </script>
