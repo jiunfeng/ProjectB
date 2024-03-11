@@ -172,6 +172,7 @@ export const useUserInfoStore = defineStore('info', {
                     this.userpassword = res.data.password
                     this.username = res.data.username
                     this.userrank = [Math.floor(res.data.experience / 100), res.data.experience % 100]
+                    this.userexp = res.data.experience
                     this.usermoney = res.data.money
                     this.usercredit = res.data.credit
                     this.userpets = res.data.userpets
@@ -216,6 +217,8 @@ export const useUserInfoStore = defineStore('info', {
             } catch (error) {
                 console.error('Error fetching data:', error)
             }
+
+            this.successDungeon("1-1")
         },
         async register(account, password, username) {
 
@@ -232,6 +235,42 @@ export const useUserInfoStore = defineStore('info', {
                 console.log(this.message);
             } catch (error) {
                 console.error('Error fetching data:', error)
+            }
+        },
+
+        //關卡通關
+        async successDungeon(dungeonNum) {
+            let addexp = 0
+            let additems = []
+            if (dungeonNum == "1-1") {
+                addexp = 340
+                additems = ["001", 5]
+            }
+            console.log(addexp);
+            let nowexp = parseInt(this.userexp)
+            console.log(this.userexp);
+            this.userexp = parseInt(addexp) + nowexp
+            console.log(this.userexp);
+
+            let items = {}
+            this.useritems.split("|").forEach(pair => {
+                let [key, value] = pair.split(',');
+                items[key] = parseInt(value)
+            });
+            items[additems[0]] += additems[1]
+            let itemsStr = Object.entries(items).map(([key, value]) => key + ',' + value).join("|")
+            this.useritems = itemsStr
+
+
+            const reqData = {
+                account: this.useraccount,
+                experience: this.userexp,
+                items: this.useritems
+            }
+            try {
+                const res = await axios.post(import.meta.env.VITE_APP_API + '/userUpdate', reqData)
+            } catch (error) {
+                console.error('Error update addexp', error)
             }
         }
     }
