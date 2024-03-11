@@ -31,6 +31,9 @@
             <button class="btn2" type="button" @click="reg">註冊</button>
         </div>
 
+        <!-- 會員管理頁面按鈕 -->
+        <button class="btn_manage btn btn-primary" type="button" @click="manage">會員管理</button>
+
         <!-- 註冊頁面 -->
         <div class="reg-mask mx-auto" :style="regdivsty" @click.self="regmask">
             <div class="reg-container translate-middle" :style="regdivsty1">
@@ -77,12 +80,12 @@
         </div>
     </div>
 
-    <link rel="stylesheet" href="/mainui/css/into1.css">
+    <!-- <link rel="stylesheet" href="/mainui/css/into1.css"> -->
     <link rel="stylesheet" href="/mainui/css/bootstrap.min.css">
 </template>
 
 <script setup>
-// import "@/assets/into1.css"
+import "@/assets/into1.css"
 import { ref, computed } from 'vue'
 // 控制使用者currentPage導向
 // 連線userInfo.js的資料
@@ -116,6 +119,7 @@ function into() {
                 console.log("rank:" + userStore.userrank[0]);
                 console.log("exp:" + userStore.usercredit);
 
+                // 跳轉頁面
                 userStore.currentPage = "main";
             }
             else if (userStore.message == "帳號或密碼錯誤") {
@@ -192,6 +196,11 @@ function regin() {
     else {
         alert('請輸入正確的字數')
     }
+}
+
+// #會員管理跳轉
+function manage(){
+    userStore.currentPage = "manage";
 }
 
 </script>
