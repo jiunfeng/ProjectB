@@ -59,12 +59,20 @@
                 </div>
                 <div class="border rounded m-4 bg-danger p-5">
                     <div class="" style="height:400px;">
-                            <div class="d-flex justify-content-center">
-                                <img v-bind:src="'sprites/hero/007.png'" alt="">
-                            </div>
-                            <div>
-                                
-                            </div>
+                        <div class="d-flex justify-content-center">
+                            <img v-bind:src="'sprites/hero/007.png'" alt="">
+                        </div>
+                        <div>
+                            <hr>
+                            <p>擁有:{{ userExpitem }}</p>
+                            <p class="d-flex">使用</p><select name="" id="" v-model="selectExpitem">
+                                <option v-for="n in parseInt(userExpitem)" :value="n">{{ String(n) }}</option>
+                            </select>
+                            <p>{{ userExpitem }}→<span class="text-warning">{{ userExpitem - selectExpitem }}</span> 個
+                            </p>
+                            <button class="btn btn-warning">選擇素材</button><button class="btn btn-primary"
+                                @click=levelup()>使用</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -89,8 +97,6 @@
     width: 100%;
     transition: 1s;
 }
-
-
 </style>
 
 <script setup>
@@ -101,8 +107,6 @@ const userInfoStore = useUserInfoStore()
 const changePage = (page) => {
     userInfoStore.currentPage = page;
 }
-console.log(userInfoStore.useritems.split('|')[0].split(','));
-
 var key_id = [];
 for (let keys of userInfoStore.userpetset.values()) {
     key_id.push(keys.id);
@@ -119,6 +123,10 @@ const key3 = ref(key_id[2])
 const c_img = ref()
 const pet = ref([])
 const c_level = ref()
+const userExptype = ref('001')
+const userExpitem = ref(userInfoStore.useritems.split('|')[0].split(',')[1]);
+console.log(userExpitem);
+const selectExpitem = ref()
 
 function delimage(data) {
     key_id.splice(data, 1, '');
@@ -174,6 +182,14 @@ const displaynone = (data) => {
     visibleDiv.value = data;
     console.log(visibleDiv.value);
 }
+function levelup() {
+    console.log(c_img.value);
+    console.log(userExptype.value);
+    console.log(selectExpitem.value);
+    userInfoStore.petLevelUp(c_img.value, userExptype.value, selectExpitem.value).then(() => {
+        console.log(userInfoStore.useritems.split('|')[0].split(',')[1]);
+    });
+}
 
 </script>
 
@@ -184,7 +200,7 @@ const displaynone = (data) => {
     </div>
 </div> -->
 
-                        <!-- <transition name="f1">
+<!-- <transition name="f1">
                             <div id="exp-fruit1" class="border block" @click="show = !show, displaynone(show ? 0 : 1)"
                                 v-show="visibleDiv == 1 || visibleDiv === 0"
                                 :class="{ 'hidden': visibleDiv !== 1 && visibleDiv !== 0 }"
@@ -192,7 +208,7 @@ const displaynone = (data) => {
                                 <img v-bind:src="'sprites/hero/007.png'" alt="">
                             </div>
                         </transition> -->
-                        <!-- <transition name="f2">
+<!-- <transition name="f2">
                             <div id="exp-fruit2" class="border " @click="show = !show, displaynone(show ? 0 : 2)"
                                 v-show="visibleDiv == 2 || visibleDiv === 0"
                                 :class="{ 'hidden': visibleDiv !== 2 && visibleDiv !== 0 }"
@@ -200,6 +216,6 @@ const displaynone = (data) => {
                                 <img v-bind:src="'sprites/hero/008.png'" alt="" class="">
                             </div>
                         </transition> -->
-                        <!-- <div id="exp-fruit3" class="border flex-fill" @click="show=!show,displaynone(show?0:3)" v-show="visibleDiv == 3|| visibleDiv === 0" :class="{ 'hidden': visibleDiv !== 3 && visibleDiv !== 0 }" :style="{ height: visibleDiv ? '400px' : '100px'}">
+<!-- <div id="exp-fruit3" class="border flex-fill" @click="show=!show,displaynone(show?0:3)" v-show="visibleDiv == 3|| visibleDiv === 0" :class="{ 'hidden': visibleDiv !== 3 && visibleDiv !== 0 }" :style="{ height: visibleDiv ? '400px' : '100px'}">
                             <img v-bind:src="'sprites/hero/009.png'" alt="" class="">
                         </div> -->
