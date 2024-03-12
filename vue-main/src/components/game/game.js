@@ -14,7 +14,7 @@ function launch(containerId) {
       default: 'arcade',
       arcade: {
         gravity: { y: 0 },
-        debug: true,
+        debug: false,
       }
     },
     scene: [Dun, Main, Secondary,OverGame],
