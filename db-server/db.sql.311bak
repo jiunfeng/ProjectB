@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： db
--- 產生時間： 2024 年 03 月 11 日 01:53
+-- 產生時間： 2024 年 03 月 01 日 05:28
 -- 伺服器版本： 10.4.8-MariaDB-1:10.4.8+maria~bionic
 -- PHP 版本： 8.2.12
 
@@ -72,18 +72,15 @@ CREATE TABLE `user_account` (
   `credit` int(4) NOT NULL,
   `experience` int(4) NOT NULL,
   `pet_team` varchar(16) NOT NULL,
-  `items` varchar(60) NOT NULL,
-  `background_pet` varchar(3) NOT NULL DEFAULT '001',
-  `heads` varchar(3) NOT NULL DEFAULT '001'
+  `items` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 傾印資料表的資料 `user_account`
 --
 
-INSERT INTO `user_account` (`id`, `account`, `password`, `username`, `rank`, `money`, `credit`, `experience`, `pet_team`, `items`, `background_pet`, `heads`) VALUES
-(1, 'test0001', 'test001pas', 'testaccount', 3, 5000, 3000, 780, '001|002|003', '001,70|002,10|004,10', '001', '001'),
-(7, 'test00010', 'test001pas', '天字吧好', 1, 1000, 500, 840, '001|002|003', '001,25|002,10|004,10', '001', '001');
+INSERT INTO `user_account` (`id`, `account`, `password`, `username`, `rank`, `money`, `credit`, `experience`, `pet_team`, `items`) VALUES
+(1, 'test0001', 'test001pas', 'testaccount', 3, 5000, 3000, 300, '001|002|003', '001,20|002,10|004,10');
 
 -- --------------------------------------------------------
 
@@ -106,10 +103,7 @@ INSERT INTO `user_pets` (`id`, `user_account`, `pet_number`, `experience`) VALUE
 (1, 1, 1, '500'),
 (2, 1, 2, '1000'),
 (3, 1, 5, '900'),
-(4, 1, 6, '1000'),
-(5, 7, 1, '100'),
-(6, 7, 2, '100'),
-(7, 7, 5, '100');
+(4, 1, 6, '1000');
 
 --
 -- 已傾印資料表的索引
@@ -149,13 +143,13 @@ ALTER TABLE `pets_card`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user_account`
 --
 ALTER TABLE `user_account`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `user_pets`
 --
 ALTER TABLE `user_pets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- 已傾印資料表的限制式
