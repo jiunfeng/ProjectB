@@ -37,7 +37,7 @@ connection.connect((err) => {
             pets_card[id] = petInfo
         });
 
-        console.log('Pet cart data:', pets_card);
+        // console.log('Pet cart data:', pets_card);
     })
 });
 
@@ -191,7 +191,25 @@ app.post('/userDelete', (req, res) => {
 
 // 使用者資料更新
 app.post('/userUpdate', (req, res) => {
+    //檢查是否有更新經驗
+    if (req.body.hasOwnProperty('addexp')) {
+        req.body.experience = parseInt(req.body.addexp) + parseInt(req.body.experience)
+        delete req.body.addexp
+    }
+    //檢查是否有更新道具
+    if (req.body.hasOwnProperty('additems')) {
+        let items = {}
+        req.body.items.split("|").forEach(pair => {
+            let [key, value] = pair.split(',');
+            items[key] = parseInt(value)
+        });
+        items[req.body.additems[0]] += req.body.additems[1]
+        let itemsStr = Object.entries(items).map(([key, value]) => key + ',' + value).join("|")
+        delete req.body.additems, req.body.items;
+        req.body.items = itemsStr
 
+
+    }
     const { account, ...updates } = req.body;//提取account將剩下的存到updates
     connection.query('SELECT * FROM user_account WHERE account=?', [account], (error, results) => {
         if (error) {
@@ -218,6 +236,90 @@ app.post('/userUpdate', (req, res) => {
 
     })
 })
+
+// 使用者列表
+app.get('/userList', (req, res) => {
+    connection.query('SELECT * FROM user_account', (error, results) => {
+        if (error) {
+            console.error('錯誤查詢:', error);
+            return res.json({ message: '發生異常錯誤，帳號無法更新。' });
+        }
+
+        const userData = {}
+        results.forEach(element => {
+            delete element.id
+            userData[element.account] = element
+        });
+
+        // console.log(userData);
+        return res.json(userData)
+    })
+});
+
+//使用者寵物經驗更新
+app.post('/petUpdate', (req, res) => {
+    const { account, ...updates } = req.body;
+    let userdata = {};
+
+    connection.query('SELECT * FROM user_account WHERE account=?', [account], (error, user) => {
+        if (error) {
+            console.error('錯誤查詢:', error);
+            res.json({ message: '發生異常錯誤，使用者寵物經驗無法更新。' });
+        }
+
+        if (user.length == 0) {
+            return res.json({ message: '該用戶不存在' })
+        } else {
+            //果實數量更新
+
+            let items = {}
+            user[0].items.split("|").forEach(pair => {
+                let [key, value] = pair.split(',');
+                items[key] = parseInt(value)
+            });
+            console.log(items);
+            items[updates.itemnumber] -= updates.itemamount
+            console.log(items);
+            let itemsStr = Object.entries(items).map(([key, value]) => key + ',' + value).join("|")
+            console.log(itemsStr);
+
+            connection.query('UPDATE user_account SET items = ? WHERE account = ?', [itemsStr, user[0].account], (error, results) => {
+                if (error) {
+                    console.error('錯誤查詢:', error);
+                    res.json({ message: '發生異常錯誤，使用者道具無法更新。' });
+                }
+
+                console.log('更新完成', results);
+            })
+
+            //使用者寵物經驗更新
+
+            let upexp = updates.itemamount * 80
+
+            connection.query('UPDATE user_pets SET experience = experience + ? WHERE user_account = ? AND pet_number = ? ', [upexp, user[0].id, updates.petnumber], (error, results) => {
+                if (error) {
+                    console.error('錯誤查詢:', error);
+                    res.json({ message: '發生異常錯誤，使用者寵物經驗無法更新。' });
+                }
+
+                connection.query('SELECT * FROM user_pets WHERE user_account = ? AND pet_number = ?', [user[0].id, updates.petnumber], (error, results) => {
+
+                    console.log('使用者寵物經驗更新完成', results);
+                    res.json({ message: '寵物經驗更新完成', items: itemsStr, exp: results[0].experience })
+                })
+            })
+
+
+
+
+
+        }
+    })
+
+
+
+});
+
 
 //監聽
 const PORT = process.env.PORT || 3000;

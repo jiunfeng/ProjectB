@@ -110,6 +110,17 @@ br {
     border-radius:10%;
 }
 
+/* 會員管理按鈕 */
+.btn_manage{
+    position: absolute;
+    /* font-size: 45px; */
+    top: 13%;
+    left: 10%;
+    width: 20%;
+    height: 6%;
+    z-index: 2;
+}
+
 /* 註冊的css */
 .reg-mask{
     position: absolute;
