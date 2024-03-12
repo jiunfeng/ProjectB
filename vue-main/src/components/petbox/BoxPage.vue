@@ -58,32 +58,13 @@
                     </div>
                 </div>
                 <div class="border rounded m-4 bg-danger p-5">
-                    <div class="d-flex flex-column" style="height:400px;">
-                        <transition name="f1">
-                            <div id="exp-fruit1" class="border block" @click="show = !show, displaynone(show ? 0 : 1)"
-                                v-show="visibleDiv == 1 || visibleDiv === 0" :key="vf - 1">
+                    <div class="" style="height:400px;">
+                            <div class="d-flex justify-content-center">
                                 <img v-bind:src="'sprites/hero/007.png'" alt="">
                             </div>
-                        </transition>
-                        <!-- <transition name="f1">
-                            <div id="exp-fruit1" class="border block" @click="show = !show, displaynone(show ? 0 : 1)"
-                                v-show="visibleDiv == 1 || visibleDiv === 0"
-                                :class="{ 'hidden': visibleDiv !== 1 && visibleDiv !== 0 }"
-                                :style="{ height: visibleDiv ? '400px' : '100px' }" :key="vf-1">
-                                <img v-bind:src="'sprites/hero/007.png'" alt="">
+                            <div>
+                                
                             </div>
-                        </transition> -->
-                        <!-- <transition name="f2">
-                            <div id="exp-fruit2" class="border " @click="show = !show, displaynone(show ? 0 : 2)"
-                                v-show="visibleDiv == 2 || visibleDiv === 0"
-                                :class="{ 'hidden': visibleDiv !== 2 && visibleDiv !== 0 }"
-                                :style="{ height: visibleDiv ? '400px' : '100px'}">
-                                <img v-bind:src="'sprites/hero/008.png'" alt="" class="">
-                            </div>
-                        </transition> -->
-                        <!-- <div id="exp-fruit3" class="border flex-fill" @click="show=!show,displaynone(show?0:3)" v-show="visibleDiv == 3|| visibleDiv === 0" :class="{ 'hidden': visibleDiv !== 3 && visibleDiv !== 0 }" :style="{ height: visibleDiv ? '400px' : '100px'}">
-                            <img v-bind:src="'sprites/hero/009.png'" alt="" class="">
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -109,46 +90,7 @@
     transition: 1s;
 }
 
-#exp-fruit1 {
-    margin-bottom: 50px;
-}
 
-#exp-fruit2 {
-    margin-bottom: 50px;
-}
-
-.f1-enter-active {
-    transition: all 10s ease;
-}
-
-.f1-enter-to {
-    transform: translateY(150%);
-    height: 400px;
-}
-
-.f1-enter-from {
-    transform: translateY(150%);
-    height: 100px;
-}
-
-/* .f2-leave-active {
-    transition: all 0.5s linear;
-}
-
-
-.f2-enter-from{
-    transform: translateY(100%);
-}
-
-.f2-leave-to{
-
-} */
-
-
-/* #exp-fruit3{
-height: 100px;
-transition:1s;
-}  */
 </style>
 
 <script setup>
@@ -159,6 +101,8 @@ const userInfoStore = useUserInfoStore()
 const changePage = (page) => {
     userInfoStore.currentPage = page;
 }
+console.log(userInfoStore.useritems.split('|')[0].split(','));
+
 var key_id = [];
 for (let keys of userInfoStore.userpetset.values()) {
     key_id.push(keys.id);
@@ -232,3 +176,30 @@ const displaynone = (data) => {
 }
 
 </script>
+
+<!-- <div class="" style="height:400px;">
+    <div id="exp-fruit1" class="border" @click="show = !show, displaynone(show ? 0 : 1)"
+        v-show="visibleDiv == 1 || visibleDiv === 0">
+        <img v-bind:src="'sprites/hero/007.png'" alt="">
+    </div>
+</div> -->
+
+                        <!-- <transition name="f1">
+                            <div id="exp-fruit1" class="border block" @click="show = !show, displaynone(show ? 0 : 1)"
+                                v-show="visibleDiv == 1 || visibleDiv === 0"
+                                :class="{ 'hidden': visibleDiv !== 1 && visibleDiv !== 0 }"
+                                :style="{ height: visibleDiv ? '400px' : '100px' }" :key="vf-1">
+                                <img v-bind:src="'sprites/hero/007.png'" alt="">
+                            </div>
+                        </transition> -->
+                        <!-- <transition name="f2">
+                            <div id="exp-fruit2" class="border " @click="show = !show, displaynone(show ? 0 : 2)"
+                                v-show="visibleDiv == 2 || visibleDiv === 0"
+                                :class="{ 'hidden': visibleDiv !== 2 && visibleDiv !== 0 }"
+                                :style="{ height: visibleDiv ? '400px' : '100px'}">
+                                <img v-bind:src="'sprites/hero/008.png'" alt="" class="">
+                            </div>
+                        </transition> -->
+                        <!-- <div id="exp-fruit3" class="border flex-fill" @click="show=!show,displaynone(show?0:3)" v-show="visibleDiv == 3|| visibleDiv === 0" :class="{ 'hidden': visibleDiv !== 3 && visibleDiv !== 0 }" :style="{ height: visibleDiv ? '400px' : '100px'}">
+                            <img v-bind:src="'sprites/hero/009.png'" alt="" class="">
+                        </div> -->

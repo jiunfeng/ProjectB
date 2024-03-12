@@ -186,7 +186,7 @@ export const useUserInfoStore = defineStore('info', {
 
                     }
                     console.log(this.userpetset);
-                    this.useritems = res.data.items
+                    this.useritems = res.data.items;
                     // this.userpetset = res.data.userpets
                     // this.userpetset.set(1, {
                     //     id: '001',
