@@ -3,7 +3,7 @@
 import { computed } from 'vue';
 import GamePage from "@/views/GameView.vue";
 import IntoPage from "@/views/IntoView.vue";
-import MainUIPage from "@/views/MainUIView.vue"
+import MainUIPage from "@/views/MainUIView.vue";
 import BoxPage from "@/views/PetBoxView.vue";
 import { useUserInfoStore } from "@/stores/userInfo";
 import ResultPage from "@/views/tmpRoundResultView.vue";

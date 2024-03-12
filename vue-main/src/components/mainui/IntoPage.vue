@@ -77,12 +77,12 @@
         </div>
     </div>
 
-    <link rel="stylesheet" href="/mainui/css/into1.css">
+    <!-- <link rel="stylesheet" href="/mainui/css/into1.css"> -->
     <link rel="stylesheet" href="/mainui/css/bootstrap.min.css">
 </template>
 
 <script setup>
-// import "@/assets/into1.css"
+import "@/assets/into1.css"
 import { ref, computed } from 'vue'
 // 控制使用者currentPage導向
 // 連線userInfo.js的資料
@@ -116,6 +116,7 @@ function into() {
                 console.log("rank:" + userStore.userrank[0]);
                 console.log("exp:" + userStore.usercredit);
 
+                // 跳轉頁面
                 userStore.currentPage = "main";
             }
             else if (userStore.message == "帳號或密碼錯誤") {
