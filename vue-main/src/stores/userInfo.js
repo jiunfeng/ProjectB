@@ -273,6 +273,29 @@ export const useUserInfoStore = defineStore('info', {
             } catch (error) {
                 console.error('Error update addexp', error)
             }
+        },
+
+        //寵物升級
+        async petLevelUp(petnumber, itemnumber, itemamount) {
+            const reqData = {
+                account: this.useraccount,
+                petnumber: petnumber,
+                itemnumber: itemnumber,
+                itemamount: itemamount
+            }
+            try {
+                const res = await axios.post(import.meta.env.VITE_APP_API + '/petUpdate', reqData)
+                if (res.data.message == '寵物經驗更新完成') {
+                    //更新用戶端道具資料
+                    this.useritems = res.data.iterms
+
+                    //更新用戶端寵物資料
+                    this.userpets[petnumber].level = [Math.floor(res.data.exp / 100), res.data.exp % 100]
+
+                }
+            } catch (error) {
+                console.error('Error update addexp', error)
+            }
         }
     }
 })
