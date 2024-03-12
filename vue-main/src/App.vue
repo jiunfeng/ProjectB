@@ -3,7 +3,6 @@
 import { computed } from 'vue';
 import GamePage from "@/views/GameView.vue";
 import IntoPage from "@/views/IntoView.vue";
-import ManagePage from "@/views/ManageView.vue";
 import MainUIPage from "@/views/MainUIView.vue";
 import BoxPage from "@/views/PetBoxView.vue";
 import { useUserInfoStore } from "@/stores/userInfo";
@@ -17,8 +16,6 @@ const currentPageComponent = computed(() => {
   switch (userStore.currentPage) {
     case 'into':
       return IntoPage;
-    case 'manage':
-      return ManagePage;
     case 'main':
       return MainUIPage;
     case 'game':
@@ -66,7 +63,6 @@ const changePage = (page) => {
     <button @click="changePage('main')">MainPage</button>
     <button @click="changePage('game')">game</button>
     <button @click="changePage('box')">box</button>
-    <button @click="changePage('manage')">manage</button>
   </div>
   <component :is="ResultPage"></component>
 </template>

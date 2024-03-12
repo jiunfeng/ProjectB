@@ -6,8 +6,9 @@
                     <!-- <a class="btn btn-info" href="add">新增</a>  -->
 
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a class="btn btn-danger" href="javascript:deleteAll()">刪除</a>
-                    <a class="btn btn-info" href="add">返回上一頁</a>
+                    <button class="btn btn-danger">刪除</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-info">返回上一頁</button>
                 </div>
             </div>
             <form action="delete" name="list">
@@ -16,15 +17,14 @@
                         <th class="text-center">
                             <input type="checkbox" class="form-check-input" id="all">
                         </th>
-                        <th class="text-center">商店名稱</th>
-                        <th class="text-center">商店名稱</th>
-                        <th class="text-center">商店名稱</th>
-                        <th class="text-center">商店名稱</th>
-                        <th class="text-center">商店名稱</th>
-                        <th class="text-center">商店名稱</th>
-                        <th class="text-center">商店名稱</th>
-                        <th class="text-center">商店名稱</th>
-                        <td class="text-center">修改</td>
+                        <th class="text-center">帳號</th>
+                        <th class="text-center">密碼</th>
+                        <th class="text-center">使用者名字</th>
+                        <th class="text-center">等級</th>
+                        <th class="text-center">錢</th>
+                        <th class="text-center">經驗</th>
+                        <th class="text-center">持有角色</th>
+                        <th class="text-center">隊伍狀態</th>                        <td class="text-center">修改</td>
                     </tr>
                     <tr>
                         <td class="text-center">
@@ -38,10 +38,34 @@
                         <td class="text-center">123</td>
                         <td class="text-center">123</td>
                         <td class="text-center">123</td>
-                        <td class="text-center"><a href="#" class="btn btn-success">修改</a></td>
+                        <td class="text-center">
+                            <button class="btn btn-success">修改</button>
+                        </td>
                     </tr>
                 </table>
             </form>
         </div>
     </div>
 </template>
+
+<script setup>
+// #預設
+import "@/assets/index1.css"
+// 須自己打的預設
+import { ref, computed } from 'vue'
+// 控制使用者currentPage導向
+// 連線userInfo.js的資料
+import { useUserInfoStore } from "@/stores/userInfo";
+
+
+// $(document).ready(function() {
+//   $("#all").click(function() {
+//     if ($(this).is(":checked")) {
+//       $(".chk").attr("checked", true);
+//     } else {
+//       $(".chk").attr("checked", false);
+//     }
+//   });
+// });
+
+</script>
