@@ -57,14 +57,14 @@ const changePage = (page) => {
 
     <component :is="currentPageComponent"></component>
   </main>
-  <div class="ccc">
+  <!-- <div class="ccc">
     <h1>main test</h1>
     <button @click="changePage('into')">IntoPage</button>
     <button @click="changePage('main')">MainPage</button>
     <button @click="changePage('game')">game</button>
     <button @click="changePage('box')">box</button>
   </div>
-  <component :is="ResultPage"></component>
+  <component :is="ResultPage"></component> -->
 </template>
 
 <style scoped>
