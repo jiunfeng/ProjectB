@@ -4,7 +4,8 @@
 }
 
 .wapper {
-    width: 610.88px;
+    position: relative;
+    width:610.88px;
     height: 100vh;
     block-size: 100% 100%;
     background-image: -webkit-linear-gradient(left, #88aeb7 0%, #b8d0d3 5%, #cfe8eb 20%, #d2d4cf 80%, #c7cebd 95%, #afc1c5 100%);
@@ -117,3 +118,21 @@
     justify-content: center;
     padding: 20px;
 }
+
+.upgrade {
+    position: absolute;
+    width:610.88px;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.upgrade-table{
+    position: absolute;
+    background-image: url('/mainui/images/into/reg2.jpg');
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transition:0.3s linear;
+}
+
