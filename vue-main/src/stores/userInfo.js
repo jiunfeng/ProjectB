@@ -291,7 +291,7 @@ export const useUserInfoStore = defineStore('info', {
                 const res = await axios.post(import.meta.env.VITE_APP_API + '/petUpdate', reqData)
                 if (res.data.message == '寵物經驗更新完成') {
                     //更新用戶端道具資料
-                    this.useritems = res.data.iterms
+                    this.useritems = res.data.items
 
                     //更新用戶端寵物資料
                     this.userpets[petnumber].level = [Math.floor(res.data.exp / 100), res.data.exp % 100]

@@ -49,10 +49,12 @@
                     <div class="d-flex">
                         <img v-bind:src="'sprites/hero/' + c_img + '.png'" alt="">
                         <div class="ms-5 flex-fill">
-                            <p>{{ pet.name }} LV {{ c_level }}</p>
-                            <p>HP {{ pet.health }}ATK {{ pet.attack }}</p>
+                            <p>{{ c_name }} LV {{ c_level }}</p>
+                            <!-- <p>HP {{ c_health }}ATK {{ c_attack }}</p> -->
                             <div class="level" style="width: 100%;height: 2px;background-color: #fff;">
-                                <div class="transition"></div>
+                                <div class="transition"
+                                    :style="{ transition: slider ? '1s' : 'none', width: exp + '%' }">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -64,14 +66,23 @@
                         </div>
                         <div>
                             <hr>
-                            <p>擁有:{{ userExpitem }}</p>
-                            <p class="d-flex">使用</p><select name="" id="" v-model="selectExpitem">
-                                <option v-for="n in parseInt(userExpitem)" :value="n">{{ String(n) }}</option>
-                            </select>
-                            <p>{{ userExpitem }}→<span class="text-warning">{{ userExpitem - selectExpitem }}</span> 個
-                            </p>
-                            <button class="btn btn-warning">選擇素材</button><button class="btn btn-primary"
-                                @click=levelup()>使用</button>
+                            <div class="d-flex justify-content-center">
+                                <p>擁有:{{ userExpitem }}</p>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <p class="d-flex">使用</p><select name="" id="" v-model="selectExpitem">
+                                    <option v-for="n in parseInt(userExpitem)" :value="n">{{ String(n) }}</option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <p>{{ userExpitem }}→<span class="text-warning">{{ userExpitem - selectExpitem }}</span>
+                                    個
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-warning" @click="isShow = false">取消</button>
+                                <button class="btn btn-primary" @click=levelup(pets)>使用</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -87,7 +98,6 @@
 
 <style>
 .transition {
-    width: 0%;
     height: 2px;
     background-color: #000;
     transition: 1s;
@@ -101,9 +111,9 @@
 
 <script setup>
 import { useUserInfoStore } from '@/stores/userInfo';
-import { ref } from 'vue'
+import { ref, watch, reactive, nextTick } from 'vue'
 
-const userInfoStore = useUserInfoStore()
+const userInfoStore = useUserInfoStore();
 const changePage = (page) => {
     userInfoStore.currentPage = page;
 }
@@ -122,11 +132,18 @@ const key2 = ref(key_id[1])
 const key3 = ref(key_id[2])
 const c_img = ref()
 const pet = ref([])
-const c_level = ref()
+// const c_name = ref()
+// const c_level = ref()
+// const c_health =ref()
+// const c_attack =ref()
+const [c_name, c_level, c_pastlevel] = Array(3).fill().map(() => ref());
+const exp = ref()
 const userExptype = ref('001')
 const userExpitem = ref(userInfoStore.useritems.split('|')[0].split(',')[1]);
 console.log(userExpitem);
-const selectExpitem = ref()
+console.log(exp.value);
+const selectExpitem = ref(1)
+const slider = ref(true)
 
 function delimage(data) {
     key_id.splice(data, 1, '');
@@ -168,12 +185,23 @@ function selectchactor() {
     // console.log(userInfoStore.userpetset.get(3));
 }
 const isShow = ref(false);
+function cancel() {
+    c_level.value = ''
+    c_level.value = ''
+}
 function reg(pets, index) {
     isShow.value = true;
     console.log(index);
     c_img.value = index;
     pet.value = pets;
+    console.log(pets);
+    c_name.value = pets.name;
+    // c_health.value = pets.health;
+    // c_attack.value = pets.attack;
     c_level.value = pets.level[0];
+    exp.value = pets.level[1];
+    console.log(exp.value);
+    console.log(c_name.value)
     console.log(pet.value.level[0])
 }
 const show = ref(true)
@@ -182,14 +210,41 @@ const displaynone = (data) => {
     visibleDiv.value = data;
     console.log(visibleDiv.value);
 }
+ watch(() => c_level.value, (newValue1, oldValue1) => {
+    if (newValue1 > oldValue1) {
+        exp.value = 100;
+        setTimeout(() => {
+            slider.value = false
+            exp.value = 0
+        }, 980);
+        setTimeout(() => {
+            slider.value = true
+            exp.value = userInfoStore.userpets[c_img.value].level[1];
+        }, 1200);
+    }
+});
 function levelup() {
-    console.log(c_img.value);
-    console.log(userExptype.value);
-    console.log(selectExpitem.value);
     userInfoStore.petLevelUp(c_img.value, userExptype.value, selectExpitem.value).then(() => {
-        console.log(userInfoStore.useritems.split('|')[0].split(',')[1]);
+        c_pastlevel.value = c_level
+        c_level.value = userInfoStore.userpets[c_img.value].level[0]
+        // if (c_level.value > c_pastlevel.value) {
+        //     exp.value = 100
+        //     setTimeout(() => {
+        //         slider.value = false
+        //         exp.value = 0
+        //     }, 980);
+        //     setTimeout(() => {
+        //         slider.value = true
+        //         exp.value = userInfoStore.userpets[c_img.value].level[1];
+        //     }, 1200);
+        // }
+        userExpitem.value = userInfoStore.useritems.split('|')[0].split(',')[1]
+        exp.value = userInfoStore.userpets[c_img.value].level[1]
     });
+
 }
+
+
 
 </script>
 
