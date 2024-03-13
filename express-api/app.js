@@ -8,8 +8,8 @@ const app = express();
 const pets_card = {}
 //db連線程序設定
 const connection = mysql.createConnection({
-    // host: 'localhost',
-    host: 'db',
+    host: 'localhost',
+    // host: 'db',
     port: '3306',
     user: 'root',
     password: '123456',
@@ -330,7 +330,7 @@ app.post('/petUpdate', (req, res) => {
 
 
 //監聽
-const PORT = process.env.PORT || 3009;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
