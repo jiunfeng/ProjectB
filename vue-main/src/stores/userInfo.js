@@ -18,6 +18,8 @@ export const useUserInfoStore = defineStore('info', {
         userpetset: new Map(), ////寵物編號,屬性,等級,血量,攻擊力
         useritems: [], //使用者道具箱，目前暫時只有經驗果實
         userpets: [], //使用者擁有的寵物
+        usermainpet: '',//使用者主頁面使用寵物
+        userhead: '',//使用者頭像
         currentPage: 'into', //使用者目前頁面
         message: ''
     }),
@@ -176,6 +178,8 @@ export const useUserInfoStore = defineStore('info', {
                     this.usermoney = res.data.money
                     this.usercredit = res.data.credit
                     this.userpets = res.data.userpets
+                    this.usermainpet = res.data.background_pet
+                    this.userhead = res.data.heads
                     // 處理寵物編隊
                     const petNumbers = res.data.pet_team.split('|');
                     let index = 0
@@ -296,6 +300,43 @@ export const useUserInfoStore = defineStore('info', {
             } catch (error) {
                 console.error('Error update addexp', error)
             }
-        }
+        },
+
+        //更新使用者主頁寵物
+        async changeMainPet(change) {
+
+            const reqData = {
+                account: this.useraccount,
+                background_pet: change,
+            }
+
+            try {
+                const res = await axios.post(import.meta.env.VITE_APP_API + '/userUpdate', reqData)
+
+                //更新用戶端資料
+                this.usermainpet = change
+
+            } catch (error) {
+                console.error('Error update mainpet', error)
+            }
+        },
+
+        //更新使用者頭像
+        async changeHead(change) {
+            const reqData = {
+                account: this.useraccount,
+                heads: change,
+            }
+
+            try {
+                const res = await axios.post(import.meta.env.VITE_APP_API + '/userUpdate', reqData)
+
+                //更新用戶端資料
+                this.userhead = change
+
+            } catch (error) {
+                console.error('Error update userhead', error)
+            }
+        },
     }
 })
