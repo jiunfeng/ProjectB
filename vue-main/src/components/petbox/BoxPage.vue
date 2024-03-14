@@ -52,7 +52,7 @@
                             <p>{{ c_name }} LV {{ c_level }}</p>
                             <!-- <p>HP {{ c_health }}ATK {{ c_attack }}</p> -->
                             <div class="level" style="width: 100%;height: 2px;background-color: #fff;">
-                                <div class="transition"
+                                <div class="transition" :class="[isShow ? '' : 'd-none']"
                                     :style="{ transition: slider ? '1s' : 'none', width: exp + '%' }">
                                 </div>
                             </div>
@@ -80,8 +80,8 @@
                                 </p>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button class="btn btn-warning" @click="isShow = false">取消</button>
-                                <button class="btn btn-primary" @click=levelup(pets)>使用</button>
+                                <button class="btn btn-warning" @click="isShow = false, cancel()">取消</button>
+                                <button class="btn btn-primary" @click=levelup()>使用</button>
                             </div>
                         </div>
                     </div>
@@ -100,7 +100,6 @@
 .transition {
     height: 2px;
     background-color: #000;
-    transition: 1s;
 }
 
 .level:hover .transition {
@@ -186,8 +185,8 @@ function selectchactor() {
 }
 const isShow = ref(false);
 function cancel() {
-    c_level.value = ''
-    c_level.value = ''
+    exp.value = ''
+    console.log(exp.value)
 }
 function reg(pets, index) {
     isShow.value = true;
@@ -210,36 +209,39 @@ const displaynone = (data) => {
     visibleDiv.value = data;
     console.log(visibleDiv.value);
 }
- watch(() => c_level.value, (newValue1, oldValue1) => {
-    if (newValue1 > oldValue1) {
-        exp.value = 100;
-        setTimeout(() => {
-            slider.value = false
-            exp.value = 0
-        }, 980);
-        setTimeout(() => {
-            slider.value = true
-            exp.value = userInfoStore.userpets[c_img.value].level[1];
-        }, 1200);
-    }
-});
+// watch(() => c_level.value, (newValue1, oldValue1) => {
+//     if (newValue1 > oldValue1) {
+//         exp.value = 100;
+//         setTimeout(() => {
+//             slider.value = false
+//             exp.value = 0
+//         }, 980);
+//         setTimeout(() => {
+//             slider.value = true
+//             exp.value = userInfoStore.userpets[c_img.value].level[1];
+//         }, 1200);
+//     }
+// });
 function levelup() {
     userInfoStore.petLevelUp(c_img.value, userExptype.value, selectExpitem.value).then(() => {
-        c_pastlevel.value = c_level
+        c_pastlevel.value = c_level.value
         c_level.value = userInfoStore.userpets[c_img.value].level[0]
-        // if (c_level.value > c_pastlevel.value) {
-        //     exp.value = 100
-        //     setTimeout(() => {
-        //         slider.value = false
-        //         exp.value = 0
-        //     }, 980);
-        //     setTimeout(() => {
-        //         slider.value = true
-        //         exp.value = userInfoStore.userpets[c_img.value].level[1];
-        //     }, 1200);
-        // }
+        console.log(c_pastlevel.value, c_level.value)
+        if (c_level.value > c_pastlevel.value) {
+            exp.value = 100
+            console.log(exp.value);
+            setTimeout(() => {
+                slider.value = false
+                exp.value = 0
+            }, 980);
+            setTimeout(() => {
+                slider.value = true
+                exp.value = userInfoStore.userpets[c_img.value].level[1];
+            }, 1200);
+        } else {
+            exp.value = userInfoStore.userpets[c_img.value].level[1]
+        }
         userExpitem.value = userInfoStore.useritems.split('|')[0].split(',')[1]
-        exp.value = userInfoStore.userpets[c_img.value].level[1]
     });
 
 }
