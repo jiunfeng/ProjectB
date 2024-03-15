@@ -133,6 +133,71 @@
     top: 50%;
     left: 50%;
     width: 100%;
-    transition:0.3s linear;
+    /* transition:0.3s linear; */
 }
+
+.f1-enter-active {
+    transition: opacity 0.1s
+}
+
+.f1-leave-active {
+    transition: opacity 0.1s .5s
+}
+
+.f1-enter-from,
+.f1-leave-to {
+    opacity: 0;
+}
+
+.f1-enter-to,
+.f1-leave-from {
+    opacity: 1;
+}
+
+.f2-enter-active {
+    transition: .2s .3s
+}
+
+.f2-leave-active {
+    transition: .3s
+}
+
+.f2-enter-from,
+.f2-leave-to {
+    opacity: 0;
+}
+
+.f2-enter-to,
+.f2-leave-from {
+    opacity: 1;
+}
+
+
+.v-enter-active {
+    transition: 0.3s;
+}
+
+.v-leave-active {
+    transition: 0.3s 0.2s;
+}
+
+.v-enter-from,
+.v-leave-to {
+    height: 0%
+}
+
+.v-enter-to,
+.v-leave-from {
+    height: 75%;
+}
+
+.transition {
+    height: 2px;
+    background-color: #000;
+}
+
+.level:hover .transition {
+    width: 100%;
+    transition: 1s;
+    }
 

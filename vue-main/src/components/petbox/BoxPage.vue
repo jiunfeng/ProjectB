@@ -43,52 +43,64 @@
             </div>
         </div>
 
-        <div class="upgrade" :class="[isShow ? 'visible' : 'invisible']" @click.self="isShow = !isShow">
-            <div class="upgrade-table translate-middle" :style="{ height: isShow ? '75%' : '0%' }">
-                <div class="border rounded m-4 bg-danger p-5">
-                    <div class="d-flex">
-                        <img v-bind:src="'sprites/hero/' + c_img + '.png'" alt="">
-                        <div class="ms-5 flex-fill">
-                            <p>{{ c_name }} LV {{ c_level }}</p>
-                            <!-- <p>HP {{ c_health }}ATK {{ c_attack }}</p> -->
-                            <div class="level" style="width: 100%;height: 2px;background-color: #fff;">
-                                <div class="transition" :class="[isShow ? '' : 'd-none']"
-                                    :style="{ transition: slider ? '1s' : 'none', width: exp + '%' }">
+        <!-- <div class="upgrade" :class="[isShow ? 'visible' : 'invisible']" @click.self="isShow = !isShow"> -->
+        <transition name="f1">
+            <div class="upgrade" v-show="isShow" @click.self="isShow = !isShow">
+                <transition>
+                    <div class="upgrade-table translate-middle" v-show="isShow">
+                        <transition name="f2">
+                            <div class="" v-show="isShow">
+                                <div class="border rounded m-4 bg-danger p-5">
+                                    <div class="d-flex">
+                                        <img v-bind:src="'sprites/hero/' + c_img + '.png'" alt="">
+                                        <div class="ms-5 flex-fill">
+                                            <p>{{ c_name }} LV {{ c_level }}</p>
+                                            <!-- <p>HP {{ c_health }}ATK {{ c_attack }}</p> -->
+                                            <div class="level" style="width: 100%;height: 2px;background-color: #fff;">
+                                                <div class="transition"
+                                                    :style="{ transition: slider ? '1s' : 'none', width: exp + '%' }">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border rounded m-4 bg-danger p-5">
+                                    <div class="" style="height:400px;">
+                                        <div class="d-flex justify-content-center">
+                                            <img v-bind:src="'sprites/hero/007.png'" alt="">
+                                        </div>
+                                        <div>
+                                            <hr>
+                                            <div class="d-flex justify-content-center">
+                                                <p>擁有:{{ userExpitem }}</p>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p class="d-flex">使用</p><select name="" id="" v-model="selectExpitem">
+                                                    <option v-for="n in parseInt(userExpitem)" :value="n">{{ String(n)
+                                                        }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <p>{{ userExpitem }}→<span class="text-warning">{{ userExpitem -
+                    selectExpitem
+                                                        }}</span>
+                                                    個
+                                                </p>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <button class="btn btn-warning" @click="cancel()">取消</button>
+                                                <button class="btn btn-primary" @click=levelup()>使用</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </transition>
                     </div>
-                </div>
-                <div class="border rounded m-4 bg-danger p-5">
-                    <div class="" style="height:400px;">
-                        <div class="d-flex justify-content-center">
-                            <img v-bind:src="'sprites/hero/007.png'" alt="">
-                        </div>
-                        <div>
-                            <hr>
-                            <div class="d-flex justify-content-center">
-                                <p>擁有:{{ userExpitem }}</p>
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <p class="d-flex">使用</p><select name="" id="" v-model="selectExpitem">
-                                    <option v-for="n in parseInt(userExpitem)" :value="n">{{ String(n) }}</option>
-                                </select>
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <p>{{ userExpitem }}→<span class="text-warning">{{ userExpitem - selectExpitem }}</span>
-                                    個
-                                </p>
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <button class="btn btn-warning" @click="isShow = false, cancel()">取消</button>
-                                <button class="btn btn-primary" @click=levelup()>使用</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </transition>
             </div>
-
-        </div>
+        </transition>
     </div>
 
     <link rel="stylesheet" href="/box/css/index_box.css">
@@ -96,21 +108,10 @@
     <link rel="stylesheet" href="/box/css/sweetalert2.min.css">
 </template>
 
-<style>
-.transition {
-    height: 2px;
-    background-color: #000;
-}
-
-.level:hover .transition {
-    width: 100%;
-    transition: 1s;
-}
-</style>
 
 <script setup>
 import { useUserInfoStore } from '@/stores/userInfo';
-import { ref, watch, reactive, nextTick } from 'vue'
+import { ref} from 'vue'
 
 const userInfoStore = useUserInfoStore();
 const changePage = (page) => {
@@ -185,8 +186,7 @@ function selectchactor() {
 }
 const isShow = ref(false);
 function cancel() {
-    exp.value = ''
-    console.log(exp.value)
+    isShow.value = false
 }
 function reg(pets, index) {
     isShow.value = true;
@@ -202,6 +202,7 @@ function reg(pets, index) {
     console.log(exp.value);
     console.log(c_name.value)
     console.log(pet.value.level[0])
+    selectExpitem.value = 1
 }
 const show = ref(true)
 const visibleDiv = ref(0);
