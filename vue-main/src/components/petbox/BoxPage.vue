@@ -56,7 +56,8 @@
                                         <div class="ms-5 flex-fill">
                                             <p>{{ c_name }} LV {{ c_level }}</p>
                                             <!-- <p>HP {{ c_health }}ATK {{ c_attack }}</p> -->
-                                            <div class="level" style="width: 100%;height: 2px;background-color: #fff;">
+                                            <div class="level mt-5"
+                                                style="width: 100%;height: 2px;background-color: #fff;">
                                                 <div class="transition"
                                                     :style="{ transition: slider ? '1s' : 'none', width: exp + '%' }">
                                                 </div>
@@ -75,11 +76,11 @@
                                                 <p>擁有:{{ userExpitem }}</p>
                                             </div>
                                             <div class="d-flex justify-content-center">
-                                                <p class="d-flex">使用</p><select name="" id="" v-model="selectExpitem">
-                                                    <option v-for="n in parseInt(userExpitem)" :value="n">{{ String(n)
-                                                        }}
-                                                    </option>
-                                                </select>
+                                                <p class="m-0">使用<select class="" v-model="selectExpitem">
+                                                        <option class="text-center" v-for="n in parseInt(userExpitem)"
+                                                            :value="n">{{ String(n)
+                                                            }}</option>
+                                                    </select>個</p>
                                             </div>
                                             <div class="d-flex justify-content-center">
                                                 <p>{{ userExpitem }}→<span class="text-warning">{{ userExpitem -
@@ -111,7 +112,7 @@
 
 <script setup>
 import { useUserInfoStore } from '@/stores/userInfo';
-import { ref} from 'vue'
+import { ref } from 'vue'
 
 const userInfoStore = useUserInfoStore();
 const changePage = (page) => {
@@ -136,7 +137,7 @@ const pet = ref([])
 // const c_level = ref()
 // const c_health =ref()
 // const c_attack =ref()
-const [c_name, c_level, c_pastlevel] = Array(3).fill().map(() => ref());
+const [c_name, c_level, c_level_t, c_pastlevel] = Array(4).fill().map(() => ref());
 const exp = ref()
 const userExptype = ref('001')
 const userExpitem = ref(userInfoStore.useritems.split('|')[0].split(',')[1]);
@@ -144,7 +145,6 @@ console.log(userExpitem);
 console.log(exp.value);
 const selectExpitem = ref(1)
 const slider = ref(true)
-
 function delimage(data) {
     key_id.splice(data, 1, '');
     key1.value = key_id[0]
@@ -223,32 +223,47 @@ const displaynone = (data) => {
 //         }, 1200);
 //     }
 // });
+
 function levelup() {
     userInfoStore.petLevelUp(c_img.value, userExptype.value, selectExpitem.value).then(() => {
         c_pastlevel.value = c_level.value
-        c_level.value = userInfoStore.userpets[c_img.value].level[0]
-        console.log(c_pastlevel.value, c_level.value)
-        if (c_level.value > c_pastlevel.value) {
-            exp.value = 100
-            console.log(exp.value);
-            setTimeout(() => {
-                slider.value = false
-                exp.value = 0
-            }, 980);
-            setTimeout(() => {
-                slider.value = true
-                exp.value = userInfoStore.userpets[c_img.value].level[1];
-            }, 1200);
-        } else {
-            exp.value = userInfoStore.userpets[c_img.value].level[1]
-        }
+        c_level_t.value = userInfoStore.userpets[c_img.value].level[0]
+        console.log(c_pastlevel.value, c_level_t.value)
+        exp_slider();
         userExpitem.value = userInfoStore.useritems.split('|')[0].split(',')[1]
     });
-
 }
 
+function exp_slider() {
+    if (c_level_t.value > c_pastlevel.value) {
+        loopAsync(c_pastlevel.value, c_level_t.value);
+    } else {
+        exp.value = userInfoStore.userpets[c_img.value].level[1];
+    }
+}
 
-
+function loopAsync(start, end) {
+    if (start != end) {
+        setTimeout(() => {
+            c_level.value = start
+            slider.value = true;
+            exp.value = 100;
+            setTimeout(() => {
+                slider.value = false;
+                exp.value = 0;
+                loopAsync(start + 1, end); // 递归调用，继续执行下一个异步操作
+            }, 980);
+        }, 200);
+    } else {
+        // 单独执行一个 setTimeout
+        console.log('else')
+        c_level.value = start
+        setTimeout(() => {
+            slider.value = true;
+            exp.value = userInfoStore.userpets[c_img.value].level[1];
+        }, 320);
+    }
+}
 </script>
 
 <!-- <div class="" style="height:400px;">

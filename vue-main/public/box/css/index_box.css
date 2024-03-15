@@ -1,48 +1,56 @@
 .container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .wapper {
-    position: relative;
-    width:610.88px;
-    height: 100vh;
-    block-size: 100% 100%;
-    background-image: -webkit-linear-gradient(left, #88aeb7 0%, #b8d0d3 5%, #cfe8eb 20%, #d2d4cf 80%, #c7cebd 95%, #afc1c5 100%);
+  position: relative;
+  width: 610.88px;
+  height: 100vh;
+  block-size: 100% 100%;
+  background-image: -webkit-linear-gradient(
+    left,
+    #88aeb7 0%,
+    #b8d0d3 5%,
+    #cfe8eb 20%,
+    #d2d4cf 80%,
+    #c7cebd 95%,
+    #afc1c5 100%
+  );
 }
 
 .box {
-    display: -webkit-box;
-    padding: (50px, 0, 20px, 0);
-    -webkit-box-pack: justify;
+  display: -webkit-box;
+  padding: (50px, 0, 20px, 0);
+  -webkit-box-pack: justify;
 }
 
 .box01 {
-    width: 120px;
-    aspect-ratio: 1.5/1;
-    background-color: #fff;
-    user-select: none;
-    margin: 5px;
+  width: 120px;
+  aspect-ratio: 1.5/1;
+  background-color: #fff;
+  user-select: none;
+  margin: 5px;
 }
 
 .box01_1 {
-    width: 120px;
-    aspect-ratio: 1.5/1;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    user-select: none;
-    margin: 5px;
+  width: 120px;
+  aspect-ratio: 1.5/1;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  user-select: none;
+  margin: 5px;
 }
 
 .rank {
-    width: 30%;
-    height: 30%;
-    background-color: #62a14e;
-    margin-left: auto;
-    margin-right: 0;
-    text-align: center;
-    user-select: none;
+  width: 30%;
+  height: 30%;
+  background-color: #62a14e;
+  margin-left: auto;
+  margin-right: 0;
+  text-align: center;
+  user-select: none;
 }
 
 /* .box02 {
@@ -56,148 +64,145 @@
 } */
 
 .tab {
-    width: 250px;
-    height: 70px;
-    background-color: #fff;
-    text-align: center;
-    padding-top: 20px;
-    user-select: none;
+  width: 250px;
+  height: 70px;
+  background-color: #fff;
+  text-align: center;
+  padding-top: 20px;
+  user-select: none;
 }
 
 .content {
-    width: 100%;
-    height: calc(100vh - 9.5rem);
-    background-color: #320;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+  width: 100%;
+  height: calc(100vh - 9.5rem);
+  background-color: #320;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .character {
-    width: calc(100% + 17px);
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    justify-content: start;
-    padding: 20px;
-    overflow-y: scroll;
-    margin-right:-17px;
+  width: calc(100% + 17px);
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: start;
+  padding: 20px;
+  overflow-y: scroll;
+  margin-right: -17px;
 }
 
 .page {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    justify-content: center;
-    margin: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: center;
+  margin: 50px;
 }
 
 .footer {
-    width: 100%;
-    height: 15%;
-    background-color: #572b2b;
-    margin-bottom: 0;
-
+  width: 100%;
+  height: 15%;
+  background-color: #572b2b;
+  margin-bottom: 0;
 }
 
 .select {
-    width: 40%;
-    height: 130px;
-    background-color: #5a0606;
-    margin-left: auto;
-    margin-right: 0;
-    user-select: none;
-    margin-bottom: 20px;
-    clip-path: polygon(10% 0, 100% 0, 100% 100%, 10% 100%, 0% 50%);
+  width: 40%;
+  height: 130px;
+  background-color: #5a0606;
+  margin-left: auto;
+  margin-right: 0;
+  user-select: none;
+  margin-bottom: 20px;
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 10% 100%, 0% 50%);
 }
 
 .put-in {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    justify-content: center;
-    padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: center;
+  padding: 20px;
 }
 
 .upgrade {
-    position: absolute;
-    width:610.88px;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 10;
+  position: absolute;
+  width: 610.88px;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
 }
 
-.upgrade-table{
-    position: absolute;
-    background-image: url('/mainui/images/into/reg2.jpg');
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    /* transition:0.3s linear; */
+.upgrade-table {
+  position: absolute;
+  background-image: url('/mainui/images/into/reg2.jpg');
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  /* transition:0.3s linear; */
 }
 
 .f1-enter-active {
-    transition: opacity 0.1s
+  transition: opacity 0.1s;
 }
 
 .f1-leave-active {
-    transition: opacity 0.1s .5s
+  transition: opacity 0.1s 0.5s;
 }
 
 .f1-enter-from,
 .f1-leave-to {
-    opacity: 0;
+  opacity: 0;
 }
 
 .f1-enter-to,
 .f1-leave-from {
-    opacity: 1;
+  opacity: 1;
 }
 
 .f2-enter-active {
-    transition: .2s .3s
+  transition: 0.2s 0.3s;
 }
 
 .f2-leave-active {
-    transition: .3s
+  transition: 0.3s;
 }
 
 .f2-enter-from,
 .f2-leave-to {
-    opacity: 0;
+  opacity: 0;
 }
 
 .f2-enter-to,
 .f2-leave-from {
-    opacity: 1;
+  opacity: 1;
 }
 
-
 .v-enter-active {
-    transition: 0.3s;
+  transition: 0.3s;
 }
 
 .v-leave-active {
-    transition: 0.3s 0.2s;
+  transition: 0.3s 0.2s;
 }
 
 .v-enter-from,
 .v-leave-to {
-    height: 0%
+  height: 0%;
 }
 
 .v-enter-to,
 .v-leave-from {
-    height: 75%;
+  height: 75%;
 }
 
 .transition {
-    height: 2px;
-    background-color: #000;
+  height: 2px;
+  background-color: #000;
 }
 
 .level:hover .transition {
-    width: 100%;
-    transition: 1s;
-    }
-
+  width: 100%;
+  transition: 1s;
+}
