@@ -62,6 +62,16 @@
                     <div class="input2-2 invalid-feedback" id="inva01" style="font-size: 25px;">&nbsp;請填入8~16個英文或數字
                     </div>
                 </div>
+                <!-- 密碼確認 -->
+                <label for="reg4" class="reg-text2-1" :style="regdivsty2">密碼再確認 :</label>
+                <div class="reg-inputdiv2-1" :style="regdivsty2">
+                    <input type="password" class="reg-input2-1 form-control"
+                        :class="{ 'is-invalid': regpassword.length < min || regpassword.length > max, 'is-valid': regpassword.length >= min && regpassword.length <= max }"
+                        v-model="regpass_ag" name="reg4" id="reg4" placeholder="請填入8~16個英文或數字"
+                        oninput="value=value.replace(/[^\w\.\/]/ig,'')" style="font-size: 20px;">
+                    <div class="input_ag valid-feedback" style="font-size: 25px;">&nbsp;密碼符合</div>
+                </div>
+
                 <!-- 使用者名稱 -->
                 <label for="reg3" class="reg-text3" :style="regdivsty2">名字 :</label>
                 <div class="reg-inputdiv3" :style="regdivsty2">
@@ -76,6 +86,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- <link rel="stylesheet" href="/mainui/css/into1.css"> -->
     <link rel="stylesheet" href="/mainui/css/bootstrap.min.css">
@@ -175,7 +186,7 @@ function regin() {
             if (userStore.message == "帳號創建完成") {
                 alert('帳號註冊成功');
                 isShow.value = false;
-                account.value=regaccount.value;
+                account.value = regaccount.value;
             }
             else if (userStore.message == "該帳號已有人使用") {
                 regaccount.value = "";

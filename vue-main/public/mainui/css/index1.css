@@ -191,18 +191,55 @@ br {
     border-radius: 50%;
 }
 
-.chgimgdiv{
+.chgimgdiv {
     width: 100%;
-    height: 80%;
+    height: 90%;
+    overflow: auto;
 }
+
+/* 設定垂直滾動條的寬度和水平捲軸的高度 */
+.chgimgdiv::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+/* 設定捲軸的滑軌 */
+.chgimgdiv::-webkit-scrollbar-track {
+    background-color: #ddd;
+}
+
+/* 滑桿 */
+.chgimgdiv::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
+}
+
+/* 滑桿上下的按鈕
+.chgimgdiv::-webkit-scrollbar-button {
+    background-color: #888;
+    display: none;
+} */
 
 .chgimg {
     background-repeat: no-repeat;
     background-color: transparent;
     /* 按鈕的背景顏色變為透明的 */
-    width: 180px;
+    width: 30%;
     aspect-ratio: 1.5/1;
     background-size: contain;
+    background-position: center;
+    user-select: none;
+    margin: 5px;
+}
+
+/* 頭像圖片 */
+.headimg {
+    background-repeat: no-repeat;
+    background-color: transparent;
+    /* 按鈕的背景顏色變為透明的 */
+    width: 30%;
+    aspect-ratio: 1.35/1;
+    background-size: 100% 100%;
     background-position: center;
     user-select: none;
     margin: 5px;
