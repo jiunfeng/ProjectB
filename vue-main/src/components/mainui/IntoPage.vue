@@ -63,12 +63,13 @@
                     </div>
                 </div>
                 <!-- 密碼確認 -->
-                <label for="reg4" class="reg-text2-1" :style="regdivsty2">密碼再確認 :</label>
+                <label for="reg4" class="reg-text2-1" :style="regdivsty2">密碼確認 :</label>
                 <div class="reg-inputdiv2-1" :style="regdivsty2">
                     <input type="password" class="reg-input2-1 form-control"
                         :class="{ 'is-invalid': regpassword.length < min || regpassword.length > max, 'is-valid': regpassword.length >= min && regpassword.length <= max }"
                         v-model="regpass_ag" name="reg4" id="reg4" placeholder="請填入8~16個英文或數字"
                         oninput="value=value.replace(/[^\w\.\/]/ig,'')" style="font-size: 20px;">
+                        <div class="input3-2 invalid-feedback" id="inva01" style="font-size: 25px;">&nbsp;密碼不同</div>
                     <div class="input_ag valid-feedback" style="font-size: 25px;">&nbsp;密碼符合</div>
                 </div>
 

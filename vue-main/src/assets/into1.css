@@ -155,24 +155,24 @@ br {
     position: absolute;
     left: 50%;
     top: -3%;
-    width: 60%;
-    height: 35%;
+    width: 58%;
+    height: 26%;
     border-radius: 50%;
 }
 
 .reg-text1 {
     position: absolute;
     font-size: 35px;
-    top: 32%;
+    top: 20%;
     left: 5%;
 }
 
 .reg-inputdiv1{
     position: absolute;
-    top: 32%;
+    top: 21.5%;
     left: 26%;
     width: 70%;
-    height: 13%;
+    height: 9%;
 }
 
 .reg-input1 {
@@ -183,13 +183,28 @@ br {
 .reg-text2 {
     position: absolute;
     font-size: 35px;
-    top: 49%;
+    top: 35%;
     left: 5%;
 }
 
 .reg-inputdiv2{
     position: absolute;
-    top: 50%;
+    top: 36.5%;
+    left: 26%;
+    width: 70%;
+    height: 13%;
+}
+
+.reg-text2-1 {
+    position: absolute;
+    font-size: 23px;
+    top: 52.7%;
+    left: 2%;
+}
+
+.reg-inputdiv2-1{
+    position: absolute;
+    top: 52%;
     left: 26%;
     width: 70%;
     height: 13%;
