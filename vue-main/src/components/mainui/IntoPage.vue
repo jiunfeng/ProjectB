@@ -206,7 +206,6 @@ function regin() {
         else{
             alert('密碼確認錯誤')
         }
-        
         // const message = userStore.login(regaccount.value, regpassword.value);
         // console.log(message)
     }
