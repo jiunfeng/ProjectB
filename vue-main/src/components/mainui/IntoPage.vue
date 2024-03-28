@@ -66,7 +66,7 @@
                 <label for="reg4" class="reg-text2-1" :style="regdivsty2">密碼確認 :</label>
                 <div class="reg-inputdiv2-1" :style="regdivsty2">
                     <input type="password" class="reg-input2-1 form-control"
-                        :class="{ 'is-invalid': regpassword.length < min || regpassword.length > max, 'is-valid': regpassword.length >= min && regpassword.length <= max }"
+                        :class="{ 'is-invalid': regpass_ag != regpassword || regpass_ag.length ==0  , 'is-valid': regpass_ag == regpassword && regpass_ag.length !=0 }"
                         v-model="regpass_ag" name="reg4" id="reg4" placeholder="請填入8~16個英文或數字"
                         oninput="value=value.replace(/[^\w\.\/]/ig,'')" style="font-size: 20px;">
                         <div class="input3-2 invalid-feedback" id="inva01" style="font-size: 25px;">&nbsp;密碼不同</div>
@@ -112,6 +112,7 @@ const password = ref('')
 // 註冊
 const regaccount = ref('')
 const regpassword = ref('')
+const regpass_ag = ref('')
 const regname = ref('')
 // const regdivsty = ref(false)
 
@@ -145,7 +146,7 @@ function into() {
 
     }
     else {
-        alert('請輸入正確的字數')
+        alert('帳號或密碼錯誤')
     }
 }
 
@@ -179,8 +180,10 @@ function regin() {
     min = 8;
     namemin = 1;
     namemax = 6;
-    if ((regaccount.value.length >= min && regaccount.value.length <= max) && (regpassword.value.length >= min && regpassword.value.length <= max) && (regname.value.length >= namemin && regname.value.length <= namemax)) {
-        console.log(regaccount.value);
+    if ((regaccount.value.length >= min && regaccount.value.length <= max) && (regpassword.value.length >= min && regpassword.value.length <= max) && (regname.value.length >= namemin && regname.value.length <= namemax) ) {
+        if(regpassword.value == regpass_ag.value)
+        {
+            console.log(regaccount.value);
         console.log(regpassword.value);
         console.log(regname.value);
         userStore.register(regaccount.value, regpassword.value, regname.value).then(() => {
@@ -199,6 +202,11 @@ function regin() {
                 alert('連線錯誤');
             }
         });
+        }
+        else{
+            alert('密碼確認錯誤')
+        }
+        
         // const message = userStore.login(regaccount.value, regpassword.value);
         // console.log(message)
     }
