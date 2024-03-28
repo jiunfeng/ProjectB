@@ -66,10 +66,10 @@
                 <label for="reg4" class="reg-text2-1" :style="regdivsty2">密碼確認 :</label>
                 <div class="reg-inputdiv2-1" :style="regdivsty2">
                     <input type="password" class="reg-input2-1 form-control"
-                        :class="{ 'is-invalid': regpass_ag != regpassword || regpass_ag.length ==0  , 'is-valid': regpass_ag == regpassword && regpass_ag.length !=0 }"
+                        :class="{ 'is-invalid': regpass_ag != regpassword || regpass_ag.length == 0, 'is-valid': regpass_ag == regpassword && regpass_ag.length != 0 }"
                         v-model="regpass_ag" name="reg4" id="reg4" placeholder="請填入8~16個英文或數字"
                         oninput="value=value.replace(/[^\w\.\/]/ig,'')" style="font-size: 20px;">
-                        <div class="input3-2 invalid-feedback" id="inva01" style="font-size: 25px;">&nbsp;密碼不同</div>
+                    <div class="input3-2 invalid-feedback" id="inva01" style="font-size: 25px;">&nbsp;密碼不同</div>
                     <div class="input_ag valid-feedback" style="font-size: 25px;">&nbsp;密碼符合</div>
                 </div>
 
@@ -95,7 +95,10 @@
 
 <script setup>
 import "@/assets/into1.css"
+// 初始import
 import { ref, computed } from 'vue'
+// 連線sweet2
+import Swal from 'sweetalert2'
 // 控制使用者currentPage導向
 // 連線userInfo.js的資料
 import { useUserInfoStore } from "@/stores/userInfo";
@@ -133,20 +136,57 @@ function into() {
                 userStore.currentPage = "main";
             }
             else if (userStore.message == "帳號或密碼錯誤") {
-                account.value = "";
-                password.value = "";
-                alert('請輸入正確的帳號或密碼');
+                // 警告視窗
+                Swal.fire({
+                    icon: "error",
+                    title: "帳號或密碼錯誤",
+                    showDenyButton: false,
+                    showCancelButton: false,
+                    confirmButtonText: "確定",
+                    text: "請輸入正確的帳號密碼"
+                }).then((result) => {
+                    // 按下確認
+                    if (result.isConfirmed) {
+                        password.value = "";
+                    }
+                });
             }
             else if (userStore.message == "未知錯誤") {
-                account.value = "";
-                password.value = "";
-                alert('連線錯誤');
+                // 警告視窗
+                Swal.fire({
+                    icon: "info",
+                    title: "連線錯誤",
+                    showDenyButton: false,
+                    showCancelButton: false,
+                    confirmButtonText: "重新連線",
+                    // denyButtonText: `Don't save`
+                }).then((result) => {
+                    // 按下確認
+                    if (result.isConfirmed) {
+                        // 網頁重新整理
+                        location.reload();
+                    }
+                });
             }
         });
 
     }
     else {
-        alert('帳號或密碼錯誤')
+        // 警告視窗
+        Swal.fire({
+            icon: "info",
+            title: "請輸入正確的字數",
+            showDenyButton: false,
+            showCancelButton: false,
+            confirmButtonText: "確定",
+            // denyButtonText: `Don't save`
+        }).then((result) => {
+            // 按下確認
+            if (result.isConfirmed) {
+                //
+            }
+            // else if (result.isDenied) {}
+        });
     }
 }
 
@@ -180,37 +220,103 @@ function regin() {
     min = 8;
     namemin = 1;
     namemax = 6;
-    if ((regaccount.value.length >= min && regaccount.value.length <= max) && (regpassword.value.length >= min && regpassword.value.length <= max) && (regname.value.length >= namemin && regname.value.length <= namemax) ) {
-        if(regpassword.value == regpass_ag.value)
-        {
+    // 字數確認
+    if ((regaccount.value.length >= min && regaccount.value.length <= max) && (regpassword.value.length >= min && regpassword.value.length <= max) && (regname.value.length >= namemin && regname.value.length <= namemax)) {
+        // 如果密碼確認內容和密碼內容一樣
+        if (regpassword.value == regpass_ag.value) {
             console.log(regaccount.value);
-        console.log(regpassword.value);
-        console.log(regname.value);
-        userStore.register(regaccount.value, regpassword.value, regname.value).then(() => {
-            if (userStore.message == "帳號創建完成") {
-                alert('帳號註冊成功');
-                isShow.value = false;
-                account.value = regaccount.value;
-            }
-            else if (userStore.message == "該帳號已有人使用") {
-                regaccount.value = "";
-                alert('該帳號名稱已有人使用');
-            }
-            else if (userStore.message == "發生異常錯誤，帳號無法創建。") {
-                account.value = "";
-                password.value = "";
-                alert('連線錯誤');
-            }
-        });
+            console.log(regpassword.value);
+            console.log(regname.value);
+            userStore.register(regaccount.value, regpassword.value, regname.value).then(() => {
+                if (userStore.message == "帳號創建完成") {
+                    // 警告視窗
+                    Swal.fire({
+                        icon: "success",
+                        title: "帳號註冊成功",
+                        showDenyButton: false,
+                        showCancelButton: false,
+                        confirmButtonText: "確定",
+                        // denyButtonText: `Don't save`
+                    }).then((result) => {
+                        // 按下確認
+                        if (result.isConfirmed) {
+                            // 關閉註冊頁面
+                            isShow.value = false;
+                            // 登入頁面的帳號input輸入剛剛註冊完的帳號名稱
+                            account.value = regaccount.value;
+                        }
+                        // else if (result.isDenied) {}
+                    });
+                }
+                else if (userStore.message == "該帳號已有人使用") {
+                    // 警告視窗
+                    Swal.fire({
+                        icon: "info",
+                        title: "該帳號已有人使用",
+                        showDenyButton: false,
+                        showCancelButton: false,
+                        confirmButtonText: "確定",
+                        // denyButtonText: `Don't save`
+                    }).then((result) => {
+                        // 按下確認
+                        if (result.isConfirmed) {
+                            regaccount.value = "";
+                        }
+                        // else if (result.isDenied) {}
+                    });
+                }
+                else if (userStore.message == "發生異常錯誤，帳號無法創建。") {
+                    // 警告視窗
+                    Swal.fire({
+                        icon: "info",
+                        title: "連線錯誤",
+                        showDenyButton: false,
+                        showCancelButton: false,
+                        confirmButtonText: "重新連線",
+                        // denyButtonText: `Don't save`
+                    }).then((result) => {
+                        // 按下確認
+                        if (result.isConfirmed) {
+                            // 網頁重新整理
+                            location.reload();
+                        }
+                    });
+                }
+            });
         }
-        else{
-            alert('密碼確認錯誤')
+        // 如果密碼確認內容和密碼內容不一樣
+        else {
+            // 警告視窗
+            Swal.fire({
+                icon: "info",
+                title: "密碼確認錯誤",
+                showDenyButton: false,
+                showCancelButton: false,
+                confirmButtonText: "確定",
+                // text: "請輸入正確的帳號密碼"
+            }).then((result) => {
+                // 按下確認
+                if (result.isConfirmed) {
+                    regpass_ag.value = "";
+                }
+            });
         }
-        // const message = userStore.login(regaccount.value, regpassword.value);
-        // console.log(message)
     }
     else {
-        alert('請輸入正確的字數')
+        // 警告視窗
+        Swal.fire({
+            icon: "info",
+            title: "請輸入正確的字數",
+            showDenyButton: false,
+            showCancelButton: false,
+            confirmButtonText: "確定",
+            // text: "請輸入正確的帳號密碼"
+        }).then((result) => {
+            // 按下確認
+            if (result.isConfirmed) {
+                //
+            }
+        });
     }
 }
 
