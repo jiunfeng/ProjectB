@@ -89,12 +89,12 @@
     </div>
 
 
-    <!-- <link rel="stylesheet" href="/mainui/css/into1.css"> -->
+    <link rel="stylesheet" href="/mainui/css/into1.css">
     <link rel="stylesheet" href="/mainui/css/bootstrap.min.css">
 </template>
 
 <script setup>
-import "@/assets/into1.css"
+// import "@/assets/into1.css"
 // 初始import
 import { ref, computed } from 'vue'
 // 連線sweet2
