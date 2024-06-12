@@ -1,0 +1,27 @@
+/* 行動版面: 480px 以下。 */
+
+video {
+    display:none;
+}
+.index_banner{
+    display: block;
+}
+
+/* 表格版面: 481px 到 1022px。樣式繼承自: 行動版面。 */
+
+@media only screen and (min-width: 481px) {
+
+}
+
+
+/* 桌面版面: 1023px 到最大 1232px。樣式繼承自: 行動版面和表格版面。 */
+
+@media only screen and (min-width: 1000px) {
+
+video {
+    display:block;
+}
+.index_banner{
+    display: none;
+}
+}

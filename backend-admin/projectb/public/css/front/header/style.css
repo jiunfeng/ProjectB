@@ -1,0 +1,157 @@
+/* 行動版面: 480px 以下。 */
+
+
+nav.navbar.bootsnav ul.nav > li > a {
+        font - family: ‘cwTeXHei’, sans - serif;
+        font-size: 1.3em;
+        letter-spacing: 2px;
+}
+
+
+#navbar-menu .lang_bar {
+    margin-left: -60px;
+    line-height: 60px;
+ }
+
+#navbar-menu ul .lang {
+    display: inline;
+}
+
+#navbar-menu ul .lang a {
+    text-decoration: none;
+    font-size: 0.5em;
+    letter-spacing: 1px;
+}
+.container .attr-nav ul .search a {
+        font-size: 20px;
+        margin-right: 20px;
+}
+
+
+
+.navbar-nav>li {
+    float: left;
+    width: 100%;
+}
+
+#navbar-menu .nav.navbar-nav.navbar-right li a img {
+    width: 35px;
+    margin-left: -50px;
+    margin-top: 10px;
+}
+
+#navbar-menu .nav.navbar-nav.navbar-right li a .nav_img {
+    float: left;
+    width: 3%;
+    margin-left: 40%;
+
+}
+
+#navbar-menu .nav.navbar-nav.navbar-right li a .nav_p {
+    float: left;
+    width: 100px;
+    margin-left: -15px;
+}
+
+
+nav.navbar.bootsnav ul.nav > li > a{
+    height: 80px;
+}
+
+
+
+/* 表格版面: 481px 到 1022px。樣式繼承自: 行動版面。 */
+
+@media only screen and (min-width: 481px) {
+#navbar-menu .nav.navbar-nav.navbar-right li a .nav_img {
+    margin-left: 46%;
+
+}
+#navbar-menu .lang_bar {
+    margin-left: -30px;
+    line-height: 60px;
+ }
+}
+
+
+
+/* 桌面版面: 1023px 到最大 1232px。樣式繼承自: 行動版面和表格版面。 */
+
+@media only screen and (min-width: 1023px) {
+
+/*滑鼠"滑入"選單展開*/
+.dropdown-menu li:hover .sub-menu {visibility: visible;}
+.dropdown:hover .dropdown-menu {display: block;}
+
+    
+    nav.navbar.bootsnav ul.nav > li > a {
+        font - family: ‘cwTeXHei’, sans - serif;
+        font-size: 1.1em;
+        letter-spacing: 2px;
+    }
+    .container .attr-nav ul .search {
+        margin-top: -20px;
+    }
+    .container .attr-nav ul .search a {
+        font-size: 13px;
+        position: relative;
+        z-index: 9999;
+        margin-right: 0px;
+    }
+    .container .attr-nav ul .lang a {
+        font-size: 0.7em;
+    }
+    #navbar-menu ul .lang {
+        font-size: 0.7em;
+        padding-left: 0%;
+    }
+    #navbar-menu ul .lang {
+        font-size: 0.7em;
+        padding-left: 0%;
+    }
+    #navbar-menu .lang_bar {
+        float: right;
+        padding-left: 60%;
+        margin-top: -123px;
+        line-height: 28px;
+        position: relative;
+        z-index: 9999;
+    }
+nav.navbar.bootsnav ul.nav > li > a{
+    height: auto;
+}
+
+#navbar-menu .nav.navbar-nav.navbar-right li a img {
+    width: 45px;
+    margin-left:0px; 
+    margin-top: 0px;
+}
+   .navbar-nav>li {
+        float: left;
+        width: 120px;
+    }
+    .navbar-nav>.dropdown {
+        width: 120px;
+    }
+
+
+    #navbar-menu .nav.navbar-nav.navbar-right li a .nav_img {
+    float: left;
+    width: 120px;
+    margin-left: 0%;
+}
+
+#navbar-menu .nav.navbar-nav.navbar-right li a .nav_p {
+    font-size: 12px;
+    width: 120px;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-bottom: 8px;
+}
+
+
+#navbar-menu .nav.navbar-nav.navbar-right{
+    margin-right: -33px;
+}
+
+

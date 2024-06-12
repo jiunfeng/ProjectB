@@ -1,0 +1,145 @@
+/* 行動版面: 480px 以下。 */
+.content_title{
+	float: left;
+	width: 100%;
+	text-align: center;
+	margin:10% 0 2% 0; 
+}
+
+.content_title .main_title{
+	font-size: 27px;
+	line-height: 20px;
+}
+.content_title .subtitle{
+	font-size: 14px;
+
+    letter-spacing: 2px;
+    border-bottom: dotted;
+    border-width: 1px;
+    padding-bottom: 15px;
+}
+
+
+
+
+.esontea{
+	float: left;
+	width: 100%;
+	padding: 0 10%;
+	margin-top: 0px;
+	text-align: center;
+}
+.esontea section{
+	float: left;
+    width: 100%;
+}
+.esontea section img{
+    width: 65%;
+    margin-top: 100px;
+    margin-bottom: 20px;
+}
+.esontea .subtitle{
+	font-size: 16px;
+	line-height: 28px;
+    letter-spacing: 2px;
+}
+
+
+
+
+
+.idea{
+	float: left;
+	width: 100%;
+	padding: 0 10%;
+	margin-top: 0px;
+	text-align: center;
+}
+.idea section{
+	float: left;
+    width: 100%;
+    padding: 7% 0;
+}
+.idea section img{
+    width: 40%;
+}
+.idea .main_title{
+	font-size: 20px;
+	line-height: 12px;
+	margin-top: 20px;
+}
+
+.idea .subtitle{
+	text-align: center;
+	font-size: 14px;
+	line-height: 18px;
+    letter-spacing: 2px;
+}
+
+.strength{
+	float: left;
+	width: 100%;
+	text-align: center;
+	padding: 0 10%;
+}
+.strength section{
+	float: left;
+    width: 100%;
+    padding: 7% 0;
+}
+.strength section img{
+    width: 95%;
+}
+
+.strength .main_title{
+	font-size: 20px;
+	line-height: 20px;
+	margin-top: 20px;
+}
+
+
+.strength .subtitle{
+text-align: left;	
+}
+
+/* 表格版面: 481px 到 1022px。樣式繼承自: 行動版面。 */
+
+@media only screen and (min-width: 481px) {
+	
+.esontea section img{
+    width: 45%;
+    margin-top: 150px;
+    margin-bottom: 60px;
+}
+
+.idea section{
+    width: 50%;
+    padding: 5% ;
+}
+
+.strength section{
+    width: 50%;
+    padding: 5% ;
+}
+
+
+}
+
+
+/* 桌面版面: 1023px 到最大 1232px。樣式繼承自: 行動版面和表格版面。 */
+
+@media only screen and (min-width: 1023px) {
+.esontea section img{
+    width: 15%;
+}
+
+.idea section{
+    width: 20%;
+    padding: 0 ;
+}
+.strength section{
+    width: 25%;
+    padding: 1% ;
+}
+
+}

@@ -1,0 +1,184 @@
+/* 行動版面: 480px 以下。 */
+.shop_link{
+margin-top: 20px;
+}
+.shop_link h6{
+    text-align: left;
+    margin-bottom: 0px;
+    font-size: 16px;
+}
+.shop_link p{
+float: left;
+text-align: center;
+border:dotted;
+border-width: 1px;
+padding: 5px 8px; 
+margin-right: 10px; 
+}
+
+#product_detail .right_info{
+	display: none;
+}
+
+.right_info .subtitle{
+border-bottom: dotted;
+border-width: 1px;
+border-color: #A8A7A7;
+padding-bottom: 10px;
+}
+
+
+.prod_table td{
+	width: 60%;
+	font-size: 20px;
+	line-height: 40px;
+}
+
+
+tr, th, td{
+	border: 0;
+    font-family: inherit;
+    font-size: 100%;
+    font-style: inherit;
+    font-weight: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+.mobile_slider .subtitle{
+	text-align: left;
+	line-height: 24px;
+}
+
+.mobile_slider .prod_table{
+	margin-top: 25px;
+	text-align: left;
+}
+.mobile_slider .shop_link{
+margin-top: 50px;
+}
+
+/* 表格版面: 481px 到 1022px。樣式繼承自: 行動版面。 */
+@media only screen and (min-width: 481px) {	
+#main_product.has_type ,#product_detail{
+    float: none;
+    width: 100%;
+    padding: 5% 10%;
+}
+#product_detail .right_info{
+    width: 40%;
+    padding-left: 3%;
+}
+
+
+.shop_link{
+margin-top: 50px;
+}
+
+}
+@media only screen and (min-width: 802px) {
+#main_product.has_type ,#product_detail{
+    padding-left: 5%;
+}	
+
+#product_detail .right_info{
+    display: block;
+    float: left;
+    width: 40%;
+    padding-left: 3%;
+}
+
+}
+
+@media only screen and (min-width: 860px) {
+#main_product.has_type ,#product_detail{
+    padding-left: 5%;
+}   
+
+#product_detail .right_info{
+    display: block;
+    float: left;
+    width: 42%;
+    padding-left: 3%;
+}
+
+}
+
+
+
+
+/* 桌面 */
+@media only screen and (min-width: 1023px) {    
+#main_product.has_type ,#product_detail{
+    padding-left: 10%;
+    padding-right: 6%;
+}
+#product_detail .right_info{
+    width: 42%;
+    padding-left: 3%;
+}
+
+.shop_link{
+margin-top: 45px;
+}
+
+}
+@media only screen and (min-width: 1034px) {
+#main_product.has_type ,#product_detail{
+    padding-left: 9%;
+    padding-right: 7%;
+}
+#product_detail .right_info{
+    width: 42%;
+    padding-left: 4%;
+}
+}
+@media only screen and (min-width: 1077px) {
+#main_product.has_type ,#product_detail{
+    padding-left: 10%;
+    padding-right: 7%;
+}
+#product_detail .right_info{
+    width: 41%;
+    padding-left: 4%;
+}
+}
+
+@media only screen and (min-width: 1280px) {
+#main_product.has_type ,#product_detail{
+    padding-left: 17%;
+    padding-right: 11%;
+}
+
+#product_detail .right_info{
+    width: 42%;
+    padding-left: 5%;
+}
+}
+
+/* 桌面版面: 1023px 到最大 1232px。樣式繼承自: 行動版面和表格版面。 */
+
+@media only screen and (min-width: 1489px) {
+#main_product.has_type ,#product_detail{
+    padding-left: 20%;
+    padding-right: 13%;
+}
+
+#product_detail .right_info{
+    width: 40%;
+    padding-left: 5%;
+}
+
+#product_detail .main_pic {
+    float: left;
+    width: 490px;
+    position: relative;
+}
+
+#product_detail .main_pic .m_pic {
+    width: 490px;
+    margin-bottom: 20px;
+}
+	}

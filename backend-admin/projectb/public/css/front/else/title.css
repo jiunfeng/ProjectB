@@ -1,0 +1,38 @@
+/* 各頁title、麵包屑等等*/
+/* 行動版面: 480px 以下。 */
+
+.title .breadcrumbs{
+	padding: 10px 0;
+	text-align: center;
+	font-size: 9px;
+	letter-spacing: 1px;
+}
+
+.title .top_banner img{
+width: 100%;
+height: auto;
+}
+.title .top_title{
+    padding-top: 3%;
+    text-align: center;
+    font-size: 39px;
+}
+
+
+/* 表格版面: 481px 到 1022px。樣式繼承自: 行動版面。 */
+
+@media only screen and (min-width: 481px) {
+.title .breadcrumbs{
+    text-align: right;
+    margin-right: 5%;
+}
+}
+
+
+
+
+/* 桌面版面: 1023px 到最大 1232px。樣式繼承自: 行動版面和表格版面。 */
+
+@media only screen and (min-width: 1023px) {
+
+}

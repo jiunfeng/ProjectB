@@ -1,0 +1,351 @@
+$xx: 0;
+$xs: 320px;
+$sm: 640px;
+$md: 800px;
+$lg: 1024px;
+$xl: 1440px;
+$xxl: 1920px;
+$max-breakpoints: (
+xx: 0,
+xs: 320px,
+sm: 576px,
+md: 800px,
+lg: 1024px,
+xl: 1440px,
+xxl: 1920px
+) !default;
+
+$min-breakpoints: (
+xx: 0,
+xs: 320px,
+sm: 576px,
+md: 800px,
+lg: 1024px,
+xl: 1440px,
+xxl: 1920px
+) !default;
+
+$breakpoints: (
+xx: 0,
+xs: 320px,
+sm: 576px,
+md: 800px,
+lg: 1024px,
+xl: 1440px,
+xxl: 1920px
+) !default;
+  .container-fluid {
+    width: 100%;
+
+}
+.container,  .container-fluid {
+  *zoom: 1;
+  &::before, &::after {
+    content: "";
+    display: table;
+  }
+  &::after  {
+    clear: both;
+  }
+}
+
+
+.gw {
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+// .row {
+//  width: calc(100% + 30px);
+//  margin-left: -15px;
+//  margin-right: -15px;
+//  &.mx-0 {
+//    width: 100%;
+//  }
+// }
+
+
+#page {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  justify-content: flex-start;
+  min-height: 100vmin;
+  overflow: hidden;
+
+}
+.ov-h {
+  overflow: hidden;
+}
+$bg-set: (
+ cover cover,
+ percent 100%,
+ auto auto,
+ contain contain,
+ repeat repeat,
+ att fixed,
+);
+
+@each $cls, $prop in $bg-set {
+  .bg-#{$cls} {
+    position: relative;
+    @if ($cls == 'att') {
+      background-attachment: #{$prop};
+      background-repeat: no-repeat;
+      background-size: cover;
+      @media screen and (max-width: 800px) {
+        background-attachment: local;
+      }
+    }
+    @else if ($cls == 'repeat') {
+      background-repeat: #{$prop};
+    }
+    @else {
+      background-size: #{$prop};
+      background-repeat: no-repeat;
+    }
+  }
+}//each
+
+@for $i from 2 through 20 {
+  .size--#{$i * 10} {
+    width: #{$i * 10px};
+    height: #{$i * 10px};
+    line-height: #{$i * 10px};
+    @if ($i > 10) {
+      font-size: #{($i * 10px) / 2};
+    }//if
+    @else {
+      font-size: #{($i * 10px) / 1.25};
+    }
+
+  }//size
+}
+
+.sprite {
+  display: inline-block;
+  text-align: center;
+  & img {
+    max-width: 100%;
+    display: block;
+  }
+  &.fit {
+    height: auto!important;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}
+
+
+[class*="abimg"] {
+  width: 100%;
+  display: block;
+  content: " ";
+  overflow: hidden;
+  float: left;
+  height: 0;
+  position: relative;
+  & > iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  &:not(.v-img) > img {
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  &.v-img {
+    & > img {
+      width: auto;
+      max-width: auto;
+      height: 100%;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@for $i from 3 through 32 {
+  .abimg-16n#{$i} {
+    padding-bottom: #{(100% / 16) * $i};
+  }
+}
+
+.img-wrap {
+  & img {
+    display: block;
+    width: 100%;
+  }
+  &.img-auto {
+    & img {
+      width: auto;
+      max-width: 100%;
+    }
+  }
+}
+
+.gw {
+  width: 100%;
+  display: block;
+  float: left;
+}
+// .row {
+//   width: calc(100% + 30px);
+//   margin-left: -15px;
+//   margin-right: -15px;
+//   &.mx-0 {
+//     margin-left: 0;
+//     margin-right: 0;
+//     width: 100%;
+//   }
+// }
+[class*="bnr-"] {
+  position: relative;
+  width: 100%;
+  display: block;
+  float: left;
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+[class*="abimg"] {
+  display: block;
+  width: 100%;
+  height: 0;
+  content: " ";
+  position: relative;
+  overflow: hidden;
+  float: left;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+@for $i from 4 through 32 {
+  .abimg-16n#{$i} {
+    padding-bottom: #{(100% / 16) * $i};
+  }
+}
+$bg-prop: (
+cover size cover,
+auto size auto,
+fw size 100%,
+att attachment fixed ,
+contain size contain,
+clip clip content-box
+);
+@each $cls, $prop, $values in $bg-prop {
+  .bg-#{$cls} {
+    background-#{$prop}: #{$values};
+    background-repeat: no-repeat;
+  }
+}
+$wids: (
+ 25: 25%,
+ 33: 33.3333%,
+ 50: 50%,
+ 75: 75%,
+ 100: 100%
+);
+
+
+$pos: (
+ab: absolute,
+r: relative,
+fix: fixed,
+st: static
+);
+@each $cls, $prop in $pos {
+  .pos-#{$cls} {
+    position: #{$prop};
+  }
+}
+
+$pos-dir: (
+ t top,
+ b bottom,
+ l left,
+ r right,
+ xc,
+ yc
+);
+@each $cls, $prop in $pos-dir {
+  .pos-ab-#{$cls} {
+    @if ($cls == 'xc') {
+      left: 50%;
+      transform: translateX(-50%);
+    } @else if($cls == 'yc') {
+      top: 50%;
+      transform: translateY(-50%);
+    } @else {
+      #{$prop}: 0%;
+    }
+  }//cls
+}
+@each $cls, $mida in $max-breakpoints {
+  @media screen and (min-width: $mida - 0.02) {
+    @each $w, $wid in $wids {
+      .w-#{$cls}-#{$w} {
+        width: #{$wid};
+      }//w
+    }//each w
+    @for $i from 4 through 32 {
+      .abimg-#{$cls}-16n#{$i} {
+        padding-bottom: #{(100% / 16) * $i};
+      }
+    }
+    .pos-#{$cls}-r {
+      position: relative!important;
+      transform: translateX(0);
+      transform: translateY(0);
+    }
+  }//media
+}
+
+.pre-line {
+  overflow: hidden;
+  width: 100%;
+  display: block;
+  white-space: pre-line;
+  margin-top: -25px;
+}
+
+// $golden-theme: (
+//  text, bg
+// );
+// @each $cls in $golden-theme {
+//   .#{$cls}-golden {
+//     @if $cls == "text" {
+//       color: $gold;
+//     }//if
+//     @else {
+//       background-image: linear-gradient(-14deg, $gold,  $yellow, $gold, $yellow, $gold);
+//     }//else
+//   }
+// }//each
+.mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  content: "";
+  opacity: .5;
+}

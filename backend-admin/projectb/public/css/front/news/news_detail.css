@@ -1,0 +1,65 @@
+/* 行動版面: 480px 以下。 */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+}
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+}
+
+.news_detail{
+    padding: 0 10%;
+    text-align: left;
+}
+
+.news_detail .content{
+    width: 100%;
+    margin : 10% 0; 
+}
+
+.news_detail .content img{
+    width: 100%;
+    margin: 5% 0; 
+}
+
+.news_detail .content .date{
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.news_detail .content .main_title{
+    font-size: 28px;
+}
+.news_detail .content .subtitle{
+    font-size: 16px;
+    margin-top: -10px;
+}
+.news_detail .content .context{
+    font-size: 16px;
+    margin: 5% 0; 
+}
+.news_detail .content .int_video{
+    margin: 10% 0; 
+}
+
+/* 表格版面: 481px 到 1022px。樣式繼承自: 行動版面。 */
+
+@media only screen and (min-width: 481px) {
+.news_detail{
+    padding: 0 20%;
+}
+}
+
+
+/* 桌面版面: 1023px 到最大 1232px。樣式繼承自: 行動版面和表格版面。 */
+
+@media only screen and (min-width: 1023px) {
+
+}

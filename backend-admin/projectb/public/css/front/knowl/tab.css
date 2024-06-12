@@ -1,0 +1,173 @@
+/* 行動版面: 480px 以下。 */
+.abgne_tab {
+    clear: left;
+    width: 100%;
+    margin: 5% 0;
+    padding: 0 10%;
+}
+
+ul.chooes {
+    float: left;
+    width: 70%;
+    height: 50px;
+    padding: 0 1%;
+}
+
+ul.chooes li {
+    display: inline;
+}
+
+ul.tabs {
+    float: left;
+    width: 30%;
+    height: 50px;
+    padding: 0 1%;
+}
+
+ul.tabs li {
+    float: right;
+    overflow: hidden;
+    position: relative;
+}
+
+ul.tabs li a {
+    display: block;
+    padding: 0 10px;
+    color: #6f6f6f;
+    text-decoration: none;
+}
+
+ul.tabs li.active {
+    color: #FFFFFF;
+}
+
+div.tab_container {
+    clear: left;
+    width: 100%;
+    border-top: none;
+}
+
+
+
+
+#tab1 {
+    float: left;
+    margin-bottom: 100px;
+}
+
+#tab1 .box {
+    width: 100%;
+    text-align: left;
+    float: left;
+    margin: 1%;
+    padding: 10px 0;
+}
+
+#tab1 .box img {
+    width: 100%;
+    height: auto;
+}
+
+#tab1 .box .date {
+    margin-top: 5px;
+}
+
+#tab1 .box .main_title {
+    font-size: 20px;
+}
+
+#tab1 .box .subtitle {
+    font-size: 14px;
+    margin-top: -20px;
+}
+
+
+#tab2 .line {
+   width: 100%;
+   float: left;
+   text-align: left;
+   border-top: solid;
+   border-bottom: solid;
+   border-color: #E6E6E6;
+   margin: 20px 0; 
+   padding: 10px 10%;
+}
+#tab2 .line .date {
+    margin-top: 5px;
+}
+
+#tab2 .line .main_title {
+    float: left;
+    width: 100%;
+    font-size: 24px;
+}
+
+#tab2 .line .subtitle {
+    float: left;
+    width: 100%;
+    font-size: 16px;
+    margin-top: -20px;
+    margin-bottom: -1px;
+}
+#tab2 a {
+  text-decoration:none;
+}
+
+#tab2 .line:hover {
+  background-color: #FAFAF7;
+  color: #51716b;
+}
+
+/* 表格版面: 481px 到 1022px。樣式繼承自: 行動版面。 */
+
+@media only screen and (min-width: 481px) {
+ul.chooes {
+    width: 50%;
+}
+ul.tabs {
+    width: 50%;
+}
+ul.tabs li a {
+    padding: 0 20px;
+}
+
+#tab1 .box {
+    width: 47%;
+}
+
+
+}
+
+
+/* 桌面版面: 1023px 到最大 1232px。樣式繼承自: 行動版面和表格版面。 */
+
+@media only screen and (min-width: 1023px) {
+
+#tab1 .box {
+    width: 31%;
+}
+#tab2 .line {
+   padding: 10px 15%;
+   margin-left: 10px;
+   width: 97%;
+}
+
+#tab2 .line .main_title {
+    float: left;
+    width: 40%;
+    font-size: 24px;
+    padding-right: 10px;
+}
+
+#tab2 .line .subtitle {
+    float: left;
+    width: 60%;
+    font-size: 16px;
+    text-align: left;
+    margin-top: 1%;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border-left: solid;
+    border-width: 1px;
+}
+}

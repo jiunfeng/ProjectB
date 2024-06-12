@@ -1,0 +1,47 @@
+/* 行動版面: 480px 以下。 */
+.main_title{
+  text-align: center;
+  font-size: 27px;
+  line-height: 20px;
+  letter-spacing: 2px;
+  border-bottom: dotted;
+  border-width: 1px;
+  padding-bottom: 15px;
+}
+.product_int{
+padding: 10px 0 50px;
+}
+
+.product_int img{
+	width: 100%
+}
+
+.product_int .int_img{
+padding: 15px 0;
+}
+.product_int .int_text{
+padding: 15px 30px;
+font-size: 16px;
+}
+.product_int .int_video{
+	padding: 15px 0;
+}
+/* 表格版面: 481px 到 1022px。樣式繼承自: 行動版面。 */
+
+@media only screen and (min-width: 481px) {
+.product_int{
+padding: 10px 10% 50px;
+}
+.product_int .int_text{
+padding: 15px 0;
+}
+}
+
+
+/* 桌面版面: 1023px 到最大 1232px。樣式繼承自: 行動版面和表格版面。 */
+
+@media only screen and (min-width: 1023px) {
+.product_int{
+padding: 10px 17% 70px;
+}
+}

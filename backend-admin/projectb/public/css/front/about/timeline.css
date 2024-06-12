@@ -1,0 +1,140 @@
+.eson_timeline {
+    float: left;
+    width: 100%;
+    padding: 0 25% 5% 25%;
+    height: auto;
+}
+
+.demo {
+    padding: 1.5em 0
+}
+
+.main-timeline {
+    position: relative;
+    -webkit-transition: all 0.4s ease 0s;
+    -moz-transition: all 0.4s ease 0s;
+    -ms-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+}
+
+.main-timeline:before {
+    content: "";
+    width: 3px;
+    height: 100%;
+    background: #51716b;
+    position: absolute;
+    top: 0;
+    left: 50%;
+}
+
+.main-timeline .timeline {
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.main-timeline .timeline:before,
+.main-timeline .timeline:after {
+    content: "";
+    display: block;
+    width: 100%;
+    clear: both;
+}
+
+.main-timeline .timeline-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #51716b;
+    overflow: hidden;
+    margin-left: -11px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    text-align: center;
+}
+
+.main-timeline .timeline-content {
+    width: 40%;}
+
+.main-timeline .title {
+    font-size: 30px;
+    width: 100px;
+    color: #fff;
+    padding: 10px;
+    background: #51716b;
+    border-radius: 8px 8px 8px 8px;
+    margin: 10px -10px;
+    text-align: center;
+}
+
+.main-timeline .title:hover{
+    background: #9AC0B9;
+    -o-transition: background .20s linear;
+    -webkit-transition: background .20s linear;
+    -moz-transition: background .20s linear;
+    transition:  background .20s linear;
+}
+
+.main-timeline .description {
+    font-size: 14px;
+    color: #726f77;
+}
+
+.main-timeline .timeline-content.right {
+    float: right;
+}
+
+@media only screen and (max-width: 990px) {
+    .main-timeline .title {
+        font-size: 25px;
+    }
+    .main-timeline .timeline-content::before {
+        top: 16px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .main-timeline {
+        margin-left: 20px;
+    }
+    .main-timeline:before {
+        left: 0;
+    }
+    .main-timeline .timeline-content {
+        width: 90%;
+        float: right;
+    }
+    .main-timeline .timeline-content:before,
+    .main-timeline .timeline-content.right:before {
+        left: 10%;
+        right: inherit;
+        margin-left: -6px;
+        border-left: 0;
+        border-right: 7px solid #1abc9c;
+    }
+    .main-timeline .timeline-icon {
+        left: 0;
+    }
+}
+
+@media only screen and (max-width: 479px) {
+    .main-timeline .timeline-content {
+        width: 85%;
+    }
+    .main-timeline .timeline-content:before,
+    .main-timeline .timeline-content.right:before {
+        left: 15%;
+    }
+    .main-timeline .title {
+        font-size: 20px;
+    }
+    .main-timeline .timeline-content:before {
+        top: 13px;
+    }
+
+
+.eson_timeline {
+    padding: 0%;
+}
+
+}

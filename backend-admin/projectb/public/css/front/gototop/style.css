@@ -1,0 +1,40 @@
+/* 行動版面: 480px 以下。 */
+.to-top {
+    background:transparent;
+    padding: 10px;
+    border-radius: 5px;
+    position: fixed;
+    top: 50%;
+    left: 80%;
+
+
+}
+
+.to-top img {
+    width: 70px;
+    height: auto;
+}
+/* 表格版面: 481px 到 1022px。樣式繼承自: 行動版面。 */
+
+@media only screen and (min-width: 481px) {
+.to-top {
+    top: 80%;
+    left: 87%;
+}
+
+
+}
+
+
+/* 桌面版面: 1023px 到最大 1232px。樣式繼承自: 行動版面和表格版面。 */
+@media only screen and (min-width: 1023px) {
+.to-top {
+    top: auto;
+    left: auto;
+
+}
+.to-top img {
+    width: 100px;
+    height: auto;
+}
+}

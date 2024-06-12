@@ -1,0 +1,43 @@
+.gallery {
+  & *, & *::before, & *::after {
+    transition: all ease-out .3s;
+  }
+  & [class*="col"] {
+    position: relative;
+    & [class*="abimg"] {
+      z-index: 0;
+    }
+    & .pos-ab {
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: rgba(#000, 0.75);
+      z-index: 1;
+      color: #fff;
+      display: flex;
+      flex-flow: row wrap;
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      & h2 {
+        font-size:  m#{i}n(m#{a}x(16px, 2.5vw), 20px);
+        letter-spacing: 1px;
+        font-weight: lighter;
+        transform: translateY(150%);
+      }
+    }
+    &:hover {
+       & img {
+         transform: scale(1.1);
+       }
+      & .pos-ab {
+        opacity: 1;
+        & h2 {
+          transform: translateY(0);
+        }
+      }
+    }
+  }//col
+}

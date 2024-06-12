@@ -1,0 +1,99 @@
+@import "variables";
+
+@font-face {
+  font-family: '#{$icomoon-font-family}';
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?u7hs7z');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?u7hs7z#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?u7hs7z') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?u7hs7z') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?u7hs7z##{$icomoon-font-family}') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: '#{$icomoon-font-family}' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  //line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-arrow-holly-down {
+  &:before {
+    content: $icon-arrow-holly-down;
+  }
+}
+.icon-arrow-holly-left {
+  &:before {
+    content: $icon-arrow-holly-left;
+  }
+}
+.icon-arrow-holly-right {
+  &:before {
+    content: $icon-arrow-holly-right;
+  }
+}
+.icon-arrow-holly-top {
+  &:before {
+    content: $icon-arrow-holly-top;
+  }
+}
+.icon-arrow-simplr-down {
+  &:before {
+    content: $icon-arrow-simplr-down;
+  }
+}
+.icon-arrow-simplr-left {
+  &:before {
+    content: $icon-arrow-simplr-left;
+  }
+}
+.icon-arrow-simplr-right {
+  &:before {
+    content: $icon-arrow-simplr-right;
+  }
+}
+.icon-arrow-simplr-top {
+  &:before {
+    content: $icon-arrow-simplr-top;
+  }
+}
+.icon-arrow-solid-down {
+  &:before {
+    content: $icon-arrow-solid-down;
+  }
+}
+.icon-arrow-solid-left {
+  &:before {
+    content: $icon-arrow-solid-left;
+  }
+}
+.icon-arrow-solid-right {
+  &:before {
+    content: $icon-arrow-solid-right;
+  }
+}
+.icon-arrow-solid-top {
+  &:before {
+    content: $icon-arrow-solid-top;
+  }
+}
+
+.icon-arrow-thick-left {
+  &:before {
+    content: $icon-arrow-thick-left;
+  }
+}
+.icon-arrow-thick-right {
+  &:before {
+    content: $icon-arrow-thick-right;
+  }
+}

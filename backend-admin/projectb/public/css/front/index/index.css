@@ -1,0 +1,48 @@
+/* 行動版面: 480px 以下。 */
+
+.index-list {
+    float: left;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.index-list a:hover{
+    color: #FFFFFF;
+}
+
+.index-list .product_tit {
+    color: #6f6f6f;
+    font-family: ‘cwTeXHei’, sans-serif;
+    font-size: 1.3em;
+    text-align: center;
+    line-height: 60px;
+}
+.index-list .product_cnt{
+	color: #6f6f6f;
+    font-family: ‘cwTeXHei’, sans-serif;
+    font-size: 1em;
+    text-align: center;
+    margin-top:-35px; 
+
+    overflow:hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+
+/* 表格版面: 481px 到 1022px。樣式繼承自: 行動版面。 */
+
+@media only screen and (min-width: 481px) {}
+
+
+/* 桌面版面: 1023px 到最大 1232px。樣式繼承自: 行動版面和表格版面。 */
+
+@media only screen and (min-width: 1023px) {
+.index-list {
+    float: left;
+    width: 100%;
+    height: 100%;
+    margin: 3% 2%;
+}
+
+}

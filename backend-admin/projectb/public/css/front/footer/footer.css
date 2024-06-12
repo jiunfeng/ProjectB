@@ -1,0 +1,156 @@
+/* 行動版面: 480px 以下。 */
+
+
+.footer {
+    float: left;
+    width: 100%;
+    height: 350px;
+    font-size: 0.8em;
+}
+
+.footer .icon {
+    width: 100%;
+    height: 15%;
+    text-align: center;
+    margin-bottom: 2px;
+}
+.footer .icon ul{
+	margin-left: -40px;
+}
+.footer .icon ul li{
+	display:inline;
+}
+.footer .icon ul li img{
+    width: 25px;
+    height:auto;
+    margin: 0 10px;
+}
+
+
+
+.footer .logo {
+    width: 100%;
+    height: 35%;
+    background-color: #F2F2F2;
+    text-align: center;
+    padding-top: 28px;
+    padding-bottom: 28px;
+}
+
+.footer .logo img{
+    width: 80px;
+    height: auto;
+}
+
+.footer .info {
+    width: 100%;
+    height: 34%;
+    background-color: #F2F2F2;
+    text-align: center;
+    letter-spacing:2px;
+    color: #6f6f6f;
+}
+.footer .info a:link{
+    text-decoration: none;
+    }
+
+.footer .copyright {
+    width: 100%;
+    height: 15%;
+    background-color: #51716b;
+    color: #ffffff;
+    text-align: center;
+    padding-top: 15px;
+    font-size: 0.4em;
+    letter-spacing: 1px;
+}
+.footer .copyright a:link{
+    color: #FFFFFF;
+    text-decoration: none;
+    }
+/* 手機版 隱藏footer選單 */
+.footer .nav {
+    display:none;
+}
+
+
+/* 表格版面: 481px 到 1022px。樣式繼承自: 行動版面。 */
+
+@media only screen and (min-width: 481px) {
+.footer {
+    font-size: 0.9em;
+}
+
+}
+
+
+/* 桌面版面: 1023px 到最大 1232px。樣式繼承自: 行動版面和表格版面。 */
+
+@media only screen and (min-width: 1023px) {
+.footer {
+    height: 350px;
+    font-size: 1em;
+}
+.footer .icon {
+    height: 15%;
+}
+
+.footer .logo {
+    float: left;
+    text-align: right;
+    width: 50%;
+    height: 50%;
+    padding-top:50px;
+    padding-right: 70px;
+}
+
+.footer .info {
+    float: left;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-align: left;
+    width: 50%;
+    height: 50%;
+    padding-top:50px;
+}
+
+.line{
+    border-left: solid;
+    border-width: 1px;
+    padding-left: 20px;
+ 
+}
+
+.footer .copyright {
+    float: left;
+    height: 15%;
+    padding-top: 17px;
+}
+
+
+.footer .nav {
+	/* PC版 恢復footer選單 */
+	display:block;
+    width: 100%;
+    height: 19%;
+    text-align: center;
+    background-color: #F2F2F2;
+    font-size: 17px;
+    letter-spacing: 2px;
+}
+.footer .nav ul{
+	padding-top: 30px;
+	padding-bottom: 30px;
+	margin-left: -40px;ss
+}
+
+.footer .nav ul li{
+	display:inline;
+	padding: 0 24px;
+}
+
+.footer .nav ul li a:hover,a{
+	text-decoration:none;
+}
+
+}
